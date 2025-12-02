@@ -185,7 +185,6 @@ const OperatorCard = ({ member }: { member: TeamMember }) => {
     let timeoutId: ReturnType<typeof setTimeout>;
     
     const runGlitchLoop = () => {
-      // Reduce glitch frequency on mobile to save battery
       const isMobile = window.innerWidth < 768;
       if (isMobile && Math.random() > 0.3) return;
 
@@ -207,7 +206,6 @@ const OperatorCard = ({ member }: { member: TeamMember }) => {
   }, []);
 
   return (
-    // Centered on mobile, fixed width to maintain SVG aspect ratio
     <div className="relative group w-[288px] h-[420px] bg-[#0A0A0C] flex-shrink-0 mx-auto">
       
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible">
@@ -242,7 +240,6 @@ const OperatorCard = ({ member }: { member: TeamMember }) => {
                   filter: 'grayscale(100%) sepia(100%) hue-rotate(180deg) saturate(1.5) brightness(0.8) contrast(1.2)'
               }}
             />
-            {/* Glitch Layers */}
             <div 
                 className="absolute inset-0 bg-cover bg-center z-20 pointer-events-none mix-blend-hard-light"
                 style={{ 
