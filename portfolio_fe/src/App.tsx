@@ -19,16 +19,69 @@ import trigslinkLogo from '/assets/trigslink_logo_dark.jpeg';
 import trigslinkFont from '/assets/trigslink_font.png'; 
 import asciiTerminal from '/assets/ascii.png'; 
 
+// --- TypeScript Interfaces ---
+
+interface NavigationItem {
+  name: string;
+  href: string;
+}
+
+interface FeatureItem {
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: React.ReactNode;
+  stat: string;
+}
+
+interface RoadmapItem {
+  phase: string;
+  title: string;
+  items: string[];
+  status: 'completed' | 'current' | 'upcoming';
+}
+
+interface TeamMember {
+  name: string;
+  role: string;
+  initials: string;
+  hex: string;
+  image: string;
+}
+
+interface Dot {
+  x: number;
+  y: number;
+  z: number;
+  neighbors: { idx: number; dist: number }[] | number[]; // Can be object during calc, number[] after
+  pulse: number;
+}
+
+interface ProjectedDot {
+  x: number;
+  y: number;
+  scale: number;
+  z: number;
+  originalIndex: number;
+  pulse: number;
+}
+
+interface Signal {
+  startIdx: number;
+  endIdx: number;
+  progress: number;
+}
+
 // --- Data Constants ---
 
-const NAVIGATION = [
+const NAVIGATION: NavigationItem[] = [
   { name: 'PROTOCOL', href: '#features' },
   { name: 'NETWORK', href: '#architecture' },
   { name: 'ROADMAP', href: '#roadmap' },
   { name: 'TEAM', href: '#team' },
 ];
 
-const FEATURES = [
+const FEATURES: FeatureItem[] = [
   {
     title: 'GPU Marketplace',
     subtitle: 'Plug-and-Earn Infrastructure',
@@ -59,7 +112,7 @@ const FEATURES = [
   },
 ];
 
-const ROADMAP = [
+const ROADMAP: RoadmapItem[] = [
   {
     phase: 'PHASE 01',
     title: 'Foundation',
@@ -80,7 +133,7 @@ const ROADMAP = [
   },
 ];
 
-const TEAM = [
+const TEAM: TeamMember[] = [
   { 
     name: 'Gianluca Godfrey', 
     role: 'Onchain Evangelist', 
@@ -125,11 +178,11 @@ const SOCIAL_LINKS = {
 
 // --- Visual Components ---
 
-const OperatorCard = ({ member }) => {
+const OperatorCard = ({ member }: { member: TeamMember }) => {
   const [glitchState, setGlitchState] = useState(0); 
 
   useEffect(() => {
-    let timeoutId;
+    let timeoutId: ReturnType<typeof setTimeout>;
     
     const runGlitchLoop = () => {
       // Reduce glitch frequency on mobile to save battery
@@ -189,7 +242,7 @@ const OperatorCard = ({ member }) => {
                   filter: 'grayscale(100%) sepia(100%) hue-rotate(180deg) saturate(1.5) brightness(0.8) contrast(1.2)'
               }}
             />
-            {/* Glitch Layers - Simplified for performance */}
+            {/* Glitch Layers */}
             <div 
                 className="absolute inset-0 bg-cover bg-center z-20 pointer-events-none mix-blend-hard-light"
                 style={{ 
@@ -219,18 +272,17 @@ const OperatorCard = ({ member }) => {
   );
 };
 
-const TiltCard = ({ children, className = "" }) => {
-  const cardRef = useRef(null);
+const TiltCard = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
-    // Detect touch device to disable tilt effect (better for mobile scroll)
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
   }, []);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
     if (isTouchDevice || !cardRef.current) return;
     
     const card = cardRef.current;
@@ -277,13 +329,14 @@ const TiltCard = ({ children, className = "" }) => {
 };
 
 const CyberGlobe = () => {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
     
     const setDimensions = () => {
         const parent = canvas.parentElement;
@@ -298,15 +351,14 @@ const CyberGlobe = () => {
     let height = canvas.height;
     
     // Dynamic radius based on width for better mobile fit
-    // UPDATED: Radius increased for mobile to make it feel "big" as requested
     const getRadius = () => {
-        if (width < 400) return 260; // Was 180, now much bigger for small mobile
-        if (width < 768) return 320; // Was 220, now much bigger for tablets/large mobile
-        return 380; // Desktop kept exactly as requested
+        if (width < 400) return 220; // Small mobile 
+        if (width < 768) return 280; // Mobile
+        return 380; // Desktop
     };
 
     let GLOBE_RADIUS = getRadius();
-    const DOT_COUNT = width < 768 ? 400 : 600; // Reduce dots on mobile for performance
+    const DOT_COUNT = width < 768 ? 400 : 600; 
     const DOT_RADIUS = 2;
     const CONNECTION_DISTANCE_3D = 95; 
     const MAX_ACTIVE_SIGNALS = width < 768 ? 30 : 60; 
@@ -314,7 +366,7 @@ const CyberGlobe = () => {
 
     let rotation = 0;
     
-    const dots = [];
+    const dots: Dot[] = [];
     for(let i = 0; i < DOT_COUNT; i++) {
       const phi = Math.acos(-1 + (2 * i) / DOT_COUNT);
       const theta = Math.sqrt(DOT_COUNT * Math.PI) * phi;
@@ -330,7 +382,7 @@ const CyberGlobe = () => {
 
     // Precompute neighbors
     for (let i = 0; i < DOT_COUNT; i++) {
-        let possibleNeighbors = [];
+        let possibleNeighbors: { idx: number; dist: number }[] = [];
         for (let j = 0; j < DOT_COUNT; j++) {
             if (i === j) continue;
             const dx = dots[i].x - dots[j].x;
@@ -344,11 +396,12 @@ const CyberGlobe = () => {
         }
         
         possibleNeighbors.sort((a, b) => a.dist - b.dist);
+        // Store as array of indices for performance
         dots[i].neighbors = possibleNeighbors.slice(0, 5).map(n => n.idx);
     }
 
-    let signals = [];
-    let animationFrameId;
+    let signals: Signal[] = [];
+    let animationFrameId: number;
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
@@ -358,7 +411,7 @@ const CyberGlobe = () => {
 
       rotation += 0.0015;
 
-      const projectedDots = dots.map((dot, i) => {
+      const projectedDots: ProjectedDot[] = dots.map((dot, i) => {
         if (dot.pulse > 0) dot.pulse -= 0.04;
 
         const x = dot.x * Math.cos(rotation) - dot.z * Math.sin(rotation);
@@ -381,7 +434,11 @@ const CyberGlobe = () => {
       projectedDots.forEach((dot, index) => {
         if (dot.scale < 0.25) return; 
 
-        dots[dot.originalIndex].neighbors.forEach(neighborIdx => {
+        const originalDot = dots[dot.originalIndex];
+        // Cast neighbors to number[] because we transformed it in initialization
+        const neighbors = originalDot.neighbors as number[];
+
+        neighbors.forEach((neighborIdx) => {
             const neighbor = projectedDots[neighborIdx];
             
             if (neighbor.z > -GLOBE_RADIUS && index < neighborIdx) {
@@ -406,8 +463,10 @@ const CyberGlobe = () => {
       if (signals.length < MAX_ACTIVE_SIGNALS && Math.random() > 0.90) {
           const startIndex = Math.floor(Math.random() * DOT_COUNT);
           const startDotRaw = dots[startIndex];
-          if (startDotRaw.neighbors.length > 0) {
-              const neighborIndex = startDotRaw.neighbors[Math.floor(Math.random() * startDotRaw.neighbors.length)];
+          const neighbors = startDotRaw.neighbors as number[];
+          
+          if (neighbors.length > 0) {
+              const neighborIndex = neighbors[Math.floor(Math.random() * neighbors.length)];
               signals.push({
                   startIdx: startIndex,
                   endIdx: neighborIndex,
@@ -426,6 +485,9 @@ const CyberGlobe = () => {
 
           const startDot = projectedDots[signal.startIdx];
           const endDot = projectedDots[signal.endIdx];
+
+          // Check bound to avoid flicker if dots disappear
+          if (!startDot || !endDot) return false;
 
           if (startDot.z < -100 && endDot.z < -100) return true;
 
@@ -529,7 +591,7 @@ const Logo = ({ className = "w-10 h-10" }) => (
   />
 );
 
-const GlitchText = ({ text }) => (
+const GlitchText = ({ text }: { text: string }) => (
   <span className="relative inline-block group">
     <span className="relative z-10">{text}</span>
     <span className="absolute top-0 left-0 -ml-0.5 translate-x-[2px] text-red-500 opacity-0 group-hover:opacity-70 mix-blend-screen animate-pulse">{text}</span>
@@ -537,7 +599,7 @@ const GlitchText = ({ text }) => (
   </span>
 );
 
-const SectionTitle = ({ children, subtitle, align = 'center' }) => (
+const SectionTitle = ({ children, subtitle, align = 'center' }: { children: React.ReactNode, subtitle?: string, align?: 'center' | 'left' }) => (
   <div className={`mb-12 md:mb-16 px-4 ${align === 'center' ? 'text-center' : 'text-left'}`}>
     <div className={`flex items-center gap-2 mb-4 text-blue-500 font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase ${align === 'center' ? 'justify-center' : 'justify-start'}`}>
       <span className="w-8 h-[1px] bg-blue-500"></span>
@@ -555,15 +617,23 @@ const SectionTitle = ({ children, subtitle, align = 'center' }) => (
   </div>
 );
 
-const Button = ({ children, variant = 'primary', className = '', ...props }) => {
+// Explicit props interface for Button to handle index signature and event handlers
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'outline' | 'gradient' | 'cyberMobile' | 'luminousPill' | 'silverBorder';
+  className?: string;
+}
+
+const Button = ({ children, variant = 'primary', className = '', ...props }: ButtonProps) => {
   const baseStyle = "relative px-6 md:px-8 py-3 font-mono text-xs md:text-sm font-bold uppercase tracking-wider transition-all duration-200 overflow-hidden group touch-manipulation";
   
-  const variants = {
+  const variants: Record<string, string> = {
     primary: "bg-blue-600 text-white hover:bg-blue-500 clip-path-slant active:scale-95",
     secondary: "bg-transparent border border-gray-700 text-gray-300 hover:border-blue-500 hover:text-white active:bg-gray-800",
     outline: "text-blue-400 border border-blue-500/30 hover:bg-blue-500/10",
     gradient: "text-white rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 animate-gradient-roll border border-white/10 shadow-[0_0_15px_rgba(59,130,246,0.4)] hover:shadow-[0_0_25px_rgba(168,85,247,0.6)]",
-    cyberMobile: "text-white bg-blue-600/20 border border-blue-500/50 hover:bg-blue-600/40 hover:border-blue-400 active:scale-95 clip-path-slant", // New variant
+    cyberMobile: "text-white bg-blue-600/20 border border-blue-500/50 hover:bg-blue-600/40 hover:border-blue-400 active:scale-95 clip-path-slant", 
+    luminousPill: "text-white rounded-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-[length:200%_auto] hover:bg-[position:right_center] active:scale-95 shadow-[0_0_20px_rgba(59,130,246,0.5)] border border-white/20",
     silverBorder: "p-0", 
   };
 
@@ -613,20 +683,19 @@ export default function App() {
   const [walletConnected, setWalletConnected] = useState(false);
 
   useEffect(() => {
-    // Disable lenis on mobile for native feel, or keep strict if desired. 
-    // Keeping it but ensuring touch-action is handled via CSS in standard HTML usually
     const lenis = new Lenis({
       duration: 2.0, 
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+      // @ts-expect-error - Lenis options vary by version, casting to simple obj to ignore strict check
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
       mouseMultiplier: 1,
-      smoothTouch: false, // Often better false on mobile to prevent scrolljacking feel
+      smoothTouch: false, 
       touchMultiplier: 2,
-    });
+    } as any);
 
-    function raf(time) {
+    function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
@@ -658,32 +727,37 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#030304] text-white font-sans selection:bg-blue-500/40 selection:text-white overflow-x-hidden">
       
-      {/* --- MOBILE FULL SCREEN OVERLAY MENU --- */}
+      {/* --- REDESIGNED MOBILE GLASSY MENU (CARD STYLE) --- */}
       <div 
-        className={`fixed inset-0 z-[60] bg-black/95 backdrop-blur-xl transition-all duration-500 flex flex-col items-center justify-center ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setMobileMenuOpen(false)}
       >
-          {/* Close Button */}
-          <button 
-            onClick={() => setMobileMenuOpen(false)}
-            className="absolute top-6 right-6 p-2 text-gray-400 hover:text-white transition-colors border border-transparent hover:border-white/10 rounded-full"
+          {/* The Glassy Card */}
+          <div 
+            className={`w-full max-w-[340px] bg-[#0A0A0C]/90 backdrop-blur-2xl border border-white/10 rounded-[32px] p-8 shadow-[0_0_50px_rgba(0,0,0,0.8)] transform transition-all duration-500 flex flex-col relative ${mobileMenuOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}
+            onClick={(e) => e.stopPropagation()} 
           >
-             <X size={32} />
-          </button>
-
-          <div className="flex flex-col items-center gap-10 w-full px-8">
-             {/* Logo in Menu */}
-             <div className="mb-6 opacity-80">
-                <Logo className="w-16 h-16" />
+             {/* Header: Logo & Close */}
+             <div className="flex items-center justify-between mb-12">
+                <div className="flex items-center gap-2 opacity-90">
+                    <Logo className="w-8 h-8" />
+                    <span className="font-bold text-lg font-mono tracking-widest text-white">Trigslink</span>
+                </div>
+                <button 
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-gray-400 hover:text-white transition-colors"
+                >
+                    <X size={24} />
+                </button>
              </div>
 
-             {/* Links */}
-             <div className="flex flex-col gap-6 text-center">
-                {NAVIGATION.map((item, idx) => (
+             {/* Navigation Links */}
+             <div className="flex flex-col gap-8 items-center text-center mb-12">
+                {NAVIGATION.map((item) => (
                   <a 
                     key={item.name} 
                     href={item.href} 
-                    className="text-2xl font-lastica font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 hover:to-blue-400 transition-all duration-300 tracking-wider transform hover:scale-105"
-                    style={{ transitionDelay: `${idx * 50}ms` }}
+                    className="text-base font-bold font-mono tracking-[0.2em] text-gray-300 hover:text-white hover:text-shadow-glow transition-all duration-300 uppercase"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
@@ -691,30 +765,27 @@ export default function App() {
                 ))}
              </div>
 
-             {/* Mobile Wallet Button - REDESIGNED */}
-             <div className="mt-8 w-full max-w-xs">
+             {/* Luminous Connect Wallet Button */}
+             <div className="w-full mb-8">
                 <Button 
-                    variant="cyberMobile" 
-                    className="w-full py-4 text-base font-bold tracking-widest" 
+                    variant="luminousPill" 
+                    className="w-full py-4 text-sm font-bold tracking-wider" 
                     onClick={() => { toggleWallet(); setMobileMenuOpen(false); }}
                 >
-                    {walletConnected ? (
-                        <span className="flex items-center gap-2">
-                           <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                           CONNECTED
-                        </span>
-                    ) : (
-                        <>
-                           <Wallet className="w-4 h-4 mr-2" /> CONNECT WALLET
-                        </>
-                    )}
+                    {walletConnected ? 'CONNECTED' : 'Connect Wallet'}
                 </Button>
              </div>
 
-             {/* Socials */}
-             <div className="flex gap-8 mt-4">
-                <a href={SOCIAL_LINKS.github} className="text-gray-500 hover:text-white hover:scale-110 transition-all"><Github size={24}/></a>
-                <a href={SOCIAL_LINKS.youtube} className="text-gray-500 hover:text-white hover:scale-110 transition-all"><Youtube size={24}/></a>
+             {/* Footer / Socials */}
+             <div className="flex justify-center gap-6 mt-auto">
+                <a href={SOCIAL_LINKS.github} className="text-gray-500 hover:text-white transition-colors"><Github size={20}/></a>
+                <a href={SOCIAL_LINKS.youtube} className="text-gray-500 hover:text-white transition-colors"><Youtube size={20}/></a>
+             </div>
+             
+             <div className="mt-8 pt-6 border-t border-white/5 flex flex-col gap-3 text-xs text-gray-600 font-mono text-center">
+                 <a href="#" className="hover:text-gray-400">Documentation</a>
+                 <a href="#" className="hover:text-gray-400">Whitepaper</a>
+                 <a href="#" className="hover:text-gray-400">Github</a>
              </div>
           </div>
       </div>
@@ -828,7 +899,6 @@ export default function App() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {FEATURES.map((feature, idx) => (
-              // Changed height from fixed h-[420px] to fluid for mobile safety
               <TiltCard key={idx} className="h-auto min-h-[350px] lg:h-[420px]">
                 <div className="relative h-full p-6 md:p-8 rounded-[30px] md:rounded-[40px] overflow-hidden group transition-all duration-500
                               bg-[#0f0f11]/60 backdrop-blur-2xl
@@ -884,8 +954,6 @@ export default function App() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
             
             <div className="space-y-6 relative pl-4 md:pl-0">
-              
-              {/* Vertical Beam Line - Hidden on Mobile to prevent overlap issues in stacked view, visible on Desktop */}
               <div 
                 className="hidden lg:block absolute left-6 top-6 bottom-24 w-[2px] -translate-x-1/2 z-0 overflow-visible"
                 style={{
@@ -909,7 +977,6 @@ export default function App() {
                 <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent via-white to-transparent opacity-0 animate-beam-drop delay-75"></div>
               </div>
               
-              {/* Mobile Line (Simple) */}
               <div className="lg:hidden absolute left-[27px] top-6 bottom-12 w-[1px] bg-blue-900/30 z-0"></div>
 
               {[
@@ -932,12 +999,10 @@ export default function App() {
               ))}
             </div>
 
-            {/* --- TERMINAL VISUAL --- */}
             <div className="relative group w-full max-w-md mx-auto lg:mr-0 lg:ml-auto">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
               <div className="relative bg-[#050505] border border-gray-800 rounded-lg p-1 shadow-2xl">
                 
-                {/* Terminal Header */}
                 <div className="bg-[#111] px-3 py-2 flex items-center justify-between rounded-t border-b border-gray-800">
                   <div className="flex gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
@@ -947,10 +1012,8 @@ export default function App() {
                   <div className="text-[8px] md:text-[10px] font-mono text-gray-500 uppercase">root@trigslink-node:~</div>
                 </div>
                 
-                {/* Terminal Body */}
                 <div className="p-4 md:p-6 font-mono text-xs space-y-4 min-h-[300px] md:min-h-[320px] text-gray-300 bg-[#0A0A0C] rounded-b flex flex-col overflow-x-auto">
                   
-                  {/* 1. Initial Handshake Lines */}
                   <div>
                     <span className="text-green-500 mr-2">➜</span>
                     <span>initiating_handshake...</span>
@@ -960,18 +1023,15 @@ export default function App() {
                     <div>[INFO] Verifying stake... <span className="text-green-400">OK</span></div>
                   </div>
 
-                  {/* 2. The Command Line */}
                   <div className="pt-2">
                     <span className="text-green-500 mr-2">➜</span>
                     <span className="text-white font-bold text-sm break-all">trigslink-tunnel 5000</span>
                   </div>
 
-                  {/* 3. The ASCII Image */}
                   <div className="flex justify-center py-4 flex-1 items-center overflow-hidden">
                     <img src={asciiTerminal} alt="ASCII Logo" className="w-24 h-24 md:w-32 md:h-32 object-contain opacity-90" />
                   </div>
 
-                  {/* 4. The Status Bar (ESTABLISHED state) */}
                   <div className="bg-[#0f0f12] p-3 rounded-lg border border-blue-900/30">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-blue-300 font-bold text-[10px] tracking-wider">TUNNEL_STATUS</span>
@@ -986,7 +1046,6 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* 5. Forwarding Traffic Line */}
                   <div className="flex items-center gap-2 text-purple-400 pt-1">
                     <span className="animate-spin">⟳</span>
                     <span>forwarding_traffic...</span>
@@ -1008,7 +1067,6 @@ export default function App() {
           </SectionTitle>
 
           <div className="relative">
-            {/* --- Horizontal Timeline Track (Desktop Only) --- */}
             <div className="hidden md:block absolute top-[130px] left-0 w-full h-[2px] overflow-visible z-0">
                 <div className="absolute inset-0 bg-blue-900/20"></div>
                 <div 
@@ -1023,7 +1081,6 @@ export default function App() {
                 <div className="absolute top-0 bottom-0 w-48 bg-gradient-to-r from-transparent via-blue-400 to-transparent blur-md opacity-0 animate-beam-slide"></div>
             </div>
             
-            {/* Vertical Track (Mobile Only) */}
             <div className="md:hidden absolute left-0 top-0 bottom-0 w-[2px] bg-blue-900/20 z-0 ml-4"></div>
 
             <div className="grid md:grid-cols-3 gap-8 md:gap-8 relative z-10">
@@ -1035,12 +1092,10 @@ export default function App() {
                   <div key={idx} className={`group h-full p-6 md:p-8 border backdrop-blur-sm transition-all duration-300 flex flex-col relative ml-10 md:ml-0
                       ${isCurrent ? 'bg-blue-900/5 border-blue-500/50 shadow-[0_0_30px_rgba(59,130,246,0.1)]' : 'bg-[#0a0a0c] border-gray-800 hover:border-gray-700'}
                   `}>
-                      {/* Mobile Connector Dot */}
                       <div className="md:hidden absolute -left-[33px] top-8 w-4 h-4 rounded-full border-2 border-[#030304] bg-blue-900 z-20">
                          {isCurrent && <div className="absolute inset-0 bg-blue-500 rounded-full animate-ping"></div>}
                       </div>
 
-                      {/* --- PART 1: HEADER --- */}
                       <div className="mb-4 md:h-[90px] flex flex-col justify-start relative z-10">
                           <div className={`text-[10px] font-mono uppercase tracking-widest mb-3
                             ${isCurrent ? 'text-blue-400' : 'text-gray-600'}
@@ -1056,7 +1111,6 @@ export default function App() {
                           )}
                       </div>
 
-                      {/* --- PART 2: THE MARKER (Desktop) --- */}
                       <div className="hidden md:flex relative h-[40px] items-center justify-start mb-6 z-20">
                            <div className={`
                               w-4 h-4 rounded-full border-4 transition-all duration-500 relative
@@ -1067,7 +1121,6 @@ export default function App() {
                            </div>
                       </div>
 
-                      {/* --- PART 3: CONTENT --- */}
                       <ul className="space-y-3 md:space-y-4 mt-auto relative z-10">
                         {item.items.map((point, i) => (
                           <li key={i} className="flex items-start gap-3">
@@ -1161,7 +1214,7 @@ export default function App() {
       </footer>
 
       {/* Styles */}
-      <style jsx global>{`
+      <style>{`
         /* IMPORTING UNBOUNDED FONT */
         @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&display=swap');
         /* IMPORTING SILKSCREEN (PIXEL) FONT */
