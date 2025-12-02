@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type ReactNode, type MouseEvent, type ButtonHTMLAttributes } from 'react';
 import Lenis from 'lenis';
 import { 
   Cpu, 
@@ -30,7 +30,7 @@ interface FeatureItem {
   title: string;
   subtitle: string;
   description: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
   stat: string;
 }
 
@@ -53,7 +53,7 @@ interface Dot {
   x: number;
   y: number;
   z: number;
-  neighbors: { idx: number; dist: number }[] | number[]; // Can be object during calc, number[] after
+  neighbors: { idx: number; dist: number }[] | number[]; 
   pulse: number;
 }
 
@@ -272,7 +272,7 @@ const OperatorCard = ({ member }: { member: TeamMember }) => {
   );
 };
 
-const TiltCard = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
+const TiltCard = ({ children, className = "" }: { children: ReactNode, className?: string }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -282,7 +282,7 @@ const TiltCard = ({ children, className = "" }: { children: React.ReactNode, cla
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: MouseEvent) => {
     if (isTouchDevice || !cardRef.current) return;
     
     const card = cardRef.current;
@@ -352,8 +352,8 @@ const CyberGlobe = () => {
     
     // Dynamic radius based on width for better mobile fit
     const getRadius = () => {
-        if (width < 400) return 220; // Small mobile 
-        if (width < 768) return 280; // Mobile
+        if (width < 400) return 260; // Small mobile 
+        if (width < 768) return 320; // Mobile
         return 380; // Desktop
     };
 
@@ -435,7 +435,6 @@ const CyberGlobe = () => {
         if (dot.scale < 0.25) return; 
 
         const originalDot = dots[dot.originalIndex];
-        // Cast neighbors to number[] because we transformed it in initialization
         const neighbors = originalDot.neighbors as number[];
 
         neighbors.forEach((neighborIdx) => {
@@ -486,7 +485,6 @@ const CyberGlobe = () => {
           const startDot = projectedDots[signal.startIdx];
           const endDot = projectedDots[signal.endIdx];
 
-          // Check bound to avoid flicker if dots disappear
           if (!startDot || !endDot) return false;
 
           if (startDot.z < -100 && endDot.z < -100) return true;
@@ -599,7 +597,7 @@ const GlitchText = ({ text }: { text: string }) => (
   </span>
 );
 
-const SectionTitle = ({ children, subtitle, align = 'center' }: { children: React.ReactNode, subtitle?: string, align?: 'center' | 'left' }) => (
+const SectionTitle = ({ children, subtitle, align = 'center' }: { children: ReactNode, subtitle?: string, align?: 'center' | 'left' }) => (
   <div className={`mb-12 md:mb-16 px-4 ${align === 'center' ? 'text-center' : 'text-left'}`}>
     <div className={`flex items-center gap-2 mb-4 text-blue-500 font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase ${align === 'center' ? 'justify-center' : 'justify-start'}`}>
       <span className="w-8 h-[1px] bg-blue-500"></span>
@@ -618,8 +616,8 @@ const SectionTitle = ({ children, subtitle, align = 'center' }: { children: Reac
 );
 
 // Explicit props interface for Button to handle index signature and event handlers
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
   variant?: 'primary' | 'secondary' | 'outline' | 'gradient' | 'cyberMobile' | 'luminousPill' | 'silverBorder';
   className?: string;
 }
@@ -1214,7 +1212,7 @@ export default function App() {
       </footer>
 
       {/* Styles */}
-      <style>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         /* IMPORTING UNBOUNDED FONT */
         @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&display=swap');
         /* IMPORTING SILKSCREEN (PIXEL) FONT */
@@ -1332,7 +1330,7 @@ export default function App() {
             animation: none;
           }
         }
-      `}</style>
+      `}} />
     </div>
   );
 }
