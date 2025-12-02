@@ -15,9 +15,9 @@ import {
   Radio,
   Play
 } from 'lucide-react';
-import trigslinkLogo from '/assets/trigslink_logo_dark.jpeg';
-import trigslinkFont from '/assets/trigslink_font.png'; 
-import asciiTerminal from '/assets/ascii.png'; 
+import trigslinkLogo from '/images/trigslink_logo_dark.jpeg';
+import trigslinkFont from '/images/trigslink_font.png'; 
+import asciiTerminal from '/images/ascii.png'; 
 
 // --- TypeScript Interfaces ---
 
@@ -139,35 +139,35 @@ const TEAM: TeamMember[] = [
     role: 'Onchain Evangelist', 
     initials: 'GG', 
     hex: '0x01',
-    image: '/assets/gianluca.png' 
+    image: '/images/gianluca.png' 
   },
   { 
     name: 'Aakash Jaiswal', 
     role: 'AI & Backend Alchemist', 
     initials: 'AJ', 
     hex: '0x02',
-    image: '/assets/Aakash.png'
+    image: '/images/Aakash.png'
   },
   { 
     name: 'Charles Cai', 
     role: 'The Architect Whisperer', 
     initials: 'CC', 
     hex: '0x03',
-    image: '/assets/charles.png'
+    image: '/images/charles.png'
   },
   { 
     name: 'Yellie Cefalù', 
     role: 'CryptoKitana', 
     initials: 'YC', 
     hex: '0x04',
-    image: '/assets/yellie.png'
+    image: '/images/yellie.png'
   },
   { 
     name: 'Odudu Essien', 
     role: 'Pixel Crafter', 
     initials: 'OE', 
     hex: '0x05',
-    image: '/assets/odudu.png'
+    image: '/images/odudu.png'
   },
 ];
 
