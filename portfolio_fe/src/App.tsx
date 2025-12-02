@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import trigslinkLogo from '/assets/trigslink_logo_dark.jpeg';
 import trigslinkFont from '/assets/trigslink_font.png'; 
+import asciiTerminal from '/assets/ascii.png'; 
 
 // --- Data Constants ---
 
@@ -125,45 +126,44 @@ const SOCIAL_LINKS = {
 // --- Visual Components ---
 
 const OperatorCard = ({ member }) => {
-  const [glitchState, setGlitchState] = useState(0); // 0: None, 1: Slice Top, 2: Slice Bottom, 3: Color Shift
+  const [glitchState, setGlitchState] = useState(0); 
 
   useEffect(() => {
     let timeoutId;
     
     const runGlitchLoop = () => {
-      // Randomly choose a "glitch type"
+      // Reduce glitch frequency on mobile to save battery
+      const isMobile = window.innerWidth < 768;
+      if (isMobile && Math.random() > 0.3) return;
+
       const type = Math.floor(Math.random() * 3) + 1; 
       setGlitchState(type);
       
-      // Glitch lasts for a very short burst (50ms - 150ms) to look like a flicker
       const duration = Math.random() * 100 + 50;
       
       setTimeout(() => {
         setGlitchState(0);
-        // Wait for a random interval before next glitch (2s - 5s)
         const nextDelay = Math.random() * 3000 + 2000; 
         timeoutId = setTimeout(runGlitchLoop, nextDelay);
       }, duration);
     };
 
-    // Start the loop with a random initial delay
     timeoutId = setTimeout(runGlitchLoop, Math.random() * 2000);
     
     return () => clearTimeout(timeoutId);
   }, []);
 
   return (
-    <div className="relative group w-72 h-[420px] bg-[#0A0A0C]">
+    // Centered on mobile, fixed width to maintain SVG aspect ratio
+    <div className="relative group w-[288px] h-[420px] bg-[#0A0A0C] flex-shrink-0 mx-auto">
       
-      {/* 1. Tech Border Shape (Using SVG for precise cut corners) */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible">
         <defs>
           <clipPath id="card-shape">
-            <polygon points="20,0 100,0 100,100 80,100 0,100 0,20" /> {/* Relative coordinates will be handled by CSS clip-path */}
+            <polygon points="20,0 100,0 100,100 80,100 0,100 0,20" /> 
           </clipPath>
         </defs>
         
-        {/* Main Border Path */}
         <path 
           d="M20,1 L287,1 L287,419 L268,419 L268,419 L1,419 L1,20 Z" 
           vectorEffect="non-scaling-stroke"
@@ -173,24 +173,15 @@ const OperatorCard = ({ member }) => {
           className="transition-colors duration-300 group-hover:stroke-blue-500/80"
         />
         
-        {/* Corner Accents */}
         <path d="M1,20 L20,1" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="2" fill="none" />
         <path d="M268,419 L287,419" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="2" fill="none" />
       </svg>
 
-      {/* 2. Content Container with Clip Path */}
       <div className="w-full h-full relative" style={{ clipPath: 'polygon(20px 0, 100% 0, 100% 100%, calc(100% - 20px) 100%, 0 100%, 0 20px)' }}>
         
-        {/* IMAGE SECTION */}
         <div className="relative h-[70%] w-full overflow-hidden bg-blue-900/10">
-            
-            {/* Static Noise Overlay (Always Active) */}
             <div className="absolute inset-0 z-10 opacity-30 mix-blend-overlay pointer-events-none animate-noise bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-            
-            {/* Scanlines */}
             <div className="absolute inset-0 z-10 opacity-20 pointer-events-none bg-[repeating-linear-gradient(transparent,transparent_2px,#000_3px)]"></div>
-
-            {/* Base Image */}
             <div 
               className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
               style={{ 
@@ -198,10 +189,7 @@ const OperatorCard = ({ member }) => {
                   filter: 'grayscale(100%) sepia(100%) hue-rotate(180deg) saturate(1.5) brightness(0.8) contrast(1.2)'
               }}
             />
-
-            {/* --- GLITCH LAYERS (Triggered by State) --- */}
-            
-            {/* Slice 1: Top shift */}
+            {/* Glitch Layers - Simplified for performance */}
             <div 
                 className="absolute inset-0 bg-cover bg-center z-20 pointer-events-none mix-blend-hard-light"
                 style={{ 
@@ -212,32 +200,8 @@ const OperatorCard = ({ member }) => {
                     filter: 'grayscale(100%) sepia(100%) hue-rotate(180deg) brightness(1.5) contrast(1.5)'
                 }}
             />
-
-            {/* Slice 2: Bottom shift */}
-            <div 
-                className="absolute inset-0 bg-cover bg-center z-20 pointer-events-none mix-blend-hard-light"
-                style={{ 
-                    backgroundImage: `url(${member.image})`,
-                    opacity: glitchState === 2 ? 0.8 : 0,
-                    clipPath: 'inset(60% 0 10% 0)',
-                    transform: 'translate(5px, 0)',
-                    filter: 'grayscale(100%) sepia(100%) hue-rotate(90deg) brightness(1.5) contrast(1.5)'
-                }}
-            />
-            
-            {/* Slice 3: Color Split (RGB Shift) */}
-            <div 
-                className="absolute inset-0 bg-cover bg-center z-20 pointer-events-none mix-blend-screen"
-                style={{ 
-                    backgroundImage: `url(${member.image})`,
-                    opacity: glitchState === 3 ? 0.9 : 0,
-                    transform: 'translate(-3px, 0)',
-                    filter: 'grayscale(100%) drop-shadow(4px 0px 0px rgba(255,0,0,0.5))'
-                }}
-            />
         </div>
 
-        {/* TEXT SECTION */}
         <div className="absolute bottom-0 left-0 right-0 h-[30%] bg-[#0f0f12] border-t border-blue-900/30 p-6 flex flex-col justify-center">
             <h3 className="text-white font-bold font-mono text-lg uppercase tracking-tight mb-1">
                 {member.name}
@@ -255,16 +219,19 @@ const OperatorCard = ({ member }) => {
   );
 };
 
-// ... [The rest of your components: TiltCard, CyberGlobe, Logo, SectionTitle, Button, App] ...
-// I will include the full App component below to ensure it pastes cleanly.
-
 const TiltCard = ({ children, className = "" }) => {
   const cardRef = useRef(null);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    // Detect touch device to disable tilt effect (better for mobile scroll)
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
 
   const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
+    if (isTouchDevice || !cardRef.current) return;
     
     const card = cardRef.current;
     const rect = card.getBoundingClientRect();
@@ -281,7 +248,10 @@ const TiltCard = ({ children, className = "" }) => {
     setRotation({ x: rotateX, y: rotateY });
   };
 
-  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseEnter = () => {
+    if (!isTouchDevice) setIsHovered(true);
+  };
+  
   const handleMouseLeave = () => {
     setIsHovered(false);
     setRotation({ x: 0, y: 0 });
@@ -316,19 +286,30 @@ const CyberGlobe = () => {
     const ctx = canvas.getContext('2d');
     
     const setDimensions = () => {
-        canvas.width = canvas.parentElement.offsetWidth;
-        canvas.height = canvas.parentElement.offsetHeight;
+        const parent = canvas.parentElement;
+        if(parent) {
+            canvas.width = parent.offsetWidth;
+            canvas.height = parent.offsetHeight;
+        }
     };
     setDimensions();
 
     let width = canvas.width;
     let height = canvas.height;
     
-    const GLOBE_RADIUS = width < 768 ? 220 : 380; 
-    const DOT_COUNT = 600; 
+    // Dynamic radius based on width for better mobile fit
+    // UPDATED: Radius increased for mobile to make it feel "big" as requested
+    const getRadius = () => {
+        if (width < 400) return 260; // Was 180, now much bigger for small mobile
+        if (width < 768) return 320; // Was 220, now much bigger for tablets/large mobile
+        return 380; // Desktop kept exactly as requested
+    };
+
+    let GLOBE_RADIUS = getRadius();
+    const DOT_COUNT = width < 768 ? 400 : 600; // Reduce dots on mobile for performance
     const DOT_RADIUS = 2;
     const CONNECTION_DISTANCE_3D = 95; 
-    const MAX_ACTIVE_SIGNALS = 60; 
+    const MAX_ACTIVE_SIGNALS = width < 768 ? 30 : 60; 
     const SIGNAL_SPEED = 0.05;
 
     let rotation = 0;
@@ -347,6 +328,7 @@ const CyberGlobe = () => {
       });
     }
 
+    // Precompute neighbors
     for (let i = 0; i < DOT_COUNT; i++) {
         let possibleNeighbors = [];
         for (let j = 0; j < DOT_COUNT; j++) {
@@ -366,6 +348,7 @@ const CyberGlobe = () => {
     }
 
     let signals = [];
+    let animationFrameId;
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
@@ -493,7 +476,7 @@ const CyberGlobe = () => {
         ctx.shadowBlur = 0;
       });
 
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
     animate();
@@ -502,9 +485,25 @@ const CyberGlobe = () => {
       setDimensions();
       width = canvas.width;
       height = canvas.height;
+      
+      // Update radius on resize
+      GLOBE_RADIUS = getRadius();
+      
+      // Re-initialize dots on major resize
+      for(let i = 0; i < DOT_COUNT; i++) {
+        const phi = Math.acos(-1 + (2 * i) / DOT_COUNT);
+        const theta = Math.sqrt(DOT_COUNT * Math.PI) * phi;
+        dots[i].x = GLOBE_RADIUS * Math.cos(theta) * Math.sin(phi);
+        dots[i].y = GLOBE_RADIUS * Math.sin(theta) * Math.sin(phi);
+        dots[i].z = GLOBE_RADIUS * Math.cos(phi);
+      }
     };
+    
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+        window.removeEventListener('resize', handleResize);
+        cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   return (
@@ -539,17 +538,17 @@ const GlitchText = ({ text }) => (
 );
 
 const SectionTitle = ({ children, subtitle, align = 'center' }) => (
-  <div className={`mb-16 px-4 ${align === 'center' ? 'text-center' : 'text-left'}`}>
-    <div className={`flex items-center gap-2 mb-4 text-blue-500 font-mono text-xs tracking-[0.2em] uppercase ${align === 'center' ? 'justify-center' : 'justify-start'}`}>
+  <div className={`mb-12 md:mb-16 px-4 ${align === 'center' ? 'text-center' : 'text-left'}`}>
+    <div className={`flex items-center gap-2 mb-4 text-blue-500 font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase ${align === 'center' ? 'justify-center' : 'justify-start'}`}>
       <span className="w-8 h-[1px] bg-blue-500"></span>
       System Module
       <span className="w-8 h-[1px] bg-blue-500"></span>
     </div>
-    <h2 className="text-3xl md:text-4xl font-black text-white mb-6 tracking-tighter font-lastica uppercase">
+    <h2 className="text-2xl md:text-4xl font-black text-white mb-4 md:mb-6 tracking-tighter font-lastica uppercase break-words hyphens-auto">
       {children}
     </h2>
     {subtitle && (
-      <p className="text-gray-400 max-w-2xl text-lg leading-relaxed font-light mx-auto">
+      <p className="text-gray-400 max-w-2xl text-base md:text-lg leading-relaxed font-light mx-auto">
         {subtitle}
       </p>
     )}
@@ -557,20 +556,21 @@ const SectionTitle = ({ children, subtitle, align = 'center' }) => (
 );
 
 const Button = ({ children, variant = 'primary', className = '', ...props }) => {
-  const baseStyle = "relative px-8 py-3 font-mono text-sm font-bold uppercase tracking-wider transition-all duration-200 overflow-hidden group";
+  const baseStyle = "relative px-6 md:px-8 py-3 font-mono text-xs md:text-sm font-bold uppercase tracking-wider transition-all duration-200 overflow-hidden group touch-manipulation";
   
   const variants = {
-    primary: "bg-blue-600 text-white hover:bg-blue-500 clip-path-slant",
-    secondary: "bg-transparent border border-gray-700 text-gray-300 hover:border-blue-500 hover:text-white",
+    primary: "bg-blue-600 text-white hover:bg-blue-500 clip-path-slant active:scale-95",
+    secondary: "bg-transparent border border-gray-700 text-gray-300 hover:border-blue-500 hover:text-white active:bg-gray-800",
     outline: "text-blue-400 border border-blue-500/30 hover:bg-blue-500/10",
     gradient: "text-white rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 animate-gradient-roll border border-white/10 shadow-[0_0_15px_rgba(59,130,246,0.4)] hover:shadow-[0_0_25px_rgba(168,85,247,0.6)]",
-    chromion: "bg-[#7FBCC9] text-black font-bold tracking-widest text-xs uppercase hover:bg-[#6aa8b5] transition-colors flex items-center gap-4 py-4 px-10 clip-path-chromion"
+    cyberMobile: "text-white bg-blue-600/20 border border-blue-500/50 hover:bg-blue-600/40 hover:border-blue-400 active:scale-95 clip-path-slant", // New variant
+    silverBorder: "p-0", 
   };
 
   if (variant === 'gradient') {
     return (
       <button 
-        className={`relative p-0.5 rounded-full overflow-hidden group ${className}`} 
+        className={`relative p-0.5 rounded-full overflow-hidden group ${className} active:scale-95 transition-transform`} 
         {...props}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 animate-gradient-roll bg-[length:200%_200%]"></div>
@@ -584,11 +584,11 @@ const Button = ({ children, variant = 'primary', className = '', ...props }) => 
   if (variant === 'silverBorder') {
     return (
       <button 
-        className={`relative p-[1px] group overflow-hidden rounded ${className}`} 
+        className={`relative p-[1px] group overflow-hidden rounded ${className} active:scale-95 transition-transform`} 
         {...props}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[#334155] via-[#e2e8f0] to-[#334155] bg-[length:200%_100%] animate-gold-border"></div>
-        <div className="relative px-10 py-4 bg-black rounded h-full w-full flex items-center justify-center gap-3 font-mono text-xs font-bold tracking-[0.2em] uppercase text-white transition-colors group-hover:text-[#e2e8f0] group-hover:bg-[#0a0a0c]">
+        <div className="relative px-8 md:px-10 py-4 bg-black rounded h-full w-full flex items-center justify-center gap-3 font-mono text-xs font-bold tracking-[0.2em] uppercase text-white transition-colors group-hover:text-[#e2e8f0] group-hover:bg-[#0a0a0c]">
           {children}
         </div>
       </button>
@@ -613,6 +613,8 @@ export default function App() {
   const [walletConnected, setWalletConnected] = useState(false);
 
   useEffect(() => {
+    // Disable lenis on mobile for native feel, or keep strict if desired. 
+    // Keeping it but ensuring touch-action is handled via CSS in standard HTML usually
     const lenis = new Lenis({
       duration: 2.0, 
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
@@ -620,7 +622,7 @@ export default function App() {
       gestureDirection: 'vertical',
       smooth: true,
       mouseMultiplier: 1,
-      smoothTouch: false,
+      smoothTouch: false, // Often better false on mobile to prevent scrolljacking feel
       touchMultiplier: 2,
     });
 
@@ -641,16 +643,87 @@ export default function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [mobileMenuOpen]);
 
   const toggleWallet = () => setWalletConnected(!walletConnected);
 
   return (
     <div className="min-h-screen bg-[#030304] text-white font-sans selection:bg-blue-500/40 selection:text-white overflow-x-hidden">
       
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-50 rounded-full border border-white/20 bg-[#050505]/90 backdrop-blur-xl px-6 py-3 shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300">
+      {/* --- MOBILE FULL SCREEN OVERLAY MENU --- */}
+      <div 
+        className={`fixed inset-0 z-[60] bg-black/95 backdrop-blur-xl transition-all duration-500 flex flex-col items-center justify-center ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+      >
+          {/* Close Button */}
+          <button 
+            onClick={() => setMobileMenuOpen(false)}
+            className="absolute top-6 right-6 p-2 text-gray-400 hover:text-white transition-colors border border-transparent hover:border-white/10 rounded-full"
+          >
+             <X size={32} />
+          </button>
+
+          <div className="flex flex-col items-center gap-10 w-full px-8">
+             {/* Logo in Menu */}
+             <div className="mb-6 opacity-80">
+                <Logo className="w-16 h-16" />
+             </div>
+
+             {/* Links */}
+             <div className="flex flex-col gap-6 text-center">
+                {NAVIGATION.map((item, idx) => (
+                  <a 
+                    key={item.name} 
+                    href={item.href} 
+                    className="text-2xl font-lastica font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 hover:to-blue-400 transition-all duration-300 tracking-wider transform hover:scale-105"
+                    style={{ transitionDelay: `${idx * 50}ms` }}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                ))}
+             </div>
+
+             {/* Mobile Wallet Button - REDESIGNED */}
+             <div className="mt-8 w-full max-w-xs">
+                <Button 
+                    variant="cyberMobile" 
+                    className="w-full py-4 text-base font-bold tracking-widest" 
+                    onClick={() => { toggleWallet(); setMobileMenuOpen(false); }}
+                >
+                    {walletConnected ? (
+                        <span className="flex items-center gap-2">
+                           <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                           CONNECTED
+                        </span>
+                    ) : (
+                        <>
+                           <Wallet className="w-4 h-4 mr-2" /> CONNECT WALLET
+                        </>
+                    )}
+                </Button>
+             </div>
+
+             {/* Socials */}
+             <div className="flex gap-8 mt-4">
+                <a href={SOCIAL_LINKS.github} className="text-gray-500 hover:text-white hover:scale-110 transition-all"><Github size={24}/></a>
+                <a href={SOCIAL_LINKS.youtube} className="text-gray-500 hover:text-white hover:scale-110 transition-all"><Youtube size={24}/></a>
+             </div>
+          </div>
+      </div>
+
+      <nav className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-50 rounded-2xl md:rounded-full border border-white/10 bg-[#050505]/90 backdrop-blur-xl px-4 md:px-6 py-3 transition-all duration-300 ${isScrolled ? 'shadow-[0_10px_30px_-10px_rgba(0,0,0,0.8)]' : 'shadow-none'}`}>
         <div className="flex items-center justify-between relative">
           
-          <div className="flex items-center gap-3 cursor-pointer group z-10" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+          {/* Logo Section */}
+          <div className="flex items-center gap-3 cursor-pointer group z-20" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <div className="relative">
               <Logo className="w-8 h-8 transition-all duration-500 group-hover:rotate-180" />
               <div className="absolute inset-0 bg-blue-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
@@ -662,6 +735,7 @@ export default function App() {
             />
           </div>
           
+          {/* Desktop Nav */}
           <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-8">
             {NAVIGATION.map((item) => (
               <a 
@@ -674,7 +748,8 @@ export default function App() {
             ))}
           </div>
 
-          <div className="hidden md:block z-10">
+          {/* Desktop Wallet */}
+          <div className="hidden md:block z-20">
             <Button 
               variant={walletConnected ? "secondary" : "gradient"} 
               onClick={toggleWallet}
@@ -686,60 +761,45 @@ export default function App() {
                 </span>
               ) : (
                 <>
-                  <Wallet className="w-4 h-4" /> Connect Wallet
+                  <Wallet className="w-4 h-4" /> Connect
                 </>
               )}
             </Button>
           </div>
 
-          <div className="md:hidden z-10">
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-gray-300 hover:text-white p-2">
-              {mobileMenuOpen ? <X /> : <Menu />}
+          {/* Mobile Toggle */}
+          <div className="md:hidden z-20">
+            <button 
+                onClick={() => setMobileMenuOpen(true)} 
+                className="text-gray-300 hover:text-white p-2 focus:outline-none"
+            >
+              <Menu size={24} />
             </button>
-          </div>
-        </div>
-
-        <div className={`md:hidden overflow-hidden transition-all duration-300 ${mobileMenuOpen ? 'max-h-96 mt-4 border-t border-gray-800' : 'max-h-0'}`}>
-          <div className="py-4 space-y-3 flex flex-col items-center">
-            {NAVIGATION.map((item) => (
-              <a 
-                key={item.name} 
-                href={item.href} 
-                className="text-sm text-gray-300 hover:text-white tracking-widest uppercase font-mono"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.name}
-              </a>
-            ))}
-            <div className="pt-2 w-full px-4">
-               <Button variant="gradient" className="w-full rounded-full" onClick={() => { toggleWallet(); setMobileMenuOpen(false); }}>
-                {walletConnected ? 'Connected' : 'Connect Wallet'}
-              </Button>
-            </div>
           </div>
         </div>
       </nav>
 
-      <section className="relative pt-40 pb-32 lg:pt-60 lg:pb-48 px-4 overflow-hidden flex items-center justify-center min-h-screen">
+      {/* --- HERO SECTION --- */}
+      <section className="relative pt-32 pb-20 lg:pt-60 lg:pb-48 px-4 overflow-hidden flex items-center justify-center min-h-[90vh] md:min-h-screen">
         <CyberGlobe />
-        <div className="max-w-7xl mx-auto text-center relative z-20 pointer-events-auto">
+        <div className="max-w-7xl mx-auto text-center relative z-20 pointer-events-auto px-2">
           
         <h1
-          className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl 
+          className="text-2xl sm:text-3xl md:text-5xl lg:text-5xl 
                     font-light tracking-tighter
-                    text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-00
-                    leading-tight font-montserrat mb-4">
+                    text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-500
+                    leading-tight font-montserrat mb-2 md:mb-4">
           THE ONCHAIN
         </h1>
 
-        <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl 
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl 
                       font-black tracking-tighter 
-                      mb-16 text-white leading-none 
-                      font-lastica uppercase drop-shadow-2xl">
+                      mb-8 md:mb-16 text-white leading-none 
+                      font-lastica uppercase drop-shadow-2xl break-words">
           CONTEXT PROTOCOL
         </h1>
 
-          <p className="text-lg md:text-xl text-gray-400 max-w-4xl mx-auto mb-16 tracking-[0.3em] font-light uppercase font-sans">
+          <p className="text-sm md:text-xl text-gray-400 max-w-sm md:max-w-4xl mx-auto mb-10 md:mb-16 tracking-[0.2em] md:tracking-[0.3em] font-light uppercase font-sans leading-relaxed">
             The discovery, billing, and access layer for onchain MCPs
           </p>
           
@@ -759,39 +819,32 @@ export default function App() {
         </div>
       </section>
 
-      {/* --- FEATURES SECTION (UPDATED FOR ADVANCED GLASS LOOK) --- */}
-      <section id="features" className="relative z-10 py-32 bg-[#050507]">
+      {/* --- FEATURES SECTION --- */}
+      <section id="features" className="relative z-10 py-16 md:py-32 bg-[#050507]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle subtitle="Bridging isolated AI agents with high-fidelity, real-time context.">
             PROTOCOL ARCHITECTURE
           </SectionTitle>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {FEATURES.map((feature, idx) => (
-              <TiltCard key={idx} className="h-[420px]">
-                {/* COMPLETE REDESIGN FOR "THICK GLASS" LOOK
-                   - rounded-[40px]: Very smooth corners matching the generated image
-                   - backdrop-blur-2xl: Heavy blur for that premium glass feel
-                   - shadow-[inset...]: Creates the 3D depth and thickness of the glass slab
-                */}
-                <div className="relative h-full p-8 rounded-[40px] overflow-hidden group transition-all duration-500
+              // Changed height from fixed h-[420px] to fluid for mobile safety
+              <TiltCard key={idx} className="h-auto min-h-[350px] lg:h-[420px]">
+                <div className="relative h-full p-6 md:p-8 rounded-[30px] md:rounded-[40px] overflow-hidden group transition-all duration-500
                               bg-[#0f0f11]/60 backdrop-blur-2xl
                               border border-white/10
                               shadow-[inset_0px_0px_20px_rgba(255,255,255,0.05),0_10px_40px_-10px_rgba(0,0,0,0.8)]
-                              hover:shadow-[inset_0px_0px_30px_rgba(59,130,246,0.1),0_0_25px_rgba(59,130,246,0.2)]">
+                              hover:shadow-[inset_0px_0px_30px_rgba(59,130,246,0.1),0_0_25px_rgba(59,130,246,0.2)]
+                              flex flex-col">
                   
-                  {/* Internal "Watery" Reflection Gradient */}
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.08),transparent_70%)] opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                   
-                  {/* Top Highlight "Lip" for Thickness */}
                   <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-50"></div>
                   
-                  {/* Content Container */}
                   <div className="relative z-10 flex flex-col h-full">
                     
-                    {/* Header: Icon & Stat Badge */}
-                    <div className="flex justify-between items-start mb-8">
-                      <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-transparent border border-blue-500/30 text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.3)] group-hover:scale-110 transition-transform duration-300">
+                    <div className="flex justify-between items-start mb-6 md:mb-8">
+                      <div className="p-3 md:p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-transparent border border-blue-500/30 text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.3)] group-hover:scale-110 transition-transform duration-300">
                         {feature.icon}
                       </div>
                       <span className="text-[10px] font-mono text-gray-400 border border-white/10 px-3 py-1.5 rounded-full bg-black/40 shadow-inner backdrop-blur-sm">
@@ -799,24 +852,21 @@ export default function App() {
                       </span>
                     </div>
                     
-                    {/* Title Area */}
                     <div className="mt-2">
-                        <h3 className="text-xl font-bold text-white mb-2 font-sans tracking-tight leading-tight">
+                        <h3 className="text-lg md:text-xl font-bold text-white mb-2 font-sans tracking-tight leading-tight">
                         <GlitchText text={feature.title} />
                         </h3>
-                        <div className="text-[10px] font-mono text-blue-400 mb-6 uppercase tracking-widest font-bold opacity-80">
+                        <div className="text-[10px] font-mono text-blue-400 mb-4 md:mb-6 uppercase tracking-widest font-bold opacity-80">
                             {feature.subtitle}
                         </div>
                     </div>
                     
-                    {/* Description - pushed to bottom */}
                     <p className="text-gray-400 text-sm leading-relaxed font-montserrat font-medium mt-auto border-t border-white/5 pt-6 group-hover:text-gray-300 transition-colors">
                       {feature.description}
                     </p>
                   </div>
                   
-                  {/* Hover Outer Glow Border */}
-                  <div className="absolute inset-0 rounded-[40px] border-2 border-transparent group-hover:border-blue-500/30 transition-colors duration-500 pointer-events-none"></div>
+                  <div className="absolute inset-0 rounded-[30px] md:rounded-[40px] border-2 border-transparent group-hover:border-blue-500/30 transition-colors duration-500 pointer-events-none"></div>
                 </div>
               </TiltCard>
             ))}
@@ -824,30 +874,57 @@ export default function App() {
         </div>
       </section>
 
-      <section id="architecture" className="relative z-10 py-32 px-4 overflow-hidden border-y border-white/5 bg-[#030304]">
-        <div className="max-w-7xl mx-auto">
+      {/* --- ARCHITECTURE SECTION --- */}
+      <section id="architecture" className="relative z-10 py-16 md:py-32 px-4 overflow-hidden border-y border-white/5 bg-[#030304]">
+        <div className="max-w-6xl mx-auto">
           <SectionTitle subtitle="Trustless data flow secured by cryptographic proofs and smart contracts.">
             NETWORK TOPOLOGY
           </SectionTitle>
 
-          <div className="grid lg:grid-cols-2 gap-20 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
             
-            <div className="space-y-6 relative">
-              <div className="absolute left-6 top-0 bottom-0 w-[1px] bg-gradient-to-b from-blue-500/0 via-blue-500/20 to-blue-500/0"></div>
+            <div className="space-y-6 relative pl-4 md:pl-0">
               
+              {/* Vertical Beam Line - Hidden on Mobile to prevent overlap issues in stacked view, visible on Desktop */}
+              <div 
+                className="hidden lg:block absolute left-6 top-6 bottom-24 w-[2px] -translate-x-1/2 z-0 overflow-visible"
+                style={{
+                  maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+                }}
+              >
+                <div className="absolute inset-0 bg-blue-900/20 w-[1px] mx-auto"></div>
+                
+                <div 
+                  className="absolute inset-0 w-full h-full opacity-50 animate-dotted-flow"
+                  style={{
+                    backgroundImage: 'radial-gradient(circle, #3b82f6 40%, transparent 50%)',
+                    backgroundSize: '4px 20px', 
+                    backgroundRepeat: 'repeat-y',
+                    backgroundPositionX: 'center'
+                  }}
+                ></div>
+
+                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent via-blue-400 to-transparent blur-md opacity-0 animate-beam-drop"></div>
+                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent via-white to-transparent opacity-0 animate-beam-drop delay-75"></div>
+              </div>
+              
+              {/* Mobile Line (Simple) */}
+              <div className="lg:hidden absolute left-[27px] top-6 bottom-12 w-[1px] bg-blue-900/30 z-0"></div>
+
               {[
                 { title: 'Provider Node', desc: 'Dockerized MCPs running locally, exposed securely via Cloudflare tunnels.', icon: <Server size={18} />, id: '01' },
                 { title: 'Onchain Registry', desc: 'Immutable smart contract registry. Discovery and billing settled in $AVAX.', icon: <Database size={18} />, id: '02' },
                 { title: 'Context Stream', desc: 'Direct, encrypted pipe from provider to agent. Validated by Chainlink Automation.', icon: <Radio size={18} />, id: '03' }
               ].map((step, i) => (
-                <div key={i} className="relative flex gap-8 group">
-                  <div className="relative z-10 flex-shrink-0 w-12 h-12 bg-[#0A0A0C] border border-blue-900/50 flex items-center justify-center text-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.1)] group-hover:border-blue-500 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300">
+                <div key={i} className="relative flex gap-6 md:gap-8 group">
+                  <div className="relative z-10 flex-shrink-0 w-12 h-12 bg-[#0A0A0C] border border-blue-900/50 flex items-center justify-center text-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.1)] group-hover:border-blue-500 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 rounded-lg">
                     {step.icon}
                   </div>
                   <div className="pt-1">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-xs font-mono text-blue-500/50">_SYS.{step.id}</span>
-                      <h3 className="text-xl font-bold text-white">{step.title}</h3>
+                      <h3 className="text-lg md:text-xl font-bold text-white">{step.title}</h3>
                     </div>
                     <p className="text-gray-400 text-sm leading-relaxed max-w-md">{step.desc}</p>
                   </div>
@@ -855,53 +932,66 @@ export default function App() {
               ))}
             </div>
 
-            <div className="relative group">
+            {/* --- TERMINAL VISUAL --- */}
+            <div className="relative group w-full max-w-md mx-auto lg:mr-0 lg:ml-auto">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
               <div className="relative bg-[#050505] border border-gray-800 rounded-lg p-1 shadow-2xl">
-                <div className="bg-[#111] px-4 py-2 flex items-center justify-between rounded-t border-b border-gray-800">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+                
+                {/* Terminal Header */}
+                <div className="bg-[#111] px-3 py-2 flex items-center justify-between rounded-t border-b border-gray-800">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
                   </div>
-                  <div className="text-[10px] font-mono text-gray-500 uppercase">root@trigslink-node:~</div>
+                  <div className="text-[8px] md:text-[10px] font-mono text-gray-500 uppercase">root@trigslink-node:~</div>
                 </div>
                 
-                <div className="p-6 font-mono text-sm space-y-4 min-h-[300px] text-gray-300">
-                  <div className="flex">
+                {/* Terminal Body */}
+                <div className="p-4 md:p-6 font-mono text-xs space-y-4 min-h-[300px] md:min-h-[320px] text-gray-300 bg-[#0A0A0C] rounded-b flex flex-col overflow-x-auto">
+                  
+                  {/* 1. Initial Handshake Lines */}
+                  <div>
                     <span className="text-green-500 mr-2">➜</span>
                     <span>initiating_handshake...</span>
                   </div>
-                  <div className="text-blue-400 text-xs pl-4 border-l border-blue-500/30 ml-1 py-1">
+                  <div className="text-blue-400 pl-4 ml-1 space-y-1">
                     <div>[INFO] Provider identified: 0x8a...2b</div>
                     <div>[INFO] Verifying stake... <span className="text-green-400">OK</span></div>
                   </div>
-                  
-                  <div className="flex">
+
+                  {/* 2. The Command Line */}
+                  <div className="pt-2">
                     <span className="text-green-500 mr-2">➜</span>
-                    <span>establishing_tunnel</span>
+                    <span className="text-white font-bold text-sm break-all">trigslink-tunnel 5000</span>
                   </div>
-                  
-                  <div className="bg-blue-900/10 p-3 rounded border border-blue-500/20 text-xs">
-                    <div className="flex justify-between text-blue-300 mb-2">
-                      <span>TUNNEL_STATUS</span>
-                      <span className="animate-pulse text-green-400">ACTIVE</span>
+
+                  {/* 3. The ASCII Image */}
+                  <div className="flex justify-center py-4 flex-1 items-center overflow-hidden">
+                    <img src={asciiTerminal} alt="ASCII Logo" className="w-24 h-24 md:w-32 md:h-32 object-contain opacity-90" />
+                  </div>
+
+                  {/* 4. The Status Bar (ESTABLISHED state) */}
+                  <div className="bg-[#0f0f12] p-3 rounded-lg border border-blue-900/30">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-blue-300 font-bold text-[10px] tracking-wider">TUNNEL_STATUS</span>
+                      <span className="text-green-400 font-bold text-[10px] tracking-wider">ESTABLISHED</span>
                     </div>
-                    <div className="h-1 bg-gray-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-blue-500 w-[85%] relative">
-                        <div className="absolute top-0 right-0 bottom-0 w-2 bg-white/50 animate-ping"></div>
-                      </div>
+                    <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden mb-2">
+                      <div className="h-full bg-blue-500 w-full shadow-[0_0_10px_#3b82f6]"></div>
+                    </div>
+                    <div className="flex justify-between text-[10px] text-gray-500 font-mono">
+                        <span>PORT: 5000</span>
+                        <span>LATENCY: 12ms</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 text-purple-400">
+                  {/* 5. Forwarding Traffic Line */}
+                  <div className="flex items-center gap-2 text-purple-400 pt-1">
                     <span className="animate-spin">⟳</span>
-                    <span>streaming_context_data</span>
+                    <span>forwarding_traffic...</span>
                   </div>
 
-                  <div className="text-gray-500 text-xs mt-8 pt-4 border-t border-gray-800/50">
-                    {'>'} Last login: {new Date().toUTCString()} on ttys001
-                  </div>
                 </div>
               </div>
             </div>
@@ -910,54 +1000,82 @@ export default function App() {
         </div>
       </section>
 
-      <section id="roadmap" className="relative z-10 py-32 bg-[#050507]">
+      {/* --- ROADMAP SECTION --- */}
+      <section id="roadmap" className="relative z-10 py-16 md:py-32 bg-[#050507]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle subtitle="Execution plan towards autonomous economic agents.">
             MISSION TIMELINE
           </SectionTitle>
 
           <div className="relative">
-            <div className="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-gray-800 -translate-x-0 -translate-y-1/2"></div>
+            {/* --- Horizontal Timeline Track (Desktop Only) --- */}
+            <div className="hidden md:block absolute top-[130px] left-0 w-full h-[2px] overflow-visible z-0">
+                <div className="absolute inset-0 bg-blue-900/20"></div>
+                <div 
+                    className="absolute inset-0 opacity-50 animate-dotted-flow-horizontal"
+                    style={{
+                        backgroundImage: 'radial-gradient(circle, #3b82f6 40%, transparent 50%)',
+                        backgroundSize: '20px 4px', 
+                        backgroundRepeat: 'repeat-x',
+                        backgroundPosition: 'center'
+                    }}
+                ></div>
+                <div className="absolute top-0 bottom-0 w-48 bg-gradient-to-r from-transparent via-blue-400 to-transparent blur-md opacity-0 animate-beam-slide"></div>
+            </div>
             
-            <div className="grid md:grid-cols-3 gap-8 relative z-10">
+            {/* Vertical Track (Mobile Only) */}
+            <div className="md:hidden absolute left-0 top-0 bottom-0 w-[2px] bg-blue-900/20 z-0 ml-4"></div>
+
+            <div className="grid md:grid-cols-3 gap-8 md:gap-8 relative z-10">
               {ROADMAP.map((item, idx) => {
                 const isCurrent = item.status === 'current';
                 const isCompleted = item.status === 'completed';
                 
                 return (
-                  <div key={idx} className={`relative pt-8 md:pt-12 group`}>
-                    <div className={`hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-4 z-20 transition-all duration-300
-                      ${isCurrent ? 'bg-black border-blue-500 shadow-[0_0_15px_#3b82f6] scale-125' : 
-                        isCompleted ? 'bg-blue-900 border-blue-800' : 'bg-black border-gray-700'}
-                    `}></div>
-
-                    <div className={`
-                      h-full p-8 border backdrop-blur-sm transition-all duration-300 flex flex-col
+                  <div key={idx} className={`group h-full p-6 md:p-8 border backdrop-blur-sm transition-all duration-300 flex flex-col relative ml-10 md:ml-0
                       ${isCurrent ? 'bg-blue-900/5 border-blue-500/50 shadow-[0_0_30px_rgba(59,130,246,0.1)]' : 'bg-[#0a0a0c] border-gray-800 hover:border-gray-700'}
-                    `}>
-                      <div className={`text-[10px] font-mono uppercase tracking-widest mb-4 
-                        ${isCurrent ? 'text-blue-400' : 'text-gray-600'}
-                      `}>
-                        {item.phase}
+                  `}>
+                      {/* Mobile Connector Dot */}
+                      <div className="md:hidden absolute -left-[33px] top-8 w-4 h-4 rounded-full border-2 border-[#030304] bg-blue-900 z-20">
+                         {isCurrent && <div className="absolute inset-0 bg-blue-500 rounded-full animate-ping"></div>}
                       </div>
-                      
-                      <h3 className="text-2xl font-bold text-white mb-6">{item.title}</h3>
-                      
-                      <ul className="space-y-4 mt-auto">
+
+                      {/* --- PART 1: HEADER --- */}
+                      <div className="mb-4 md:h-[90px] flex flex-col justify-start relative z-10">
+                          <div className={`text-[10px] font-mono uppercase tracking-widest mb-3
+                            ${isCurrent ? 'text-blue-400' : 'text-gray-600'}
+                          `}>
+                            {item.phase}
+                          </div>
+                          <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">{item.title}</h3>
+                          
+                          {isCurrent && (
+                            <div className="absolute top-0 right-0 px-2 py-1 bg-blue-600 text-[8px] font-bold text-white uppercase tracking-wider rounded-sm">
+                              Processing
+                            </div>
+                          )}
+                      </div>
+
+                      {/* --- PART 2: THE MARKER (Desktop) --- */}
+                      <div className="hidden md:flex relative h-[40px] items-center justify-start mb-6 z-20">
+                           <div className={`
+                              w-4 h-4 rounded-full border-4 transition-all duration-500 relative
+                              ${isCurrent ? 'bg-black border-blue-500 shadow-[0_0_15px_#3b82f6] scale-125' : 
+                                isCompleted ? 'bg-blue-900 border-blue-800' : 'bg-black border-gray-700'}
+                           `}>
+                              {isCurrent && <div className="absolute inset-0 rounded-full bg-blue-400 animate-ping opacity-75"></div>}
+                           </div>
+                      </div>
+
+                      {/* --- PART 3: CONTENT --- */}
+                      <ul className="space-y-3 md:space-y-4 mt-auto relative z-10">
                         {item.items.map((point, i) => (
                           <li key={i} className="flex items-start gap-3">
-                            <span className={`mt-1.5 w-1.5 h-1.5 rounded-sm ${isCurrent ? 'bg-blue-500' : 'bg-gray-700'}`}></span>
-                            <span className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors font-mono">{point}</span>
+                            <span className={`mt-1.5 w-1.5 h-1.5 flex-shrink-0 rounded-sm ${isCurrent ? 'bg-blue-500' : 'bg-gray-700'}`}></span>
+                            <span className="text-xs md:text-sm text-gray-400 group-hover:text-gray-300 transition-colors font-mono">{point}</span>
                           </li>
                         ))}
                       </ul>
-
-                      {isCurrent && (
-                        <div className="absolute top-0 right-0 px-3 py-1 bg-blue-600 text-[9px] font-bold text-white uppercase tracking-wider">
-                          Processing
-                        </div>
-                      )}
-                    </div>
                   </div>
                 );
               })}
@@ -966,13 +1084,14 @@ export default function App() {
         </div>
       </section>
 
-      <section id="team" className="relative z-10 py-32 px-4 bg-[#030304] border-t border-white/5">
+      {/* --- TEAM SECTION --- */}
+      <section id="team" className="relative z-10 py-16 md:py-32 px-4 bg-[#030304] border-t border-white/5">
         <div className="max-w-7xl mx-auto">
-          <SectionTitle subtitle="Core contributors & protocol architects.">
-            OPERATORS
+          <SectionTitle subtitle="Founding Team of the Trigslink Protocol.">
+            HALL OF FAME
           </SectionTitle>
 
-          <div className="flex flex-wrap justify-center gap-8">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
             {TEAM.map((member, idx) => (
               <OperatorCard key={idx} member={member} />
             ))}
@@ -980,10 +1099,10 @@ export default function App() {
         </div>
       </section>
 
-      <footer className="relative z-10 py-16 border-t border-white/10 bg-black">
+      <footer className="relative z-10 py-12 md:py-16 border-t border-white/10 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-12 mb-12">
-            <div className="col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12">
+            <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-3 mb-6">
                 <Logo className="w-8 h-8" />
                 <span className="font-bold text-xl text-white tracking-widest font-mono">TRIGSLINK</span>
@@ -995,17 +1114,17 @@ export default function App() {
             </div>
             
             <div>
-               <h4 className="text-white font-bold mb-6 font-mono text-sm uppercase">Protocol</h4>
-               <ul className="space-y-4 text-sm text-gray-500">
-                 <li className="hover:text-blue-400 cursor-pointer">Documentation</li>
-                 <li className="hover:text-blue-400 cursor-pointer">Whitepaper</li>
-                 <li className="hover:text-blue-400 cursor-pointer">Github</li>
-                 <li className="hover:text-blue-400 cursor-pointer">Audits</li>
+               <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase">Protocol</h4>
+               <ul className="space-y-3 md:space-y-4 text-sm text-gray-500">
+                 <li className="hover:text-blue-400 cursor-pointer transition-colors">Documentation</li>
+                 <li className="hover:text-blue-400 cursor-pointer transition-colors">Whitepaper</li>
+                 <li className="hover:text-blue-400 cursor-pointer transition-colors">Github</li>
+                 <li className="hover:text-blue-400 cursor-pointer transition-colors">Audits</li>
                </ul>
             </div>
 
             <div>
-               <h4 className="text-white font-bold mb-6 font-mono text-sm uppercase">Community</h4>
+               <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase">Community</h4>
                <div className="flex gap-4">
                   <a 
                     href={SOCIAL_LINKS.github} 
@@ -1029,11 +1148,11 @@ export default function App() {
             </div>
           </div>
 
-          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600 font-mono uppercase tracking-wider">
+          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] md:text-xs text-gray-600 font-mono uppercase tracking-wider text-center md:text-left">
             <div>
               © {new Date().getFullYear()} Trigslink Foundation. All rights reserved.
             </div>
-            <div className="flex gap-8">
+            <div className="flex gap-6 md:gap-8">
                <span>Privacy Policy</span>
                <span>Terms of Service</span>
             </div>
@@ -1115,8 +1234,48 @@ export default function App() {
            animation: noise 0.5s steps(3) infinite;
         }
 
+        /* NEW ANIMATION FOR DOTTED FLOW */
+        @keyframes dotted-flow {
+          0% { background-position: 0 0; }
+          100% { background-position: 0 20px; } /* Must match height of background-size pattern */
+        }
+        .animate-dotted-flow {
+          animation: dotted-flow 1s linear infinite;
+        }
+
+        /* NEW ANIMATION FOR HORIZONTAL DOTTED FLOW */
+        @keyframes dotted-flow-horizontal {
+          0% { background-position: 0 0; }
+          100% { background-position: 20px 0; }
+        }
+        .animate-dotted-flow-horizontal {
+          animation: dotted-flow-horizontal 1s linear infinite;
+        }
+
+        /* BEAM DROP ANIMATION */
+        @keyframes beam-drop {
+          0% { top: -20%; opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { top: 120%; opacity: 0; }
+        }
+        .animate-beam-drop {
+          animation: beam-drop 3s ease-in-out infinite;
+        }
+
+        /* BEAM SLIDE HORIZONTAL ANIMATION */
+        @keyframes beam-slide {
+          0% { left: -20%; opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { left: 120%; opacity: 0; }
+        }
+        .animate-beam-slide {
+          animation: beam-slide 3s ease-in-out infinite;
+        }
+
         @media (prefers-reduced-motion: reduce) {
-          .animate-gradient-roll, .animate-gold-border, .animate-noise {
+          .animate-gradient-roll, .animate-gold-border, .animate-noise, .animate-dotted-flow, .animate-beam-drop, .animate-dotted-flow-horizontal, .animate-beam-slide {
             animation: none;
           }
         }
