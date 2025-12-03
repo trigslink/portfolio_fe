@@ -15,7 +15,7 @@ import {
   Radio,
   Play
 } from 'lucide-react';
-import trigslinkLogo from '/images/trigslink_logo_dark.jpeg';
+import trigslinkLogo from '/images/trigslink_logo.png';
 import trigslinkFont from '/images/trigslink_font.png'; 
 import asciiTerminal from '/images/ascii.png'; 
 
@@ -1148,7 +1148,7 @@ export default function App() {
       {/* --- TEAM SECTION --- */}
       <section id="team" className="relative z-10 py-16 md:py-32 px-4 bg-[#030304] border-t border-white/5">
         <div className="max-w-7xl mx-auto">
-          <SectionTitle subtitle="Founding Team of the Trigslink Protocol.">
+          <SectionTitle subtitle="Founding Team of the Trigslink Protocol">
             HALL OF FAME
           </SectionTitle>
 
