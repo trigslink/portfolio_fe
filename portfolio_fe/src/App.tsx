@@ -347,11 +347,10 @@ const CyberGlobe = () => {
     let width = canvas.width;
     let height = canvas.height;
     
-    // Dynamic radius based on width for better mobile fit
     const getRadius = () => {
-        if (width < 400) return 280; // Small mobile 
-        if (width < 768) return 320; // Mobile
-        return 380; // Desktop
+        if (width < 400) return 280; 
+        if (width < 768) return 320; 
+        return 380; 
     };
 
     let GLOBE_RADIUS = getRadius();
@@ -377,7 +376,6 @@ const CyberGlobe = () => {
       });
     }
 
-    // Precompute neighbors
     for (let i = 0; i < DOT_COUNT; i++) {
         let possibleNeighbors: { idx: number; dist: number }[] = [];
         for (let j = 0; j < DOT_COUNT; j++) {
@@ -393,7 +391,6 @@ const CyberGlobe = () => {
         }
         
         possibleNeighbors.sort((a, b) => a.dist - b.dist);
-        // Store as array of indices for performance
         dots[i].neighbors = possibleNeighbors.slice(0, 5).map(n => n.idx);
     }
 
@@ -543,10 +540,8 @@ const CyberGlobe = () => {
       width = canvas.width;
       height = canvas.height;
       
-      // Update radius on resize
       GLOBE_RADIUS = getRadius();
       
-      // Re-initialize dots on major resize
       for(let i = 0; i < DOT_COUNT; i++) {
         const phi = Math.acos(-1 + (2 * i) / DOT_COUNT);
         const theta = Math.sqrt(DOT_COUNT * Math.PI) * phi;
@@ -612,7 +607,6 @@ const SectionTitle = ({ children, subtitle, align = 'center' }: { children: Reac
   </div>
 );
 
-// Explicit props interface for Button to handle index signature and event handlers
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   variant?: 'primary' | 'secondary' | 'outline' | 'gradient' | 'cyberMobile' | 'luminousPill' | 'silverBorder';
@@ -681,7 +675,6 @@ export default function App() {
     const lenis = new Lenis({
       duration: 2.0,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
-      // Removed unused ts-expect-error directive
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
@@ -708,7 +701,6 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  // Prevent body scroll when menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -722,17 +714,15 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#030304] text-white font-sans selection:bg-blue-500/40 selection:text-white overflow-x-hidden">
       
-      {/* --- REDESIGNED MOBILE GLASSY MENU (CARD STYLE) --- */}
+      {/* --- MOBILE MENU --- */}
       <div 
         className={`fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setMobileMenuOpen(false)}
       >
-          {/* The Glassy Card */}
           <div 
             className={`w-full max-w-[340px] bg-[#0A0A0C]/90 backdrop-blur-2xl border border-white/10 rounded-[32px] p-8 shadow-[0_0_50px_rgba(0,0,0,0.8)] transform transition-all duration-500 flex flex-col relative ${mobileMenuOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`}
             onClick={(e) => e.stopPropagation()} 
           >
-             {/* Header: Logo & Close */}
              <div className="flex items-center justify-between mb-12">
                 <div className="flex items-center gap-3 opacity-90">
                     <Logo className="w-8 h-8" />
@@ -750,7 +740,6 @@ export default function App() {
                 </button>
              </div>
 
-             {/* Navigation Links */}
              <div className="flex flex-col gap-8 items-center text-center mb-12">
                 {NAVIGATION.map((item) => (
                   <a 
@@ -764,10 +753,6 @@ export default function App() {
                 ))}
              </div>
 
-             {/* Luminous Connect Wallet Button */}
-             
-
-             {/* Footer / Socials */}
              <div className="flex justify-center gap-6 mt-auto">
                 <a href={SOCIAL_LINKS.github} className="text-gray-500 hover:text-white transition-colors"><Github size={20}/></a>
                 <a href={SOCIAL_LINKS.youtube} className="text-gray-500 hover:text-white transition-colors"><Youtube size={20}/></a>
@@ -775,7 +760,6 @@ export default function App() {
              
              <div className="mt-8 pt-6 border-t border-white/5 flex flex-col gap-3 text-xs text-gray-600 font-mono text-center">
                  <a href="#" className="hover:text-gray-400">Documentation</a>
-                 <a href="#" className="hover:text-gray-400">Whitepaper</a>
                  <a href="#" className="hover:text-gray-400">Github</a>
              </div>
           </div>
@@ -784,7 +768,6 @@ export default function App() {
       <nav className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-50 rounded-2xl md:rounded-full border border-white/10 bg-[#050505]/90 backdrop-blur-xl px-4 md:px-6 py-3 transition-all duration-300 ${isScrolled ? 'shadow-[0_10px_30px_-10px_rgba(0,0,0,0.8)]' : 'shadow-none'}`}>
         <div className="flex items-center justify-between relative">
           
-          {/* Logo Section */}
           <div className="flex items-center gap-3 cursor-pointer group z-20" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <div className="relative">
               <Logo className="w-8 h-8 transition-all duration-500 group-hover:rotate-180" />
@@ -797,7 +780,6 @@ export default function App() {
             />
           </div>
           
-          {/* Desktop Nav */}
           <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-8">
             {NAVIGATION.map((item) => (
               <a 
@@ -810,7 +792,6 @@ export default function App() {
             ))}
           </div>
 
-          {/* Desktop Wallet */}
           <div className="hidden md:block z-20">
             <Button 
               variant={walletConnected ? "secondary" : "gradient"} 
@@ -829,7 +810,6 @@ export default function App() {
             </Button>
           </div>
 
-          {/* Mobile Toggle */}
           <div className="md:hidden z-20">
             <button 
                 onClick={() => setMobileMenuOpen(true)} 
@@ -970,8 +950,8 @@ export default function App() {
               
               {[
                 { title: 'Provider Node', desc: 'Dockerized MCPs running locally, exposed securely via Cloudflare tunnels.', icon: <Server size={18} />, id: '01' },
-                { title: 'Onchain Registry', desc: 'Immutable smart contract registry. Discovery and billing settled in $AVAX.', icon: <Database size={18} />, id: '02' },
-                { title: 'Context Stream', desc: 'Direct, encrypted pipe from provider to agent. Validated by Chainlink Automation.', icon: <Radio size={18} />, id: '03' }
+                { title: 'Onchain Registry', desc: 'Immutable smart contract registry. Uses Chainlink Price Feeds to convert USD prices to $AVAX.', icon: <Database size={18} />, id: '02' },
+                { title: 'Context Stream', desc: 'Direct, encrypted pipe from provider to agent. Subscription lifecycle validated by Chainlink Automation.', icon: <Radio size={18} />, id: '03' }
               ].map((step, i) => (
                 <div key={i} className="relative flex gap-6 md:gap-8 group">
                   <div className="relative z-10 flex-shrink-0 w-12 h-12 bg-[#0A0A0C] border border-blue-900/50 flex items-center justify-center text-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.1)] group-hover:border-blue-500 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 rounded-lg">
@@ -989,6 +969,7 @@ export default function App() {
             </div>
 
             <div className="relative group w-full max-w-md mx-auto lg:mr-0 lg:ml-auto">
+              {/* Terminal code remains same as provided */}
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
               <div className="relative bg-[#050505] border border-gray-800 rounded-lg p-1 shadow-2xl">
                 
@@ -1174,22 +1155,39 @@ export default function App() {
               </div>
               <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
                 A decentralized coordination layer for AI context. 
-                Built for autonomous agents, secured by Avax, verified by link.
+                Securing data independence for the next generation of agents.
               </p>
             </div>
             
+            {/* UPDATED: Only showing actual things used */}
             <div>
-               <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase">Protocol</h4>
+               <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase">Built With</h4>
                <ul className="space-y-3 md:space-y-4 text-sm text-gray-500">
-                 <li className="hover:text-blue-400 cursor-pointer transition-colors">Documentation</li>
-                 <li className="hover:text-blue-400 cursor-pointer transition-colors">Whitepaper</li>
-                 <li className="hover:text-blue-400 cursor-pointer transition-colors">Github</li>
-                 <li className="hover:text-blue-400 cursor-pointer transition-colors">Audits</li>
+                 <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                    Avalanche
+                 </li>
+                 <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+                    Chainlink Price Feeds
+                 </li>
+                 <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+                    Chainlink Automation
+                 </li>
                </ul>
             </div>
 
             <div>
                <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase">Community</h4>
+               <ul className="space-y-3 md:space-y-4 text-sm text-gray-500 mb-4">
+                  <li className="hover:text-blue-400 cursor-pointer transition-colors">
+                    <a href="#" className="hover:text-white transition-colors">Documentation</a>
+                  </li>
+                  <li className="hover:text-blue-400 cursor-pointer transition-colors">
+                    <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
+                  </li>
+               </ul>
                <div className="flex gap-4">
                   <a 
                     href={SOCIAL_LINKS.github} 
