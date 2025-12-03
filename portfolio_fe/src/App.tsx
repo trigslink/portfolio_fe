@@ -868,7 +868,7 @@ export default function App() {
           <div className="flex flex-col items-center justify-center gap-6">
             <Button variant="silverBorder">
               <a 
-                href="https://youtu.be/x_i38WNCgj8?si=QB64PRN589UYH0VN" 
+                href="https://youtu.be/8pIFDMWpUCA?si=pyOP2S3N-Mov2DOw" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2"
