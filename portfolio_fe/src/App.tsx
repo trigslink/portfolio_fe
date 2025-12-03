@@ -349,7 +349,7 @@ const CyberGlobe = () => {
     
     // Dynamic radius based on width for better mobile fit
     const getRadius = () => {
-        if (width < 400) return 260; // Small mobile 
+        if (width < 400) return 280; // Small mobile 
         if (width < 768) return 320; // Mobile
         return 380; // Desktop
     };
@@ -734,9 +734,13 @@ export default function App() {
           >
              {/* Header: Logo & Close */}
              <div className="flex items-center justify-between mb-12">
-                <div className="flex items-center gap-2 opacity-90">
+                <div className="flex items-center gap-3 opacity-90">
                     <Logo className="w-8 h-8" />
-                    <span className="font-bold text-lg font-mono tracking-widest text-white">Trigslink</span>
+                    <img 
+                        src={trigslinkFont} 
+                        alt="Trigslink" 
+                        className="h-5 object-contain" 
+                    />
                 </div>
                 <button 
                     onClick={() => setMobileMenuOpen(false)}
@@ -761,15 +765,7 @@ export default function App() {
              </div>
 
              {/* Luminous Connect Wallet Button */}
-             <div className="w-full mb-8">
-                <Button 
-                    variant="luminousPill" 
-                    className="w-full py-4 text-sm font-bold tracking-wider" 
-                    onClick={() => { toggleWallet(); setMobileMenuOpen(false); }}
-                >
-                    {walletConnected ? 'CONNECTED' : 'Connect Wallet'}
-                </Button>
-             </div>
+             
 
              {/* Footer / Socials */}
              <div className="flex justify-center gap-6 mt-auto">
@@ -950,7 +946,7 @@ export default function App() {
             
             <div className="space-y-6 relative pl-4 md:pl-0">
               <div 
-                className="hidden lg:block absolute left-6 top-6 bottom-24 w-[2px] -translate-x-1/2 z-0 overflow-visible"
+                className="absolute left-[27px] lg:left-6 top-6 bottom-12 lg:bottom-24 w-[2px] -translate-x-1/2 z-0 overflow-visible"
                 style={{
                   maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
                   WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
@@ -972,8 +968,6 @@ export default function App() {
                 <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent via-white to-transparent opacity-0 animate-beam-drop delay-75"></div>
               </div>
               
-              <div className="lg:hidden absolute left-[27px] top-6 bottom-12 w-[1px] bg-blue-900/30 z-0"></div>
-
               {[
                 { title: 'Provider Node', desc: 'Dockerized MCPs running locally, exposed securely via Cloudflare tunnels.', icon: <Server size={18} />, id: '01' },
                 { title: 'Onchain Registry', desc: 'Immutable smart contract registry. Discovery and billing settled in $AVAX.', icon: <Database size={18} />, id: '02' },
@@ -1076,7 +1070,26 @@ export default function App() {
                 <div className="absolute top-0 bottom-0 w-48 bg-gradient-to-r from-transparent via-blue-400 to-transparent blur-md opacity-0 animate-beam-slide"></div>
             </div>
             
-            <div className="md:hidden absolute left-0 top-0 bottom-0 w-[2px] bg-blue-900/20 z-0 ml-4"></div>
+            <div className="md:hidden absolute left-[21px] top-6 bottom-6 w-[2px] -translate-x-1/2 z-0 overflow-visible"
+              style={{
+                maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+              }}
+            >
+                <div className="absolute inset-0 bg-blue-900/20 w-[1px] mx-auto"></div>
+                
+                <div 
+                  className="absolute inset-0 w-full h-full opacity-50 animate-dotted-flow"
+                  style={{
+                    backgroundImage: 'radial-gradient(circle, #3b82f6 40%, transparent 50%)',
+                    backgroundSize: '4px 20px', 
+                    backgroundRepeat: 'repeat-y',
+                    backgroundPositionX: 'center'
+                  }}
+                ></div>
+
+                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent via-blue-400 to-transparent blur-md opacity-0 animate-beam-drop"></div>
+            </div>
 
             <div className="grid md:grid-cols-3 gap-8 md:gap-8 relative z-10">
               {ROADMAP.map((item, idx) => {
@@ -1153,7 +1166,11 @@ export default function App() {
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-3 mb-6">
                 <Logo className="w-8 h-8" />
-                <span className="font-bold text-xl text-white tracking-widest font-mono">TRIGSLINK</span>
+                <img 
+                    src={trigslinkFont} 
+                    alt="TRIGSLINK" 
+                    className="h-6 object-contain opacity-90" 
+                />
               </div>
               <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
                 A decentralized coordination layer for AI context. 
