@@ -680,8 +680,7 @@ export default function App() {
   useEffect(() => {
     const lenis = new Lenis({
       duration: 2.0, 
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
-      // @ts-expect-error - Lenis options vary by version, casting to simple obj to ignore strict check
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
