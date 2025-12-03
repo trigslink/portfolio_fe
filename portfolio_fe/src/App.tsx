@@ -1157,7 +1157,7 @@ export default function App() {
               </div>
               <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
                 A decentralized coordination layer for AI context. 
-                Built for autonomous agents, secured by Avax, verified by Chainlink.
+                Built for autonomous agents, secured by Avax, verified by link.
               </p>
             </div>
             
