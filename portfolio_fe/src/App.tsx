@@ -146,7 +146,7 @@ const TEAM: TeamMember[] = [
     role: 'AI & Backend Alchemist', 
     initials: 'AJ', 
     hex: '0x02',
-    image: '/images/Aakash.png'
+    image: '/images/aakash.png'
   },
   { 
     name: 'Charles Cai', 
