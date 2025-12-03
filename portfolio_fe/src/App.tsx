@@ -1159,23 +1159,39 @@ export default function App() {
               </p>
             </div>
             
-            {/* UPDATED: Only showing actual things used */}
             <div>
-               <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase">Built With</h4>
-               <ul className="space-y-3 md:space-y-4 text-sm text-gray-500">
-                 <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-                    Avalanche
-                 </li>
-                 <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
-                    Chainlink Price Feeds
-                 </li>
-                 <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
-                    Chainlink Automation
-                 </li>
-               </ul>
+              <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase">Built With</h4>
+              <ul className="space-y-3 md:space-y-4 text-sm text-gray-500">
+                {/* Avalanche */}
+                <li className="flex items-center gap-2">
+                  <img 
+                    src="https://cryptologos.cc/logos/avalanche-avax-logo.svg?v=035" 
+                    alt="Avalanche Logo" 
+                    className="w-5 h-5" 
+                  />
+                  Avalanche
+                </li>
+
+                {/* Chainlink Price Feeds */}
+                <li className="flex items-center gap-2">
+                  <img 
+                    src="https://cryptologos.cc/logos/chainlink-link-logo.svg?v=035" 
+                    alt="Chainlink Logo" 
+                    className="w-5 h-5" 
+                  />
+                  Chainlink Price Feeds
+                </li>
+
+                {/* Chainlink Automation */}
+                <li className="flex items-center gap-2">
+                  <img 
+                    src="https://cryptologos.cc/logos/chainlink-link-logo.svg?v=035" 
+                    alt="Chainlink Logo" 
+                    className="w-5 h-5" 
+                  />
+                  Chainlink Automation
+                </li>
+              </ul>
             </div>
 
             <div>
