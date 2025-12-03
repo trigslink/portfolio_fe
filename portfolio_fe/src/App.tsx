@@ -679,13 +679,14 @@ export default function App() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 2.0, 
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 2.0,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+      // Removed unused ts-expect-error directive
       direction: 'vertical',
       gestureDirection: 'vertical',
       smooth: true,
       mouseMultiplier: 1,
-      smoothTouch: false, 
+      smoothTouch: false,
       touchMultiplier: 2,
     } as any);
 
@@ -869,7 +870,7 @@ export default function App() {
           </p>
           
           <div className="flex flex-col items-center justify-center gap-6">
-            <Button variant="silverBorder" asChild>
+            <Button variant="silverBorder">
               <a 
                 href="https://youtu.be/x_i38WNCgj8?si=QB64PRN589UYH0VN" 
                 target="_blank" 
