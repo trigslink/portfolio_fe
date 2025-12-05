@@ -1203,6 +1203,9 @@ export default function App() {
                   <li className="hover:text-blue-400 cursor-pointer transition-colors">
                     <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
                   </li>
+                  <li className="hover:text-blue-400 cursor-pointer transition-colors">
+                    <a href="mailto:trigslink@gmail.com" className="hover:text-white transition-colors">trigslink@gmail.com</a>
+                  </li>
                </ul>
                <div className="flex gap-4">
                   <a 
