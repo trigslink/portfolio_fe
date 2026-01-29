@@ -85,7 +85,7 @@ const NAVIGATION: NavigationItem[] = [
   { name: 'NETWORK', href: '#architecture' },
   { name: 'ROADMAP', href: '#roadmap' },
   { name: 'TEAM', href: '#team' },
-  { name: 'TRIGSLINK MCP', href: 'https://mcp.trigslink.com', isExternal: true },
+  { name: 'TRIGSLINK MCP', href: '/pages/mcp.tsx', isExternal: true },
 ];
 
 const FEATURES: FeatureItem[] = [
@@ -685,7 +685,7 @@ export default function App() {
         
         @font-face { font-family: 'Korataki'; src: url('/fonts/korataki.otf') format('opentype'); font-weight: normal; font-style: normal; }
         html { scroll-behavior: smooth; }
-        .font-lastica { font-family: 'Korataki', 'Michroma', sans-serif; text-transform: uppercase; display: inline-block; transform: scaleX(1.15); letter-spacing: -0.05em; line-height: 0.9; }
+        .font-lastica { font-family: 'Korataki', 'Michroma', sans-serif; text-transform: uppercase; display: inline-block; transform: scaleX(1.3);transform-origin: center; letter-spacing: -0.02em; line-height: 0.9; }
         .font-montserrat { font-family: 'Montserrat', sans-serif; }
         .clip-path-slant { clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%); }
 
