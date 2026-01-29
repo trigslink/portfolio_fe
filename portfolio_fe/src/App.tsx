@@ -440,7 +440,7 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const lenis = new Lenis({ duration: 2.0, smooth: true });
+    const lenis = new Lenis({ duration: 2.0, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), });
     function raf(time: number) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
     return () => { lenis.destroy(); };
