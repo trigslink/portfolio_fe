@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, type ReactNode, type MouseEvent, type ButtonHTMLAttributes } from 'react';
 import Lenis from 'lenis';
 import { 
-  Cpu, 
+  ShieldCheck, 
   Globe, 
   Zap, 
   Menu, 
@@ -10,10 +10,10 @@ import {
   Youtube, 
   Wallet,
   Activity,
-  Server,
   Database,
   Radio,
-  Play
+  ArrowRight,
+  Cpu
 } from 'lucide-react';
 import trigslinkLogo from '/images/trigslink_logo.png';
 import trigslinkFont from '/images/trigslink_font.png'; 
@@ -24,6 +24,7 @@ import asciiTerminal from '/images/ascii.png';
 interface NavigationItem {
   name: string;
   href: string;
+  isExternal?: boolean;
 }
 
 interface FeatureItem {
@@ -79,81 +80,82 @@ const NAVIGATION: NavigationItem[] = [
   { name: 'NETWORK', href: '#architecture' },
   { name: 'ROADMAP', href: '#roadmap' },
   { name: 'TEAM', href: '#team' },
+  { name: 'TRIGSLINK MCP', href: 'https://mcp.trigslink.com', isExternal: true },
 ];
 
 const FEATURES: FeatureItem[] = [
   {
-    title: 'GPU Marketplace',
-    subtitle: 'Plug-and-Earn Infrastructure',
-    description: 'DePIN architecture allowing idle hardware to monetize compute instantly. No gatekeepers, purely permissionless.',
-    icon: <Cpu className="w-8 h-8 text-blue-400" />, 
-    stat: '99.9% Uptime'
+    title: 'Autonomous Resolution',
+    subtitle: 'Zero-Human Bottleneck',
+    description: 'Trigslink provides 15-second autonomous settlement through machine-verified logic, bypassing human-centric dispute windows[cite: 4, 33].',
+    icon: <Zap className="w-8 h-8 text-blue-400" />, 
+    stat: '15s Finality'
   },
   {
-    title: 'Auto-Pilot Contracts',
-    subtitle: 'Smart Execution Layer',
-    description: 'Tasks, staking, and payouts execute autonomously onchain. The ledger becomes the single source of truth.',
-    icon: <Zap className="w-8 h-8 text-blue-400" />,
-    stat: '<50ms Latency'
-  },
-  {
-    title: 'Sovereign Rails',
-    subtitle: 'Protocol > Platform',
-    description: 'Community-governed infrastructure. Eliminate platform risk with decentralized, immutable logic.',
+    title: 'Universal Liquidity (ULR)',
+    subtitle: 'Cross-Chain Rails',
+    description: 'Unifies fragmented cross-chain capital into global rails, allowing instant-settle bets from any network while protecting capital[cite: 4, 52].',
     icon: <Globe className="w-8 h-8 text-blue-400" />,
-    stat: 'DAO Gov'
+    stat: 'ULR Engine'
   },
   {
-    title: 'Neural Context',
-    subtitle: 'Shared Memory State',
-    description: 'Agents share context like neurons—securely and in real-time, preventing context black holes.',
+    title: 'Machine Grounding',
+    subtitle: 'Evidence-Based Truth',
+    description: 'Multi-node verification against official news wires and document repositories eliminates human heuristic bias[cite: 146, 148].',
+    icon: <ShieldCheck className="w-8 h-8 text-blue-400" />,
+    stat: 'Node Integrity'
+  },
+  {
+    title: 'Capital Velocity',
+    subtitle: 'Institutional Efficiency',
+    description: 'Eliminates the "Zombie Period" of locked capital, enabling high-frequency market makers to recycle liquidity instantly[cite: 72, 238].',
     icon: <Activity className="w-8 h-8 text-blue-400" />,
-    stat: 'Real-time'
+    stat: '100% Utility'
   },
 ];
 
 const ROADMAP: RoadmapItem[] = [
   {
     phase: 'PHASE 01',
-    title: 'Foundation',
-    items: ['ElizaOS Consumer Integration', 'Onchain Response Integrity', 'Core Smart Contracts Deployment'],
+    title: 'Deterministic Trust',
+    items: ['Autonomous Resolution Layer', 'Verification Script SDK', 'Core Handshake Logic Deployment'],
     status: 'completed'
   },
   {
     phase: 'PHASE 02',
-    title: 'Expansion',
-    items: ['Identity-based Memory', 'Individual MCP Node Subnets', 'High Throughput Optimization'],
+    title: 'Universal Rails',
+    items: ['ULR Cross-Chain Bridge', 'Global Truth Pool Aggregator', 'Institutional API Launch'],
     status: 'current'
   },
   {
     phase: 'PHASE 03',
-    title: 'Ecosystem',
-    items: ['Cross-chain Interoperability', '$TRIGS Token Generation', 'Token-gated MCP Access'],
+    title: 'Global Truth Router',
+    items: ['Parametric Underwriting Hub', 'DAO Treasury Automation', 'Enterprise Compliance Gateways'],
     status: 'upcoming'
   },
 ];
 
 const TEAM: TeamMember[] = [
   { 
-    name: 'Gianluca Godfrey', 
-    role: 'Onchain Evangelist', 
-    initials: 'GG', 
-    hex: '0x01',
-    image: '/images/gianluca.png' 
-  },
-  { 
     name: 'Aakash Jaiswal', 
-    role: 'AI & Backend Alchemist', 
+    role: 'Architect & Author', 
     initials: 'AJ', 
-    hex: '0x02',
+    hex: '0x01',
     image: '/images/aakash.png'
   },
   { 
     name: 'Charles Cai', 
-    role: 'The Architect Whisperer', 
+    role: 'The System Architect', 
     initials: 'CC', 
-    hex: '0x03',
+    hex: '0x02',
     image: '/images/charles.png'
+  },
+  { 
+    name: 'Gianluca Godfrey', 
+    role: 'Onchain Evangelist', 
+    initials: 'GG', 
+    hex: '0x03',
+    image: '/images/gianluca.png' 
   },
   { 
     name: 'Yellie Cefalù', 
@@ -593,7 +595,7 @@ const SectionTitle = ({ children, subtitle, align = 'center' }: { children: Reac
   <div className={`mb-12 md:mb-16 px-4 ${align === 'center' ? 'text-center' : 'text-left'}`}>
     <div className={`flex items-center gap-2 mb-4 text-blue-500 font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase ${align === 'center' ? 'justify-center' : 'justify-start'}`}>
       <span className="w-8 h-[1px] bg-blue-500"></span>
-      System Module
+      Protocol Logic
       <span className="w-8 h-[1px] bg-blue-500"></span>
     </div>
     <h2 className="text-2xl md:text-4xl font-black text-white mb-4 md:mb-6 tracking-tighter font-lastica uppercase break-words hyphens-auto">
@@ -609,7 +611,7 @@ const SectionTitle = ({ children, subtitle, align = 'center' }: { children: Reac
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline' | 'gradient' | 'cyberMobile' | 'luminousPill' | 'silverBorder';
+  variant?: 'primary' | 'secondary' | 'outline' | 'gradient' | 'cyberMobile' | 'luminousPill' | 'silverBorder' | 'silverRotating';
   className?: string;
 }
 
@@ -624,6 +626,7 @@ const Button = ({ children, variant = 'primary', className = '', ...props }: But
     cyberMobile: "text-white bg-blue-600/20 border border-blue-500/50 hover:bg-blue-600/40 hover:border-blue-400 active:scale-95 clip-path-slant", 
     luminousPill: "text-white rounded-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-[length:200%_auto] hover:bg-[position:right_center] active:scale-95 shadow-[0_0_20px_rgba(59,130,246,0.5)] border border-white/20",
     silverBorder: "p-0", 
+    silverRotating: "p-0",
   };
 
   if (variant === 'gradient') {
@@ -648,6 +651,20 @@ const Button = ({ children, variant = 'primary', className = '', ...props }: But
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[#334155] via-[#e2e8f0] to-[#334155] bg-[length:200%_100%] animate-gold-border"></div>
         <div className="relative px-8 md:px-10 py-4 bg-black rounded h-full w-full flex items-center justify-center gap-3 font-mono text-xs font-bold tracking-[0.2em] uppercase text-white transition-colors group-hover:text-[#e2e8f0] group-hover:bg-[#0a0a0c]">
+          {children}
+        </div>
+      </button>
+    );
+  }
+
+  if (variant === 'silverRotating') {
+    return (
+      <button 
+        className={`relative p-[1px] group overflow-hidden rounded ${className} active:scale-95 transition-transform`} 
+        {...props}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a] via-[#e5e5e5] to-[#1a1a1a] bg-[length:200%_100%] animate-silver-rotate"></div>
+        <div className="relative px-8 md:px-10 py-4 bg-black rounded h-full w-full flex items-center justify-center gap-3 font-mono text-xs font-bold tracking-[0.2em] uppercase text-white transition-colors group-hover:text-[#e5e5e5] group-hover:bg-[#0a0a0c]">
           {children}
         </div>
       </button>
@@ -745,6 +762,8 @@ export default function App() {
                   <a 
                     key={item.name} 
                     href={item.href} 
+                    target={item.isExternal ? "_blank" : "_self"}
+                    rel={item.isExternal ? "noopener noreferrer" : ""}
                     className="text-base font-bold font-mono tracking-[0.2em] text-gray-300 hover:text-white hover:text-shadow-glow transition-all duration-300 uppercase"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -785,29 +804,13 @@ export default function App() {
               <a 
                 key={item.name} 
                 href={item.href} 
-                className="text-xs font-mono font-medium text-gray-400 hover:text-white transition-colors relative group uppercase tracking-widest"
+                target={item.isExternal ? "_blank" : "_self"}
+                rel={item.isExternal ? "noopener noreferrer" : ""}
+                className="text-[10px] font-mono font-medium text-gray-400 hover:text-white transition-colors relative group uppercase tracking-widest whitespace-nowrap"
               >
                 {item.name}
               </a>
             ))}
-          </div>
-
-          <div className="hidden md:block z-20">
-            <Button 
-              variant={walletConnected ? "secondary" : "gradient"} 
-              onClick={toggleWallet}
-            >
-              {walletConnected ? (
-                <span className="flex items-center gap-2 font-mono">
-                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]"></span>
-                  0x71...3A9
-                </span>
-              ) : (
-                <>
-                  <Wallet className="w-4 h-4" /> Connect
-                </>
-              )}
-            </Button>
           </div>
 
           <div className="md:hidden z-20">
@@ -831,31 +834,30 @@ export default function App() {
                     font-light tracking-tighter
                     text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-500
                     leading-tight font-montserrat mb-2 md:mb-4">
-          THE ONCHAIN
+          THE AUTONOMOUS
         </h1>
 
         <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl 
                       font-black tracking-tighter 
                       mb-8 md:mb-16 text-white leading-none 
                       font-lastica uppercase drop-shadow-2xl break-words">
-          CONTEXT PROTOCOL
+          TRUTH ENGINE
         </h1>
 
           <p className="text-sm md:text-xl text-gray-400 max-w-sm md:max-w-4xl mx-auto mb-10 md:mb-16 tracking-[0.2em] md:tracking-[0.3em] font-light uppercase font-sans leading-relaxed">
-            The discovery, billing, and access layer for onchain MCPs
+            15-Second Autonomous Settlement • Universal Liquidity Rails • Machine-Verified Finality
           </p>
           
-          <div className="flex flex-col items-center justify-center gap-6">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <Button variant="silverBorder">
               <a 
-                href="https://youtu.be/8pIFDMWpUCA?si=pyOP2S3N-Mov2DOw" 
-                target="_blank" 
-                rel="noopener noreferrer"
+                href="#" 
                 className="flex items-center gap-2"
               >
-                Watch Demo <Play size={14} className="fill-current" />
+                Read Whitepaper <ArrowRight size={14} />
               </a>
             </Button>
+            
           </div>
 
         </div>
@@ -864,8 +866,8 @@ export default function App() {
       {/* --- FEATURES SECTION --- */}
       <section id="features" className="relative z-10 py-16 md:py-32 bg-[#050507]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle subtitle="Bridging isolated AI agents with high-fidelity, real-time context.">
-            PROTOCOL ARCHITECTURE
+          <SectionTitle subtitle="Trigslink collapses the temporal gap between event conclusion and capital release through deterministic trust[cite: 121].">
+            PROTOCOL PILLARS
           </SectionTitle>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -918,7 +920,7 @@ export default function App() {
       {/* --- ARCHITECTURE SECTION --- */}
       <section id="architecture" className="relative z-10 py-16 md:py-32 px-4 overflow-hidden border-y border-white/5 bg-[#030304]">
         <div className="max-w-6xl mx-auto">
-          <SectionTitle subtitle="Trustless data flow secured by cryptographic proofs and smart contracts.">
+          <SectionTitle subtitle="A multi-layered execution proxy replacing human subjectivity with deterministic trust[cite: 163, 190].">
             NETWORK TOPOLOGY
           </SectionTitle>
 
@@ -949,9 +951,9 @@ export default function App() {
               </div>
               
               {[
-                { title: 'Provider Node', desc: 'Dockerized MCPs running locally, exposed securely via Cloudflare tunnels.', icon: <Server size={18} />, id: '01' },
-                { title: 'Onchain Registry', desc: 'Immutable smart contract registry. Uses Chainlink Price Feeds to convert USD prices to $AVAX.', icon: <Database size={18} />, id: '02' },
-                { title: 'Context Stream', desc: 'Direct, encrypted pipe from provider to agent. Subscription lifecycle validated by Chainlink Automation.', icon: <Radio size={18} />, id: '03' }
+                { title: 'Autonomous Resolution Layer', desc: 'CRE logic replaces manual proposers, automatically triggering settlement upon event conclusion[cite: 124, 132].', icon: <Zap size={18} />, id: '01' },
+                { title: 'Unified Liquidity Layer', desc: 'The ULR aggregates depth across Ethereum, Solana, and Layer 2s into a single global order book[cite: 54, 127].', icon: <Database size={18} />, id: '02' },
+                { title: 'Autonomous Grounding Layer', desc: 'Multiple independent nodes run AI checks against official news wires, news feeds, and document repositories[cite: 137, 147].', icon: <Radio size={18} />, id: '03' }
               ].map((step, i) => (
                 <div key={i} className="relative flex gap-6 md:gap-8 group">
                   <div className="relative z-10 flex-shrink-0 w-12 h-12 bg-[#0A0A0C] border border-blue-900/50 flex items-center justify-center text-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.1)] group-hover:border-blue-500 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300 rounded-lg">
@@ -969,7 +971,6 @@ export default function App() {
             </div>
 
             <div className="relative group w-full max-w-md mx-auto lg:mr-0 lg:ml-auto">
-              {/* Terminal code remains same as provided */}
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
               <div className="relative bg-[#050505] border border-gray-800 rounded-lg p-1 shadow-2xl">
                 
@@ -986,16 +987,16 @@ export default function App() {
                   
                   <div>
                     <span className="text-green-500 mr-2">➜</span>
-                    <span>initiating_handshake...</span>
+                    <span>initiating_autonomous_handshake...</span>
                   </div>
                   <div className="text-blue-400 pl-4 ml-1 space-y-1">
-                    <div>[INFO] Provider identified: 0x8a...2b</div>
-                    <div>[INFO] Verifying stake... <span className="text-green-400">OK</span></div>
+                    <div>[INFO] Truth state identified: DETERMINISTIC</div>
+                    <div>[INFO] Verifying grounding evidence... <span className="text-green-400">SUCCESS</span></div>
                   </div>
 
                   <div className="pt-2">
                     <span className="text-green-500 mr-2">➜</span>
-                    <span className="text-white font-bold text-sm break-all">trigslink-tunnel 5000</span>
+                    <span className="text-white font-bold text-sm break-all">settlement-trigger --finality 15s</span>
                   </div>
 
                   <div className="flex justify-center py-4 flex-1 items-center overflow-hidden">
@@ -1004,21 +1005,21 @@ export default function App() {
 
                   <div className="bg-[#0f0f12] p-3 rounded-lg border border-blue-900/30">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-blue-300 font-bold text-[10px] tracking-wider">TUNNEL_STATUS</span>
-                      <span className="text-green-400 font-bold text-[10px] tracking-wider">ESTABLISHED</span>
+                      <span className="text-blue-300 font-bold text-[10px] tracking-wider">TRUTH_STATUS</span>
+                      <span className="text-green-400 font-bold text-[10px] tracking-wider animate-pulse">SYNCHRONIZED</span>
                     </div>
                     <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden mb-2">
                       <div className="h-full bg-blue-500 w-full shadow-[0_0_10px_#3b82f6]"></div>
                     </div>
                     <div className="flex justify-between text-[10px] text-gray-500 font-mono">
-                        <span>PORT: 5000</span>
-                        <span>LATENCY: 12ms</span>
+                        <span>NODES: ALL ACTIVE</span>
+                        <span>LATENCY: 14.9s</span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2 text-purple-400 pt-1">
                     <span className="animate-spin">⟳</span>
-                    <span>forwarding_traffic...</span>
+                    <span>deploying_global_liquidity_rail...</span>
                   </div>
 
                 </div>
@@ -1032,7 +1033,7 @@ export default function App() {
       {/* --- ROADMAP SECTION --- */}
       <section id="roadmap" className="relative z-10 py-16 md:py-32 bg-[#050507]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle subtitle="Execution plan towards autonomous economic agents.">
+          <SectionTitle subtitle="From deterministic logic to a global ecosystem of autonomous truth[cite: 191, 215].">
             MISSION TIMELINE
           </SectionTitle>
 
@@ -1095,7 +1096,7 @@ export default function App() {
                           
                           {isCurrent && (
                             <div className="absolute top-0 right-0 px-2 py-1 bg-blue-600 text-[8px] font-bold text-white uppercase tracking-wider rounded-sm">
-                              Processing
+                              Scaling
                             </div>
                           )}
                       </div>
@@ -1129,7 +1130,7 @@ export default function App() {
       {/* --- TEAM SECTION --- */}
       <section id="team" className="relative z-10 py-16 md:py-32 px-4 bg-[#030304] border-t border-white/5">
         <div className="max-w-7xl mx-auto">
-          <SectionTitle subtitle="Founding Team of the Trigslink Protocol">
+          <SectionTitle subtitle="Founding Team of the Trigslink Protocol [cite: 1, 258]">
             HALL OF FAME
           </SectionTitle>
 
@@ -1154,15 +1155,14 @@ export default function App() {
                 />
               </div>
               <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
-                A decentralized coordination layer for AI context. 
-                Securing data independence for the next generation of agents.
+                The high-velocity truth layer for the decentralized economy. 
+                Securing data independence through deterministic settlement[cite: 59, 215].
               </p>
             </div>
             
             <div>
-              <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase">Built With</h4>
+              <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase">Infrastructure</h4>
               <ul className="space-y-3 md:space-y-4 text-sm text-gray-500">
-                {/* Avalanche */}
                 <li className="flex items-center gap-2">
                   <img 
                     src="https://cryptologos.cc/logos/avalanche-avax-logo.svg?v=035" 
@@ -1171,8 +1171,6 @@ export default function App() {
                   />
                   Avalanche
                 </li>
-
-                {/* Chainlink Price Feeds */}
                 <li className="flex items-center gap-2">
                   <img 
                     src="https://cryptologos.cc/logos/chainlink-link-logo.svg?v=035" 
@@ -1181,8 +1179,6 @@ export default function App() {
                   />
                   Chainlink Price Feeds
                 </li>
-
-                {/* Chainlink Automation */}
                 <li className="flex items-center gap-2">
                   <img 
                     src="https://cryptologos.cc/logos/chainlink-link-logo.svg?v=035" 
@@ -1204,7 +1200,7 @@ export default function App() {
                     <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
                   </li>
                   <li className="hover:text-blue-400 cursor-pointer transition-colors">
-                    <a href="mailto:trigslink@gmail.com" className="hover:text-white transition-colors">trigslink@gmail.com</a>
+                    <a href="mailto:jaiswalraj03014@gmail.com" className="hover:text-white transition-colors">jaiswalraj03014@gmail.com [cite: 261]</a>
                   </li>
                </ul>
                <div className="flex gap-4">
@@ -1232,7 +1228,7 @@ export default function App() {
 
           <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] md:text-xs text-gray-600 font-mono uppercase tracking-wider text-center md:text-left">
             <div>
-              © {new Date().getFullYear()} Trigslink Foundation. All rights reserved.
+              © {new Date().getFullYear()} Trigslink Foundation. Deterministic Trust Protocol.
             </div>
             <div className="flex gap-6 md:gap-8">
                <span>Privacy Policy</span>
@@ -1242,14 +1238,9 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Styles */}
       <style dangerouslySetInnerHTML={{ __html: `
-        /* IMPORTING UNBOUNDED FONT */
         @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&display=swap');
-        /* IMPORTING SILKSCREEN (PIXEL) FONT */
         @import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
-        
-        /* IMPORTING OTHER FONTS */
         @import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
@@ -1265,19 +1256,24 @@ export default function App() {
           scroll-behavior: smooth;
         }
         
-        /* FONTS */
         .font-unbounded { font-family: 'Unbounded', sans-serif; }
         .font-pixel { font-family: 'Silkscreen', cursive; }
-        .font-lastica { font-family: 'Korataki', 'Michroma', sans-serif; text-transform: uppercase; }
+        /* Update this section in your <style> tag */
+        .font-lastica { 
+          font-family: 'Korataki', 'Michroma', sans-serif; 
+          text-transform: uppercase;
+          /* Add these to match the "Truth Engine" screenshot */
+          display: inline-block;
+          transform: scaleX(1.15); /* Adjust this value to get that ultra-wide look */
+          letter-spacing: -0.05em;  /* Tighten the letters so they almost touch */
+          line-height: 0.9;
+        }
         .font-chromion { font-family: 'Bruno Ace SC', cursive; }
         .font-montserrat { font-family: 'Montserrat', sans-serif; }
 
-        /* UTILS */
         .clip-path-chromion { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
         .clip-path-slant { clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%); }
-        .perspective-1000 { perspective: 1000px; }
 
-        /* ANIMATIONS */
         @keyframes gradient-roll {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
@@ -1296,8 +1292,16 @@ export default function App() {
         .animate-gold-border {
           animation: gold-border 4s ease infinite;
         }
+
+        @keyframes silver-rotate {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-silver-rotate {
+          animation: silver-rotate 2.5s ease-in-out infinite;
+        }
         
-        /* NOISE ANIMATION */
         @keyframes noise {
            0% { background-position: 0 0; }
            10% { background-position: -5% -10%; }
@@ -1311,53 +1315,38 @@ export default function App() {
            90% { background-position: -10% 10%; }
            100% { background-position: 0 0; }
         }
-        
-        .animate-noise {
-           animation: noise 0.5s steps(3) infinite;
-        }
+        .animate-noise { animation: noise 0.5s steps(3) infinite; }
 
-        /* NEW ANIMATION FOR DOTTED FLOW */
         @keyframes dotted-flow {
           0% { background-position: 0 0; }
-          100% { background-position: 0 20px; } /* Must match height of background-size pattern */
+          100% { background-position: 0 20px; }
         }
-        .animate-dotted-flow {
-          animation: dotted-flow 1s linear infinite;
-        }
+        .animate-dotted-flow { animation: dotted-flow 1s linear infinite; }
 
-        /* NEW ANIMATION FOR HORIZONTAL DOTTED FLOW */
         @keyframes dotted-flow-horizontal {
           0% { background-position: 0 0; }
           100% { background-position: 20px 0; }
         }
-        .animate-dotted-flow-horizontal {
-          animation: dotted-flow-horizontal 1s linear infinite;
-        }
+        .animate-dotted-flow-horizontal { animation: dotted-flow-horizontal 1s linear infinite; }
 
-        /* BEAM DROP ANIMATION */
         @keyframes beam-drop {
           0% { top: -20%; opacity: 0; }
           10% { opacity: 1; }
           90% { opacity: 1; }
           100% { top: 120%; opacity: 0; }
         }
-        .animate-beam-drop {
-          animation: beam-drop 3s ease-in-out infinite;
-        }
+        .animate-beam-drop { animation: beam-drop 3s ease-in-out infinite; }
 
-        /* BEAM SLIDE HORIZONTAL ANIMATION */
         @keyframes beam-slide {
           0% { left: -20%; opacity: 0; }
           10% { opacity: 1; }
           90% { opacity: 1; }
           100% { left: 120%; opacity: 0; }
         }
-        .animate-beam-slide {
-          animation: beam-slide 3s ease-in-out infinite;
-        }
+        .animate-beam-slide { animation: beam-slide 3s ease-in-out infinite; }
 
         @media (prefers-reduced-motion: reduce) {
-          .animate-gradient-roll, .animate-gold-border, .animate-noise, .animate-dotted-flow, .animate-beam-drop, .animate-dotted-flow-horizontal, .animate-beam-slide {
+          .animate-gradient-roll, .animate-gold-border, .animate-noise, .animate-dotted-flow, .animate-beam-drop, .animate-dotted-flow-horizontal, .animate-beam-slide, .animate-silver-rotate {
             animation: none;
           }
         }
