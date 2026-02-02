@@ -1,25 +1,32 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#030304" />
     
-    <title>Trigslink | The Autonomous Truth Engine</title>
-    <meta name="description" content="Trigslink provides 15-second autonomous settlement and Universal Liquidity Rails (ULR) to unify cross-chain capital through a machine-verified truth engine." />
-    <meta name="keywords" content="Trigslink, Truth Engine, Autonomous Settlement, Universal Liquidity Rails, ULR, Chainlink CRE, Deterministic Trust, Prediction Markets, Machine-Verified Truth" />
+    <title>Trigslink | The Autonomous Truth Engine & Settlement Layer</title>
+    <meta name="title" content="Trigslink | The Autonomous Truth Engine & Settlement Layer" />
+    <meta name="description" content="Trigslink collapses the 'Zombie Period' of capital with 15-second autonomous settlement and Universal Liquidity Rails (ULR) for machine-verified truth." />
     
+    <meta property="og:site_name" content="Trigslink" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://trigs.link/" />
     <meta property="og:title" content="Trigslink | The Autonomous Truth Engine" />
-    <meta property="og:description" content="Collapsing the 'Zombie Period' of settlement with 15-second finality and machine-verified grounding logic." />
-    <meta property="og:image" content="https://trigs.link/images/trigslink_truth_engine_preview.png" />
+    <meta property="og:description" content="15-Second Settlement. Universal Liquidity Rails. Machine-Verified Truth." />
+    <meta property="og:image" content="https://trigs.link/images/trigslink.png" />
 
-    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:card" content="summary" /> 
     <meta property="twitter:url" content="https://trigs.link/" />
     <meta property="twitter:title" content="Trigslink | The Autonomous Truth Engine" />
-    <meta property="twitter:description" content="Eliminating human-centric bottlenecks in global information markets through deterministic trust." />
+    <meta property="twitter:description" content="Eliminating human bottlenecks in global information markets through deterministic trust." />
+    <meta property="twitter:image" content="https://trigs.link/images/trigslink.png" />
 
-    <link rel="icon" type="image/png" href="/images/trigslink.png" />
+    <link rel="icon" type="image/png" href="/images/trigslink_circle.png" />
+    <link rel="apple-touch-icon" href="/images/trigslink_circle.png" />
+    <link rel="shortcut icon" href="/images/trigslink_circle.png" />
+
     <link rel="canonical" href="https://trigs.link/" />
 
     <script type="application/ld+json">
@@ -27,22 +34,37 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Trigslink",
+      "url": "https://trigs.link/"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Trigslink",
+      "operatingSystem": "Web",
+      "applicationCategory": "FinTech/Blockchain",
+      "description": "Trigslink provides 15-second autonomous settlement and Universal Liquidity Rails to unify cross-chain capital.",
       "url": "https://trigs.link",
-      "description": "Autonomous Truth Engine and Universal Liquidity Rails protocol.",
       "author": {
         "@type": "Person",
         "name": "Aakash Jaiswal"
       },
-      "hasPart": [
-        { "@type": "WebPage", "name": "Infrastructure Pillars", "url": "https://trigs.link/#features" },
-        { "@type": "WebPage", "name": "Network Topology", "url": "https://trigs.link/#architecture" },
-        { "@type": "WebPage", "name": "Mission Roadmap", "url": "https://trigs.link/#roadmap" },
-        { "@type": "WebPage", "name": "The Architects", "url": "https://trigs.link/#team" }
-      ]
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
     }
     </script>
   </head>
   <body>
+    <noscript>
+      <h1>Trigslink: The Autonomous Truth Engine</h1>
+      <p>Trigslink provides 15-second autonomous settlement and Universal Liquidity Rails (ULR) to unify cross-chain capital through a machine-verified truth engine.</p>
+    </noscript>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
