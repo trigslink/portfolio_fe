@@ -504,7 +504,7 @@ export default function App() {
         <CyberGlobe />
         <div className="max-w-7xl mx-auto text-center relative z-20 pointer-events-auto px-2">
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-5xl font-light tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-500 leading-tight font-montserrat mb-2 md:mb-4">THE AUTONOMOUS</h1>
-          <h1 className="text-[12vw] sm:text-[10vw] md:text-[9vw] lg:text-[8.5vw] font-black tracking-[-0.05em] mb-8 md:mb-16 text-white leading-[0.8] font-korataki uppercase scale-y-[0.9] origin-center drop-shadow-2xl">TRUTH ENGINE</h1>
+          <h1 className="text-[12vw] sm:text-[10vw] md:text-[9vw] lg:text-[8.5vw] font-black tracking-[-0.05em] mb-8 md:mb-16 text-white leading-[0.8] font-kora uppercase scale-y-[0.9] origin-center drop-shadow-2xl">TRUTH ENGINE</h1>
           <p className="text-sm md:text-xl text-gray-400 max-w-sm md:max-w-4xl mx-auto mb-10 md:mb-16 tracking-[0.2em] md:tracking-[0.3em] font-light uppercase font-sans leading-relaxed">15-Second Autonomous Settlement • Universal Liquidity Rails • Machine-Verified Finality</p>
         </div>
       </section>
@@ -683,9 +683,9 @@ export default function App() {
         @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
         
-        @font-face { font-family: 'Korataki'; src: url('/fonts/korataki.otf') format('opentype'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'kora'; src: url('/fonts/kora.otf') format('opentype'); font-weight: normal; font-style: normal; }
         html { scroll-behavior: smooth; }
-        .font-lastica { font-family: 'Korataki', 'Michroma', sans-serif; text-transform: uppercase; display: inline-block; transform: scaleX(1.3);transform-origin: center; letter-spacing: -0.02em; line-height: 0.9; }
+        .font-lastica { font-family: 'kora', 'Michroma', sans-serif; text-transform: uppercase; display: inline-block; transform: scaleX(1.3);transform-origin: center; letter-spacing: -0.02em; line-height: 0.9; }
         .font-montserrat { font-family: 'Montserrat', sans-serif; }
         .clip-path-slant { clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%); }
 
