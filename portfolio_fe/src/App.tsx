@@ -268,7 +268,7 @@ const CyberGlobe = () => {
     let height = canvas.height;
     const getRadius = () => { if (width < 400) return 280; if (width < 768) return 320; return 380; };
     let GLOBE_RADIUS = getRadius();
-    const DOT_COUNT = width < 768 ? 400 : 600; 
+    const DOT_COUNT = width < 768 ? 200 : 600;
     const DOT_RADIUS = 2;
     const CONNECTION_DISTANCE_3D = 95; 
     const MAX_ACTIVE_SIGNALS = width < 768 ? 30 : 60; 
@@ -504,9 +504,9 @@ export default function App() {
         <CyberGlobe />
         <div className="max-w-7xl mx-auto text-center relative z-20 pointer-events-auto px-2">
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-5xl font-light tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-500 leading-tight font-montserrat mb-2 md:mb-4">THE AUTONOMOUS</h1>
-          <h1 className="flex flex-col items-center text-[12vw] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-bold tracking-[-0.03em] mb-8 md:mb-12 text-white leading-[0.82] font-lastica uppercase scale-y-[0.95] origin-center drop-shadow-2xl">
-            <span className="block">TRUTH</span>
-            <span className="block">ENGINE</span>
+          <h1 className="flex flex-col items-center text-[12vw] sm:text-[11vw] md:text-[10vw] lg:text-[8.5vw] font-bold tracking-[-0.04em] mb-8 md:mb-12 text-white font-kora uppercase scale-y-[1.05] origin-center drop-shadow-2xl will-change-transform">
+            <span className="block leading-[0.8]">TRUTH</span>
+            <span className="block leading-[1]">ENGINE</span>
           </h1>
           <p className="text-sm md:text-xl text-gray-400 max-w-sm md:max-w-4xl mx-auto mb-10 md:mb-16 tracking-[0.2em] md:tracking-[0.3em] font-light uppercase font-sans leading-relaxed">15-Second Autonomous Settlement • Universal Liquidity Rails • Machine-Verified Finality</p>
         </div>
