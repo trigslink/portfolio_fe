@@ -688,7 +688,7 @@ export default function App() {
         
         @font-face { font-family: 'kora'; src: url('/fonts/kora.ttf') format('opentype'); font-weight: normal; font-style: normal; font-display: swap; }
         html { scroll-behavior: smooth; }
-        .font-lastica { font-family: 'kora', 'Michroma', sans-serif; text-transform: uppercase; display: inline-block; transform: scaleX(1.3);transform-origin: center; letter-spacing: -0.02em; line-height: 0.9; }
+        .font-lastica { font-family: 'kora', 'Michroma', sans-serif; text-transform: uppercase; display: inline-block; transform: scaleX(1.3);transform-origin: center;backface-visibility: hidden; -webkit-backface-visibility: hidden; perspective: 1000px; transform-style: preserve-3d; will-change: transform; letter-spacing: -0.02em; line-height: 0.9; }
         .font-montserrat { font-family: 'Montserrat', sans-serif; }
         .clip-path-slant { clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%); }
         .font-kora { font-family: 'kora', sans-serif; }
