@@ -676,7 +676,7 @@ export default function App() {
           </div>
 
           <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] md:text-xs text-gray-600 font-mono uppercase tracking-widest">
-            <div>© {new Date().getFullYear()}Trigslink Foundation. All rights reserved.</div>
+            <div>© {new Date().getFullYear()} Trigslink Foundation. All rights reserved.</div>
             <div className="flex gap-6 md:gap-8"><span>Privacy Policy</span><span>Terms of Service</span></div>
           </div>
         </div>
