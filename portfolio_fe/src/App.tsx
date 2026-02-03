@@ -653,10 +653,14 @@ export default function App() {
                   <img src="https://cryptologos.cc/logos/chainlink-link-logo.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   Chainlink Price Feeds
                 </li>
-                <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
+               <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
                   <img src="https://cryptologos.cc/logos/chainlink-link-logo.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   Chainlink Automation
-                </li>
+                </li> 
+               <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
+                  <img src="https://cryptologos.cc/logos/chainlink-link-logo.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  CCIP (Cross-Chain Interoperability Protocol)
+                </li> 
               </ul>
             </div>
 
