@@ -504,7 +504,7 @@ export default function App() {
         <CyberGlobe />
         <div className="max-w-7xl mx-auto text-center relative z-20 pointer-events-auto px-2">
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-5xl font-light tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-500 leading-tight font-montserrat mb-2 md:mb-4">THE AUTONOMOUS</h1>
-          <h1 className="flex flex-col items-center text-[10vw] sm:text-[8vw] md:text-[7vw] lg:text-[6vw] font-bold tracking-[-0.02em] mb-6 md:mb-10 text-white leading-[0.8] font-lastica uppercase scale-y-[0.9] origin-center drop-shadow-2xl">
+          <h1 className="flex flex-col items-center text-[12vw] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-bold tracking-[-0.03em] mb-8 md:mb-12 text-white leading-[0.82] font-lastica uppercase scale-y-[0.95] origin-center drop-shadow-2xl">
             <span className="block">TRUTH</span>
             <span className="block">ENGINE</span>
           </h1>
@@ -676,7 +676,7 @@ export default function App() {
           </div>
 
           <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] md:text-xs text-gray-600 font-mono uppercase tracking-widest">
-            <div>© {new Date().getFullYear()} © 2026 Trigslink Foundation. All rights reserved.</div>
+            <div>© {new Date().getFullYear()}Trigslink Foundation. All rights reserved.</div>
             <div className="flex gap-6 md:gap-8"><span>Privacy Policy</span><span>Terms of Service</span></div>
           </div>
         </div>
