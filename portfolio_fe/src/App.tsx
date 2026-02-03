@@ -686,7 +686,7 @@ export default function App() {
         @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
         
-        @font-face { font-family: 'kora'; src: url('/fonts/kora.ttf') format('opentype'); font-weight: normal; font-style: normal; font-display: swap; }
+        @font-face { font-family: 'kora'; src: url('/fonts/kora.ttf') format('opentype'); font-weight: normal; font-style: normal; font-display: block; }
         html { scroll-behavior: smooth; }
         .font-lastica { font-family: 'kora', 'Michroma', sans-serif; text-transform: uppercase; display: inline-block; transform: scaleX(1.3);transform-origin: center;backface-visibility: hidden; -webkit-backface-visibility: hidden; perspective: 1000px; transform-style: preserve-3d; will-change: transform; letter-spacing: -0.02em; line-height: 0.9; }
         .font-montserrat { font-family: 'Montserrat', sans-serif; }
