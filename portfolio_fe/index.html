@@ -7,9 +7,9 @@
     <meta name="theme-color" content="#030304" />
     
     <title>Trigslink | Autonomous Truth Engine & Web3 Settlement</title>
-    <meta name="title" content="Trigslink | The Autonomous Truth Engine & Settlement Layer" />
+    <meta name="title" content="Trigslink | Autonomous Truth Engine & Web3 Settlement" />
     <meta name="description" content="Trigslink collapses the 'Zombie Period' of capital with 15-second autonomous settlement and Universal Liquidity Rails (ULR) for machine-verified truth." />
-    <meta name="keywords" content="Trigslink, Trigslink SDK, Autonomous Settlement, Prediction Markets, Web3 Truth Engine, ULR, Blockchain Settlement" />
+    <meta name="keywords" content="Trigslink, Trigslink SDK, Aakash Jaiswal, Gianluca Godfrey, Autonomous Settlement, Prediction Markets, Web3 Truth Engine, ULR, Blockchain Settlement" />
     
     <meta property="og:site_name" content="Trigslink" />
     <meta property="og:type" content="website" />
@@ -33,23 +33,54 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "Organization",
+          "@id": "https://trigs.link/#organization",
+          "name": "Trigslink",
+          "url": "https://trigs.link/",
+          "logo": "https://trigs.link/images/trigslink_circle.png",
+          "description": "The Autonomous Truth Engine & Settlement Layer collapsing the 'Zombie Period' of capital with 15-second autonomous settlement.",
+          "founders": [
+            {
+              "@type": "Person",
+              "name": "Aakash Jaiswal",
+              "jobTitle": "Founder",
+              "sameAs": [
+                "https://x.com/Aakash_jais03",
+                "https://www.linkedin.com/in/aakash-jaiswal-773bb9244",
+                "https://itsmesky.com",
+                
+              ]
+            },
+            {
+              "@type": "Person",
+              "name": "Gianluca Godfrey",
+              "jobTitle": "Co-Founder",
+              "sameAs": [
+                "https://x.com/gmluqa",
+              ]
+            }
+          ],
+          "sameAs": [
+            "https://x.com/trigslink",
+            "https://github.com/trigs-link"
+          ]
+        },
+        {
           "@type": "WebSite",
           "@id": "https://trigs.link/#website",
           "url": "https://trigs.link/",
           "name": "Trigslink",
-          "description": "Autonomous Truth Engine & Settlement Layer"
+          "description": "Autonomous Truth Engine & Settlement Layer",
+          "publisher": { "@id": "https://trigs.link/#organization" }
         },
         {
           "@type": "SoftwareApplication",
           "@id": "https://trigs.link/#software",
           "name": "Trigslink Protocol",
           "operatingSystem": "Web",
-          "applicationCategory": "Blockchain/FinTech",
+          "applicationCategory": "Blockchain/FinTech/Defi",
           "description": "Trigslink provides 15-second autonomous settlement and Universal Liquidity Rails (ULR) using machine-verified truth.",
-          "author": {
-            "@type": "Person",
-            "name": "Aakash Jaiswal"
-          }
+          "author": { "@id": "https://trigs.link/#organization" }
         }
       ]
     }
@@ -59,6 +90,7 @@
     <noscript>
       <header>
         <h1>Trigslink Protocol: The Autonomous Truth Engine</h1>
+        <p>Founded by Aakash Jaiswal and Gianluca Godfrey.</p>
         <p>Trigslink provides 15-second autonomous settlement and Universal Liquidity Rails (ULR) to unify cross-chain capital through a machine-verified truth engine.</p>
       </header>
       <section>
@@ -74,6 +106,7 @@
     <div id="root">
       <section style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;">
         <h1>Trigslink</h1>
+        <p>Founders: Aakash Jaiswal & Gianluca Godfrey</p>
         <article>
           <h2>The Autonomous Truth Engine</h2>
           <p>Trigslink is a decentralized protocol designed for instant 15-second settlement. By utilizing AI and Chainlink infrastructure, the Trigslink SDK allows developers to build markets with machine-verified finality.</p>
