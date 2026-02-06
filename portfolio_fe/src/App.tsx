@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, type ReactNode, type MouseEvent, type ButtonHTMLAttributes } from 'react';
 import Lenis from 'lenis';
+import { Link } from 'react-router-dom';
 import { 
   ShieldCheck, 
   Globe, 
@@ -85,7 +86,7 @@ const NAVIGATION: NavigationItem[] = [
   { name: 'NETWORK', href: '#architecture' },
   { name: 'ROADMAP', href: '#roadmap' },
   { name: 'TEAM', href: '#team' },
-  { name: 'TRIGSLINK MCP', href: '/pages/mcp.tsx', isExternal: true },
+  { name: 'TRIGSLINK MCP', href: '/mcp', isExternal: false },
 ];
 
 const FEATURES: FeatureItem[] = [
@@ -463,9 +464,24 @@ export default function App() {
                 <button onClick={() => setMobileMenuOpen(false)} className="text-gray-400 hover:text-white transition-colors"><XIcon size={24} /></button>
              </div>
              <div className="flex flex-col gap-8 items-center text-center mb-12">
-                {NAVIGATION.map((item) => (
-                  <a key={item.name} href={item.href} target={item.isExternal ? "_blank" : "_self"} className="text-base font-bold font-mono tracking-[0.2em] text-gray-300 hover:text-white transition-all uppercase" onClick={() => setMobileMenuOpen(false)}>{item.name}</a>
-                ))}
+             {NAVIGATION.map((item) => {
+                if (item.href === '/mcp') {
+                  return (
+                    <Link 
+                      key={item.name} 
+                      to="/mcp" 
+                      className="text-[10px] font-mono font-medium text-gray-400 hover:text-white transition-colors uppercase tracking-widest"
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                }
+                return (
+                  <a key={item.name} href={item.href} className="...">
+                    {item.name}
+                  </a>
+                );
+              })}
              </div>
              <div className="flex justify-center gap-6 mt-auto">
                 <a href={SOCIAL_LINKS.github} className="text-gray-500 hover:text-white transition-colors"><Github size={20}/></a>
