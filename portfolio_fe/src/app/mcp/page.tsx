@@ -34,12 +34,6 @@ icon: ReactNode;
 stat: string;
 }
 
-interface RoadmapItem {
-phase: string;
-title: string;
-items: string[];
-status: 'completed' | 'current' | 'upcoming';
-}
 
 interface TeamMember {
 name: string;
@@ -77,7 +71,6 @@ progress: number;
 const NAVIGATION: NavigationItem[] = [
 { name: 'PROTOCOL', href: '#features' },
 { name: 'NETWORK', href: '#architecture' },
-{ name: 'ROADMAP', href: '#roadmap' },
 { name: 'TEAM', href: '#team' },
 ];
 
@@ -112,26 +105,7 @@ stat: 'Real-time'
 },
 ];
 
-const ROADMAP: RoadmapItem[] = [
-{
-phase: 'PHASE 01',
-title: 'Foundation',
-items: ['ElizaOS Consumer Integration', 'Onchain Response Integrity', 'Core Smart Contracts Deployment'],
-status: 'completed'
-},
-{
-phase: 'PHASE 02',
-title: 'Expansion',
-items: ['Identity-based Memory', 'Individual MCP Node Subnets', 'High Throughput Optimization'],
-status: 'current'
-},
-{
-phase: 'PHASE 03',
-title: 'Ecosystem',
-items: ['Cross-chain Interoperability', '$TRIGS Token Generation', 'Token-gated MCP Access'],
-status: 'upcoming'
-},
-];
+
 
 const TEAM: TeamMember[] = [
 { 
@@ -1040,7 +1014,6 @@ backgroundPositionX: 'center'
 </div>
 </section>
 
-{/* --- ROADMAP SECTION --- */}
 
 
 {/* --- TEAM SECTION --- */}
