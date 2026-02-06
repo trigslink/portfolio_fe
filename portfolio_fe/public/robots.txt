@@ -1,4 +1,12 @@
+# User-agent: * applies to all search engines (Google, Bing, DuckDuckGo)
 User-agent: *
+
+# Allow everything to be crawled
 Allow: /
 
+# Block sensitive folders (standard practice for React/Next.js)
+Disallow: /private/
+Disallow: /admin/
+
+# Point to your sitemap to help bots find your updated meta tags faster
 Sitemap: https://trigs.link/sitemap.xml
