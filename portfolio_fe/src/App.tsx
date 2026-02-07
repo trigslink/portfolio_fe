@@ -649,7 +649,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Footer - REMOVED AVALANCHE, ADDED CRE/CHAINLINK */}
+      {/* Footer - REMOVED AVALANCHE, ADDED  */}
       <footer className="relative z-10 py-12 md:py-16 border-t border-white/10 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12">
