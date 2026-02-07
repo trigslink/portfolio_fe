@@ -661,22 +661,23 @@ export default function App() {
             <div>
               <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase tracking-widest opacity-80">Infrastructure</h4>
               <ul className="space-y-3 md:space-y-4 text-sm text-gray-500">
+                
                 <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
-                  <img src="https://cryptologos.cc/logos/chainlink-link-logo.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  CRE (Chainlink Runtime Environment)
-                </li>
-                <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
-                  <img src="https://cryptologos.cc/logos/chainlink-link-logo.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  Chainlink Price Feeds
+                  <img src="/images/openclaw.png" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  OpenClaw
                 </li>
                <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
-                  <img src="https://cryptologos.cc/logos/chainlink-link-logo.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  Chainlink Automation
+                  <img src="https://www.svgrepo.com/show/374088/solidity.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  Solidity
                 </li> 
                <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
                   <img src="https://cryptologos.cc/logos/chainlink-link-logo.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   CCIP (Cross-Chain Interoperability Protocol)
                 </li> 
+                <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
+                  <img src="https://cryptologos.cc/logos/chainlink-link-logo.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  CRE (Chainlink Runtime Environment)
+                </li>
               </ul>
             </div>
 
