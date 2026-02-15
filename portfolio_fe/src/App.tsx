@@ -142,7 +142,7 @@ const ROADMAP: RoadmapItem[] = [
 ];
 
 const TEAM: TeamMember[] = [
-  { name: 'Aakash Jaiswal', role: 'Founder & Backend Alchemist ', initials: 'AJ', hex: '0x01', image: '/images/aakash.png' },
+  { name: 'Aakash Jaiswal', role: 'AI & Backend Alchemist ', initials: 'AJ', hex: '0x01', image: '/images/aakash.png' },
   { name: 'Gianluca Godfrey', role: 'Onchain Evangelist', initials: 'GG', hex: '0x03', image: '/images/gianluca.png' },
   { name: 'Charles Cai', role: 'Onchain Evangelist', initials: 'CC', hex: '0x03', image: '/images/charles.png' },
   { name: 'Odudu Essien', role: 'Pixel Crafter', initials: 'OE', hex: '0x05', image: '/images/odudu.png' },
