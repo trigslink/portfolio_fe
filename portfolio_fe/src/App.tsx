@@ -567,7 +567,7 @@ export default function App() {
                 <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent via-blue-400 to-transparent blur-md opacity-0 animate-beam-drop"></div>
               </div>
               {[
-                { title: 'Autonomous Resolution Layer', desc: 'CRE logic replaces manual proposers, automatically triggering settlement upon event conclusion.', icon: <Zap size={18} />, id: '01' },
+                { title: 'Autonomous Resolution Layer', desc: 'Intrigue logic replaces manual proposers, automatically triggering settlement upon event conclusion.', icon: <Zap size={18} />, id: '01' },
                 { title: 'Unified Liquidity Layer', desc: 'The ULR aggregates depth across Ethereum, Solana, and Layer 2s into a single global order book.', icon: <Database size={18} />, id: '02' },
                 { title: 'Autonomous Grounding Layer', desc: 'Multiple independent nodes run AI checks against official news wires, news feeds, and document repositories.', icon: <Radio size={18} />, id: '03' }
               ].map((step, i) => (
@@ -660,28 +660,6 @@ export default function App() {
               <p className="text-gray-500 text-sm max-w-sm leading-relaxed">The high-velocity truth layer for the decentralized economy. Securing data independence through deterministic settlement.</p>
             </div>
             
-            <div>
-              <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase tracking-widest opacity-80">Infrastructure</h4>
-              <ul className="space-y-3 md:space-y-4 text-sm text-gray-500">
-                
-                <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
-                  <img src="/images/openclaw.png" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  OpenClaw
-                </li>
-               <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
-                  <img src="https://www.svgrepo.com/show/374088/solidity.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  Solidity
-                </li> 
-               <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
-                  <img src="https://cryptologos.cc/logos/chainlink-link-logo.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  CCIP (Cross-Chain Interoperability Protocol)
-                </li> 
-                <li className="flex items-center gap-2 group cursor-default hover:text-white transition-colors">
-                  <img src="https://cryptologos.cc/logos/chainlink-link-logo.svg" alt="Chainlink" className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  CRE (Chainlink Runtime Environment)
-                </li>
-              </ul>
-            </div>
 
             <div>
                <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase tracking-widest opacity-80">Community</h4>
