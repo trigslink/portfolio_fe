@@ -654,7 +654,7 @@ export default function App() {
       {/* Footer - REMOVED AVALANCHE, ADDED  */}
       <footer className="relative z-10 py-12 md:py-16 border-t border-white/10 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-12">
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center gap-3 mb-6"><Logo className="w-8 h-8" /><img src={trigslinkFont} alt="TRIGSLINK" className="h-6 object-contain opacity-90" /></div>
               <p className="text-gray-500 text-sm max-w-sm leading-relaxed">The high-velocity truth layer for the decentralized economy. Securing data independence through deterministic settlement.</p>
