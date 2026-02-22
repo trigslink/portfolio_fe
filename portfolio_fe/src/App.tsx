@@ -104,7 +104,7 @@ const FEATURES: FeatureItem[] = [
     stat: 'ULR Engine'
   },
   {
-    title: 'Machine Grounding',
+    title: 'Machine Verified Grounding',
     subtitle: 'Evidence-Based Truth',
     description: 'Multi-node verification against official news wires and document repositories eliminates human heuristic bias.',
     icon: <ShieldCheck className="w-8 h-8 text-blue-400" />,
@@ -213,6 +213,27 @@ const OperatorCard = ({ member }: { member: TeamMember }) => {
     </div>
   );
 };
+
+const CyberMetallicIcon = ({ children }: { children: ReactNode }) => (
+  <div className="relative group/icon flex items-center justify-center p-4 shrink-0">
+    {/* Glow background */}
+    <div className="absolute inset-0 bg-blue-600/30 blur-[30px] rounded-full scale-150 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-700" />
+    
+    {/* 3D Embossed Base */}
+    <div className="relative w-16 h-16 rounded-[18px] flex items-center justify-center bg-[#0d0d0f] shadow-[10px_10px_20px_rgba(0,0,0,0.5),-2px_-2px_5px_rgba(255,255,255,0.05),inset_2px_2px_2px_rgba(255,255,255,0.1),inset_-2px_-2px_10px_rgba(0,0,0,0.8)] transition-all duration-500 group-hover/icon:-translate-y-1">
+      
+      {/* Metallic Gradient Layer */}
+      <div className="absolute inset-[3px] rounded-[15px] bg-gradient-to-br from-[#ffffff] via-[#3b82f6] to-[#1e3a8a] border border-blue-400/30 shadow-inner overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,247,0.3),transparent_70%)]" />
+      </div>
+
+      {/* Icon with Specular Lighting Filter applied */}
+      <div className="relative z-10 text-white drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]">
+        <div style={{ filter: 'url(#blue-chrome)' }}>{children}</div>
+      </div>
+    </div>
+  </div>
+);
 
 const TiltCard = ({ children, className = "" }: { children: ReactNode, className?: string }) => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -385,10 +406,16 @@ const Logo = ({ className = "w-10 h-10" }) => (
 );
 
 const GlitchText = ({ text }: { text: string }) => (
-  <span className="relative inline-block group">
+  <span className="relative inline-block group/glitch">
     <span className="relative z-10">{text}</span>
-    <span className="absolute top-0 left-0 -ml-0.5 translate-x-[2px] text-red-500 opacity-0 group-hover:opacity-70 mix-blend-screen animate-pulse">{text}</span>
-    <span className="absolute top-0 left-0 -ml-0.5 -translate-x-[2px] text-blue-500 opacity-0 group-hover:opacity-70 mix-blend-screen animate-pulse delay-75">{text}</span>
+    
+    <span className="absolute top-0 left-0 -ml-0.5 translate-x-[2px] text-red-500 opacity-0 group-hover:opacity-70 mix-blend-screen animate-pulse pointer-events-none">
+      {text}
+    </span>
+    
+    <span className="absolute top-0 left-0 -ml-0.5 -translate-x-[2px] text-blue-500 opacity-0 group-hover:opacity-70 mix-blend-screen animate-pulse delay-75 pointer-events-none">
+      {text}
+    </span>
   </span>
 );
 
@@ -530,77 +557,187 @@ export default function App() {
       </section>
 
       {/* Features */}
-      <section id="features" className="relative z-10 py-16 md:py-32 bg-[#050507]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle subtitle="Trigslink collapses the temporal gap between event conclusion and capital release through deterministic trust.">PROTOCOL PILLARS</SectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {FEATURES.map((feature, idx) => (
-              <TiltCard key={idx} className="h-auto min-h-[350px] lg:h-[420px]">
-                <div className="relative h-full p-6 md:p-8 rounded-[30px] md:rounded-[40px] overflow-hidden group transition-all duration-500 bg-[#0f0f11]/60 backdrop-blur-2xl border border-white/10 shadow-2xl flex flex-col">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.08),transparent_70%)] opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-                  <div className="relative z-10 flex flex-col h-full">
-                    <div className="flex justify-between items-start mb-6 md:mb-8">
-                      <div className="p-3 md:p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-transparent border border-blue-500/30 text-blue-400 shadow-xl group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
-                      <span className="text-[10px] font-mono text-gray-400 border border-white/10 px-3 py-1.5 rounded-full bg-black/40 shadow-inner backdrop-blur-sm">{feature.stat}</span>
+      <section id="features" className="relative z-10 py-16 md:py-32 bg-[#030304]">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <SectionTitle subtitle="Deterministic trust through autonomous execution and machine grounding.">
+      PROTOCOL PILLARS
+    </SectionTitle>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+      {FEATURES.map((feature, idx) => {
+        // Correctly split the stat to handle multi-word units like "Node Integrity"
+        const statParts = feature.stat.split(' ');
+        const statValue = statParts[0];
+        const statUnit = statParts.slice(1).join(' ');
+
+        return (
+          <TiltCard key={idx} className="h-auto min-h-[400px] lg:h-[450px]">
+            {/* IMPROVED CARD CONTAINER: 
+              Added a stronger top-light bevel and a deeper shadow for 3D grounding 
+            */}
+            <div className="relative h-full p-8 rounded-[42px] overflow-hidden group transition-all duration-500 bg-[#08080a]/90 backdrop-blur-3xl border border-white/5 shadow-[inset_0px_1px_2px_rgba(255,255,255,0.15),inset_0px_-2px_4px_rgba(0,0,0,0.7),0_20px_40px_rgba(0,0,0,0.6)] hover:border-blue-500/40 flex flex-col text-left">
+              
+              {/* Glass Reflection & Spotlight */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-10%,rgba(59,130,247,0.25),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05),transparent_40%)] pointer-events-none"></div>
+              
+              <div className="relative z-10 flex flex-col h-full">
+                {/* Header: Fixed Alignment */}
+                <div className="flex justify-between items-start mb-10">
+                  <CyberMetallicIcon>
+                    {feature.icon}
+                  </CyberMetallicIcon>
+                  <div className="text-right pt-2">
+                    <div className="text-3xl font-mono font-black text-white tracking-tighter mb-0.5 leading-none group-hover:text-blue-400 transition-colors">
+                      {statValue}
                     </div>
-                    <div className="mt-2"><h3 className="text-lg md:text-xl font-bold text-white mb-2 font-sans tracking-tight"><GlitchText text={feature.title} /></h3><div className="text-[10px] font-mono text-blue-400 mb-4 md:mb-6 uppercase tracking-widest font-bold opacity-80">{feature.subtitle}</div></div>
-                    <p className="text-gray-400 text-sm leading-relaxed mt-auto border-t border-white/5 pt-6 group-hover:text-gray-300 transition-colors">{feature.description}</p>
+                    <div className="text-[9px] text-blue-400/60 font-mono uppercase tracking-[0.2em] font-bold">
+                      {statUnit}
+                    </div>
                   </div>
-                  <div className="absolute inset-0 rounded-[30px] md:rounded-[40px] border-2 border-transparent group-hover:border-blue-500/30 transition-colors duration-500 pointer-events-none"></div>
                 </div>
-              </TiltCard>
-            ))}
-          </div>
-        </div>
-      </section>
+
+                {/* Content: Title & Badge */}
+                <div className="mb-6 relative">
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3 font-sans tracking-tight leading-tight">
+                    {/* Ensure feature.title is a clean string with no extra spaces */}
+                    <GlitchText text={feature.title.trim()} />
+                  </h3>
+                  
+                  {/* The Subtitle Badge */}
+                  <div className="inline-block px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                    <span className="text-[8px] font-mono text-blue-400 uppercase tracking-[0.2em] font-black">
+                      {feature.subtitle}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Description: High-readability fade */}
+                <p className="text-gray-500 text-[13px] leading-relaxed mt-auto border-t border-white/5 pt-6 group-hover:text-gray-300 transition-colors duration-300">
+                  {feature.description}
+                </p>
+              </div>
+            </div>
+          </TiltCard>
+        );
+      })}
+    </div>
+  </div>
+  
+  {/* Filter tuned for deeper metallic blue highlights */}
+  <svg className="absolute w-0 h-0 pointer-events-none">
+    <defs>
+    <filter id="black-chrome" x="-50%" y="-50%" width="200%" height="200%">
+  <feGaussianBlur in="SourceAlpha" stdDeviation="0.8" result="blur" />
+  {/* lightingColor changed to white for highlights, surfaceScale increased for contrast */}
+  <feSpecularLighting in="blur" surfaceScale="7" specularConstant="1.5" specularExponent="40" lightingColor="#ffffff" result="specOut">
+    <fePointLight x="-5000" y="-10000" z="20000" />
+  </feSpecularLighting>
+  <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut" />
+  <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" />
+</filter>
+    </defs>
+  </svg>
+</section>
 
       {/* Architecture */}
       <section id="architecture" className="relative z-10 py-16 md:py-32 px-4 overflow-hidden border-y border-white/5 bg-[#030304]">
-        <div className="max-w-6xl mx-auto">
-          <SectionTitle subtitle="A multi-layered execution proxy replacing human subjectivity with deterministic trust.">NETWORK TOPOLOGY</SectionTitle>
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-            <div className="space-y-6 relative pl-4 md:pl-0">
-              <div className="absolute left-[27px] lg:left-6 top-6 bottom-12 lg:bottom-24 w-[2px] -translate-x-1/2 z-0 overflow-visible" style={{ maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}>
-                <div className="absolute inset-0 bg-blue-900/20 w-[1px] mx-auto"></div>
-                <div className="absolute inset-0 w-full h-full opacity-50 animate-dotted-flow" style={{ backgroundImage: 'radial-gradient(circle, #3b82f6 40%, transparent 50%)', backgroundSize: '4px 20px', backgroundRepeat: 'repeat-y', backgroundPositionX: 'center' }}></div>
-                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent via-blue-400 to-transparent blur-md opacity-0 animate-beam-drop"></div>
-              </div>
-              {[
-                { title: 'Autonomous Resolution Layer', desc: 'Intrigue logic replaces manual proposers, automatically triggering settlement upon event conclusion.', icon: <Zap size={18} />, id: '01' },
-                { title: 'Unified Liquidity Layer', desc: 'The ULR aggregates depth across Ethereum, Solana, and Layer 2s into a single global order book.', icon: <Database size={18} />, id: '02' },
-                { title: 'Autonomous Grounding Layer', desc: 'Multiple independent nodes run AI checks against official news wires, news feeds, and document repositories.', icon: <Radio size={18} />, id: '03' }
-              ].map((step, i) => (
-                <div key={i} className="relative flex gap-6 md:gap-8 group">
-                  <div className="relative z-10 flex-shrink-0 w-12 h-12 bg-[#0A0A0C] border border-blue-900/50 flex items-center justify-center text-blue-500 shadow-xl group-hover:border-blue-500 group-hover:shadow-blue-500/20 transition-all duration-300 rounded-lg">{step.icon}</div>
-                  <div className="pt-1"><div className="flex items-center gap-3 mb-2"><span className="text-xs font-mono text-blue-500/50"></span><h3 className="text-lg md:text-xl font-bold text-white">{step.title}</h3></div><p className="text-gray-400 text-sm leading-relaxed max-w-md">{step.desc}</p></div>
-                </div>
-              ))}
+  <div className="max-w-6xl mx-auto">
+    <SectionTitle subtitle="A multi-layered execution proxy replacing human subjectivity with deterministic trust.">
+      NETWORK TOPOLOGY
+    </SectionTitle>
+    
+    <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      {/* Left Side: 3D List Items */}
+      <div className="space-y-10 relative">
+  {/* CORRECTED VERTICAL LINE:
+      - 'left-8' (32px) is the exact mathematical center for a w-16 icon container.
+      - Removing '-translate-x-1/2' prevents sub-pixel blurring on mobile devices.
+  */}
+  <div className="absolute left-8 top-10 bottom-10 w-[2px] z-0 overflow-visible">
+    {/* static background line */}
+    <div className="absolute inset-0 bg-white/5 w-[1px] mx-auto"></div>
+    
+    {/* Animated glow line: Dotted pulse effect from your reference */}
+    <div 
+      className="absolute inset-0 w-full h-full opacity-30 animate-dotted-flow" 
+      style={{ 
+        backgroundImage: 'radial-gradient(circle, #3b82f6 40%, transparent 50%)', 
+        backgroundSize: '4px 20px', 
+        backgroundRepeat: 'repeat-y' 
+      }}
+    ></div>
+  </div>
+
+  {[
+    { title: 'Autonomous Resolution Layer', desc: 'Intrigue logic replaces manual proposers, automatically triggering settlement.', icon: <Zap size={20} /> },
+    { title: 'Unified Liquidity Layer', desc: 'The ULR aggregates depth across Ethereum, Solana, and Layer 2s into a single global order book.', icon: <Database size={20} /> },
+    { title: 'Autonomous Grounding Layer', desc: 'Multiple independent nodes run AI checks against official news wires and document repositories.', icon: <Radio size={20} /> }
+  ].map((step, i) => (
+    <div key={i} className="relative flex gap-8 items-start group">
+      {/* 3D Icon Box:
+          - 'w-16' (64px) ensures that 'left-8' (32px) is always the exact center.
+          - 'flex justify-center' forces the 3D button to sit perfectly on the line.
+      */}
+      <div className="relative z-10 flex-shrink-0 w-16 flex justify-center">
+        <CyberMetallicIcon>
+          {step.icon}
+        </CyberMetallicIcon>
+      </div>
+
+      <div className="pt-3">
+        <h3 className="text-xl font-bold text-white mb-2 tracking-tighter uppercase group-hover:text-blue-400 transition-colors">
+          {step.title}
+        </h3>
+        <p className="text-gray-500 text-sm leading-relaxed max-w-sm border-l border-white/10 pl-4 group-hover:border-blue-500/50 transition-colors">
+          {step.desc}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
+
+      {/* Right Side: Terminal with enhanced 3D container */}
+      <div className="relative group">
+        {/* Glass flare behind terminal */}
+        <div className="absolute -inset-20 bg-blue-600/10 blur-[120px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+        
+        <div className="relative bg-[#08080a] border border-white/10 rounded-2xl overflow-hidden shadow-[inset_0px_1px_2px_rgba(255,255,255,0.1),0_30px_60px_rgba(0,0,0,0.8)]">
+          <div className="bg-white/5 px-4 py-3 flex items-center justify-between border-b border-white/5">
+            <div className="flex gap-2">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
             </div>
-            <div className="relative group w-full max-w-md mx-auto lg:mr-0 lg:ml-auto">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-              <div className="relative bg-[#050505] border border-gray-800 rounded-lg p-1 shadow-2xl">
-                <div className="bg-[#111] px-3 py-2 flex items-center justify-between rounded-t border-b border-gray-800">
-                  <div className="flex gap-1.5"><div className="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div><div className="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div></div>
-                  <div className="text-[8px] md:text-[10px] font-mono text-gray-500 uppercase">root@trigslink-node:~</div>
-                </div>
-                <div className="p-4 md:p-6 font-mono text-xs space-y-4 min-h-[300px] md:min-h-[320px] text-gray-300 bg-[#0A0A0C] rounded-b flex flex-col overflow-x-auto">
-                  <div><span className="text-green-500 mr-2">➜</span><span>initiating_autonomous_handshake...</span></div>
-                  <div className="text-blue-400 pl-4 ml-1 space-y-1"><div>[INFO] Truth state identified: DETERMINISTIC</div><div>[INFO] Verifying grounding evidence... <span className="text-green-400">SUCCESS</span></div></div>
-                  <div className="pt-2"><span className="text-green-500 mr-2">➜</span><span className="text-white font-bold text-sm break-all">settlement-trigger --finality 15s</span></div>
-                  <div className="flex justify-center py-4 flex-1 items-center overflow-hidden"><img src={asciiTerminal} alt="ASCII Logo" className="w-24 h-24 md:w-32 md:h-32 object-contain opacity-90" /></div>
-                  <div className="bg-[#0f0f12] p-3 rounded-lg border border-blue-900/30">
-                    <div className="flex justify-between items-center mb-2"><span className="text-blue-300 font-bold text-[10px] tracking-wider">TRUTH_STATUS</span><span className="text-green-400 font-bold text-[10px] tracking-wider animate-pulse">SYNCHRONIZED</span></div>
-                    <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden mb-2"><div className="h-full bg-blue-500 w-full shadow-[0_0_10px_#3b82f6]"></div></div>
-                    <div className="flex justify-between text-[10px] text-gray-500 font-mono"><span>NODES: ALL ACTIVE</span><span>LATENCY: 14.9s</span></div>
-                  </div>
-                  <div className="flex items-center gap-2 text-purple-400 pt-1"><span className="animate-spin">⟳</span><span>deploying_global_liquidity_rail...</span></div>
-                </div>
-              </div>
+            <div className="text-[9px] font-mono text-gray-500 uppercase tracking-widest font-bold">trigslink_mainnet.sh</div>
+          </div>
+          
+          <div className="p-8 font-mono text-xs text-gray-400 h-[340px] bg-black/40 flex flex-col justify-between">
+            <div className="space-y-4">
+              <div className="flex gap-3"><span className="text-blue-500">➜</span><span>initiating_autonomous_handshake...</span></div>
+              <div className="pl-6 text-blue-400/80">[INFO] Verifying grounding evidence... <span className="text-green-500">SUCCESS</span></div>
+              <div className="flex gap-3"><span className="text-blue-500">➜</span><span className="text-white font-black">settlement-trigger --finality 15s</span></div>
+            </div>
+            
+            <div className="flex justify-center opacity-40 group-hover:opacity-100 transition-opacity duration-500">
+              <img src={asciiTerminal} alt="ASCII" className="w-32 h-32 object-contain" />
+            </div>
+
+            <div className="bg-blue-900/10 p-4 rounded-xl border border-blue-500/20 shadow-inner">
+               <div className="flex justify-between mb-2">
+                 <span className="text-[10px] font-black text-blue-300 tracking-widest uppercase">Truth_Sync</span>
+                 <span className="text-[10px] text-green-400 animate-pulse font-bold">100% SECURE</span>
+               </div>
+               <div className="h-1 bg-gray-800 rounded-full overflow-hidden">
+                 <div className="h-full bg-blue-500 w-full shadow-[0_0_10px_#3b82f6]"></div>
+               </div>
             </div>
           </div>
         </div>
-      </section>
-
+      </div>
+    </div>
+  </div>
+</section>
       {/* Roadmap - UPDATED PHASE 1 AS CURRENT */}
       <section id="roadmap" className="relative z-10 py-16 md:py-32 bg-[#050507]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -717,5 +854,6 @@ export default function App() {
         @media (prefers-reduced-motion: reduce) { .animate-noise, .animate-dotted-flow, .animate-beam-drop, .animate-silver-rotate { animation: none; } }
       `}} />
     </div>
+    
   );
 }
