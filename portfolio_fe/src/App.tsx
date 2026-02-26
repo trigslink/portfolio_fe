@@ -462,7 +462,7 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const lenis = new Lenis({ duration: 2.0, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), });
+    const lenis = new Lenis({ duration: 2.0, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), syncTouch: true, touchMultiplier: 2});
     function raf(time: number) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
     return () => { lenis.destroy(); };
@@ -636,7 +636,7 @@ export default function App() {
           
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             <div className="space-y-8 md:space-y-10 relative">
-              <div className="absolute left-8 top-10 bottom-10 w-[2px] z-0 overflow-visible hidden sm:block">
+              <div className="absolute left-8 top-10 bottom-10 w-[2px] z-0 overflow-visible">
                 <div className="absolute inset-0 bg-white/5 w-[1px] mx-auto"></div>
                 <div className="absolute inset-0 w-full h-full opacity-30 animate-dotted-flow" style={{ backgroundImage: 'radial-gradient(circle, #3b82f6 40%, transparent 50%)', backgroundSize: '4px 20px', backgroundRepeat: 'repeat-y' }}></div>
               </div>
