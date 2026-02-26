@@ -123,8 +123,8 @@ const ROADMAP: RoadmapItem[] = [
   {
     phase: 'PHASE 01',
     title: 'Deterministic Trust',
-    items: ['Autonomous Resolution Layer','ULR Cross-Chain Bridge','Global Truth Pool Aggregator', ],
-    status: 'current' // UPDATED TO PHASE 1 CURRENT
+    items: ['Autonomous Resolution Layer','ULR Cross-Chain Bridge','Global Truth Pool Aggregator'],
+    status: 'current' 
   },
   {
     phase: 'PHASE 02',
@@ -178,7 +178,7 @@ const OperatorCard = ({ member }: { member: TeamMember }) => {
   }, []);
 
   return (
-    <div className="relative group w-[288px] h-[420px] bg-[#0A0A0C] flex-shrink-0 mx-auto">
+    <div className="relative group w-full max-w-[288px] h-[420px] bg-[#0A0A0C] flex-shrink-0 mx-auto">
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible">
         <defs>
           <clipPath id="card-shape">
@@ -203,10 +203,10 @@ const OperatorCard = ({ member }: { member: TeamMember }) => {
             />
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-[30%] bg-[#0f0f12] border-t border-blue-900/30 p-6 flex flex-col justify-center">
-            <h3 className="text-white font-bold font-mono text-lg uppercase tracking-tight mb-1">{member.name}</h3>
+            <h3 className="text-white font-bold font-mono text-base md:text-lg uppercase tracking-tight mb-1 truncate">{member.name}</h3>
             <div className="flex items-center justify-between">
-                <span className="text-blue-400 font-mono text-[10px] uppercase tracking-widest">{member.role}</span>
-                <div className="h-1 w-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_5px_#22c55e]"></div>
+                <span className="text-blue-400 font-mono text-[9px] md:text-[10px] uppercase tracking-widest truncate pr-2">{member.role}</span>
+                <div className="h-1 w-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_5px_#22c55e] flex-shrink-0"></div>
             </div>
         </div>
       </div>
@@ -216,18 +216,11 @@ const OperatorCard = ({ member }: { member: TeamMember }) => {
 
 const CyberMetallicIcon = ({ children }: { children: ReactNode }) => (
   <div className="relative group/icon flex items-center justify-center p-4 shrink-0">
-    {/* Glow background */}
     <div className="absolute inset-0 bg-blue-600/30 blur-[30px] rounded-full scale-150 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-700" />
-    
-    {/* 3D Embossed Base */}
     <div className="relative w-16 h-16 rounded-[18px] flex items-center justify-center bg-[#0d0d0f] shadow-[10px_10px_20px_rgba(0,0,0,0.5),-2px_-2px_5px_rgba(255,255,255,0.05),inset_2px_2px_2px_rgba(255,255,255,0.1),inset_-2px_-2px_10px_rgba(0,0,0,0.8)] transition-all duration-500 group-hover/icon:-translate-y-1">
-      
-      {/* Metallic Gradient Layer */}
       <div className="absolute inset-[3px] rounded-[15px] bg-gradient-to-br from-[#ffffff] via-[#3b82f6] to-[#1e3a8a] border border-blue-400/30 shadow-inner overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,247,0.3),transparent_70%)]" />
       </div>
-
-      {/* Icon with Specular Lighting Filter applied */}
       <div className="relative z-10 text-white drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]">
         <div style={{ filter: 'url(#blue-chrome)' }}>{children}</div>
       </div>
@@ -267,7 +260,7 @@ const TiltCard = ({ children, className = "" }: { children: ReactNode, className
       onMouseMove={handleMouseMove} 
       onMouseEnter={handleMouseEnter} 
       onMouseLeave={handleMouseLeave} 
-      className={`relative transition-all duration-300 ease-out transform-gpu ${className}`} 
+      className={`relative transition-all duration-300 ease-out transform-gpu w-full ${className}`} 
       style={{ transform: isHovered ? `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale3d(1.02, 1.02, 1.02)` : 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)', willChange: 'transform' }}
     >
       {children}
@@ -408,11 +401,9 @@ const Logo = ({ className = "w-10 h-10" }) => (
 const GlitchText = ({ text }: { text: string }) => (
   <span className="relative inline-block group/glitch">
     <span className="relative z-10">{text}</span>
-    
     <span className="absolute top-0 left-0 -ml-0.5 translate-x-[2px] text-red-500 opacity-0 group-hover:opacity-70 mix-blend-screen animate-pulse pointer-events-none">
       {text}
     </span>
-    
     <span className="absolute top-0 left-0 -ml-0.5 -translate-x-[2px] text-blue-500 opacity-0 group-hover:opacity-70 mix-blend-screen animate-pulse delay-75 pointer-events-none">
       {text}
     </span>
@@ -420,12 +411,14 @@ const GlitchText = ({ text }: { text: string }) => (
 );
 
 const SectionTitle = ({ children, subtitle, align = 'center' }: { children: ReactNode, subtitle?: string, align?: 'center' | 'left' }) => (
-  <div className={`mb-12 md:mb-16 px-4 ${align === 'center' ? 'text-center' : 'text-left'}`}>
+  <div className={`mb-10 md:mb-16 px-4 w-full ${align === 'center' ? 'text-center' : 'text-left'}`}>
     <div className={`flex items-center gap-2 mb-4 text-blue-500 font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase ${align === 'center' ? 'justify-center' : 'justify-start'}`}>
-      <span className="w-8 h-[1px] bg-blue-500"></span> Protocol Logic <span className="w-8 h-[1px] bg-blue-500"></span>
+      <span className="w-6 md:w-8 h-[1px] bg-blue-500"></span> Protocol Logic <span className="w-6 md:w-8 h-[1px] bg-blue-500"></span>
     </div>
-    <h2 className="text-2xl md:text-4xl font-black text-white mb-4 md:mb-6 tracking-tighter font-lastica uppercase break-words hyphens-auto">{children}</h2>
-    {subtitle && <p className="text-gray-400 max-w-2xl text-base md:text-lg leading-relaxed font-light mx-auto">{subtitle}</p>}
+    <h2 className="text-xl sm:text-2xl md:text-4xl font-black text-white mb-4 md:mb-6 tracking-tighter font-lastica uppercase w-full max-w-full overflow-hidden text-ellipsis px-2 leading-tight">
+      {children}
+    </h2>
+    {subtitle && <p className="text-gray-400 max-w-2xl text-sm md:text-lg leading-relaxed font-light mx-auto px-2">{subtitle}</p>}
   </div>
 );
 
@@ -482,14 +475,14 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#030304] text-white font-sans selection:bg-blue-500/40 selection:text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#030304] text-white font-sans selection:bg-blue-500/40 selection:text-white overflow-x-clip relative w-full max-w-[100vw]">
       
       {/* Mobile Menu */}
-      <div className={`fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={() => setMobileMenuOpen(false)}>
-          <div className={`w-full max-w-[340px] bg-[#0A0A0C]/90 backdrop-blur-2xl border border-white/10 rounded-[32px] p-8 shadow-2xl transform transition-all duration-500 flex flex-col relative ${mobileMenuOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`} onClick={(e) => e.stopPropagation()}>
+      <div className={`fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-300 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={() => setMobileMenuOpen(false)}>
+          <div className={`w-full max-w-[340px] bg-[#0A0A0C]/95 backdrop-blur-2xl border border-white/10 rounded-[32px] p-8 shadow-2xl transform transition-all duration-500 flex flex-col relative ${mobileMenuOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-4'}`} onClick={(e) => e.stopPropagation()}>
              <div className="flex items-center justify-between mb-12">
                 <div className="flex items-center gap-3 opacity-90"><Logo className="w-8 h-8" /><img src={trigslinkFont} alt="Trigslink" className="h-5 object-contain" /></div>
-                <button onClick={() => setMobileMenuOpen(false)} className="text-gray-400 hover:text-white transition-colors"><XIcon size={24} /></button>
+                <button onClick={() => setMobileMenuOpen(false)} className="text-gray-400 hover:text-white transition-colors p-2"><XIcon size={24} /></button>
              </div>
              <div className="flex flex-col gap-8 items-center text-center mb-12">
              {NAVIGATION.map((item) => {
@@ -498,23 +491,24 @@ export default function App() {
                     <Link 
                       key={item.name} 
                       to="/mcp" 
-                      className="text-[10px] font-mono font-medium text-gray-400 hover:text-white transition-colors uppercase tracking-widest"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[12px] font-mono font-bold text-gray-400 hover:text-white transition-colors uppercase tracking-widest"
                     >
                       {item.name}
                     </Link>
                   );
                 }
                 return (
-                  <a key={item.name} href={item.href} className="...">
+                  <a key={item.name} href={item.href} onClick={() => setMobileMenuOpen(false)} className="text-[12px] font-mono font-bold text-gray-400 hover:text-white transition-colors uppercase tracking-widest">
                     {item.name}
                   </a>
                 );
               })}
              </div>
              <div className="flex justify-center gap-6 mt-auto">
-                <a href={SOCIAL_LINKS.github} className="text-gray-500 hover:text-white transition-colors"><Github size={20}/></a>
-                <a href={SOCIAL_LINKS.x} className="text-gray-500 hover:text-white transition-colors"><XTwitterIcon size={20}/></a>
-                <a href={SOCIAL_LINKS.youtube} className="text-gray-500 hover:text-white transition-colors"><Youtube size={20}/></a>
+                <a href={SOCIAL_LINKS.github} className="text-gray-500 hover:text-white transition-colors"><Github size={24}/></a>
+                <a href={SOCIAL_LINKS.x} className="text-gray-500 hover:text-white transition-colors"><XTwitterIcon size={24}/></a>
+                <a href={SOCIAL_LINKS.youtube} className="text-gray-500 hover:text-white transition-colors"><Youtube size={24}/></a>
              </div>
           </div>
       </div>
@@ -523,14 +517,13 @@ export default function App() {
         <div className="flex items-center justify-between relative">
           <div className="flex items-center gap-3 cursor-pointer group z-20" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <Logo className="w-8 h-8 transition-all duration-500 group-hover:rotate-180" />
-            <img src={trigslinkFont} alt="TRIGSLINK" className="h-5 md:h-6 object-contain opacity-90 group-hover:opacity-100 transition-opacity" />
+            <img src={trigslinkFont} alt="TRIGSLINK" className="h-4 md:h-6 object-contain opacity-90 group-hover:opacity-100 transition-opacity" />
           </div>
           
           <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-8">
             {NAVIGATION.map((item) => (
               <a key={item.name} href={item.href} target={item.isExternal ? "_blank" : "_self"} className="text-[10px] font-mono font-medium text-gray-400 hover:text-white transition-colors relative group uppercase tracking-widest whitespace-nowrap">{item.name}</a>
             ))}
-            {/* REMOVED X ICON FROM NAVBAR AS REQUESTED */}
           </div>
 
           <div className="hidden md:block z-20">
@@ -539,207 +532,181 @@ export default function App() {
             </Button>
           </div>
 
-          <div className="md:hidden z-20"><button onClick={() => setMobileMenuOpen(true)} className="text-gray-300 hover:text-white p-2"><Menu size={24} /></button></div>
+          <div className="md:hidden z-20 flex items-center">
+            <button onClick={() => setMobileMenuOpen(true)} className="text-gray-300 hover:text-white p-2">
+              <Menu size={24} />
+            </button>
+          </div>
         </div>
       </nav>
 
       {/* Hero */}
       <section className="relative pt-32 pb-20 lg:pt-60 lg:pb-48 px-4 overflow-hidden flex items-center justify-center min-h-[90vh] md:min-h-screen">
         <CyberGlobe />
-        <div className="max-w-7xl mx-auto text-center relative z-20 pointer-events-auto px-2">
-          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-5xl font-light tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-500 leading-tight font-montserrat mb-2 md:mb-4">THE AUTONOMOUS</h1>
-          <h1 className="flex flex-col items-center text-[12vw] sm:text-[11vw] md:text-[10vw] lg:text-[8.5vw] font-bold tracking-[-0.04em] mb-8 md:mb-12 text-white font-kora uppercase scale-y-[1.05] origin-center drop-shadow-2xl will-change-transform">
-            <span className="block leading-[0.8]">TRUTH</span>
-            <span className="block leading-[1]">ENGINE</span>
+        <div className="w-full max-w-7xl mx-auto text-center relative z-20 pointer-events-auto px-2">
+          <h1 className="text-xl sm:text-3xl md:text-5xl lg:text-5xl font-light tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-500 leading-tight font-montserrat mb-2 md:mb-4">
+            THE AUTONOMOUS
           </h1>
-          <p className="text-sm md:text-xl text-gray-400 max-w-sm md:max-w-4xl mx-auto mb-10 md:mb-16 tracking-[0.2em] md:tracking-[0.3em] font-light uppercase font-sans leading-relaxed">15-Second Autonomous Settlement • Universal Liquidity Rails • Machine-Verified Finality</p>
+          <h1 className="flex flex-col items-center text-[10.5vw] sm:text-[10vw] md:text-[9vw] lg:text-[8.5vw] font-bold tracking-[-0.04em] mb-8 md:mb-12 text-white font-kora uppercase scale-y-[1.05] origin-center drop-shadow-2xl will-change-transform max-w-full overflow-hidden">
+            <span className="block leading-[0.8] w-full break-words">TRUTH</span>
+            <span className="block leading-[1] w-full break-words">ENGINE</span>
+          </h1>
+          <p className="text-xs sm:text-sm md:text-xl text-gray-400 max-w-[280px] sm:max-w-sm md:max-w-4xl mx-auto mb-10 md:mb-16 tracking-[0.1em] md:tracking-[0.3em] font-light uppercase font-sans leading-relaxed">
+            15-Second Autonomous Settlement • Universal Liquidity Rails • Machine-Verified Finality
+          </p>
         </div>
       </section>
 
       {/* Features */}
-      <section id="features" className="relative z-10 py-16 md:py-32 bg-[#030304]">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <SectionTitle subtitle="Deterministic trust through autonomous execution and machine grounding.">
-      PROTOCOL PILLARS
-    </SectionTitle>
-    
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
-      {FEATURES.map((feature, idx) => {
-        // Correctly split the stat to handle multi-word units like "Node Integrity"
-        const statParts = feature.stat.split(' ');
-        const statValue = statParts[0];
-        const statUnit = statParts.slice(1).join(' ');
+      <section id="features" className="relative z-10 py-16 md:py-32 bg-[#030304] w-full overflow-hidden">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionTitle subtitle="Deterministic trust through autonomous execution and machine grounding.">
+            PROTOCOL PILLARS
+          </SectionTitle>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
+            {FEATURES.map((feature, idx) => {
+              const statParts = feature.stat.split(' ');
+              const statValue = statParts[0];
+              const statUnit = statParts.slice(1).join(' ');
 
-        return (
-          <TiltCard key={idx} className="h-auto min-h-[400px] lg:h-[450px]">
-            {/* IMPROVED CARD CONTAINER: 
-              Added a stronger top-light bevel and a deeper shadow for 3D grounding 
-            */}
-            <div className="relative h-full p-8 rounded-[42px] overflow-hidden group transition-all duration-500 bg-[#08080a]/90 backdrop-blur-3xl border border-white/5 shadow-[inset_0px_1px_2px_rgba(255,255,255,0.15),inset_0px_-2px_4px_rgba(0,0,0,0.7),0_20px_40px_rgba(0,0,0,0.6)] hover:border-blue-500/40 flex flex-col text-left">
-              
-              {/* Glass Reflection & Spotlight */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-10%,rgba(59,130,247,0.25),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05),transparent_40%)] pointer-events-none"></div>
-              
-              <div className="relative z-10 flex flex-col h-full">
-                {/* Header: Fixed Alignment */}
-                <div className="flex justify-between items-start mb-10">
-                  <CyberMetallicIcon>
-                    {feature.icon}
-                  </CyberMetallicIcon>
-                  <div className="text-right pt-2">
-                    <div className="text-3xl font-mono font-black text-white tracking-tighter mb-0.5 leading-none group-hover:text-blue-400 transition-colors">
-                      {statValue}
-                    </div>
-                    <div className="text-[9px] text-blue-400/60 font-mono uppercase tracking-[0.2em] font-bold">
-                      {statUnit}
+              return (
+                <TiltCard key={idx} className="h-auto min-h-[350px] lg:h-[450px]">
+                  <div className="relative h-full p-6 md:p-8 rounded-[32px] md:rounded-[42px] overflow-hidden group transition-all duration-500 bg-[#08080a]/90 backdrop-blur-3xl border border-white/5 shadow-[inset_0px_1px_2px_rgba(255,255,255,0.15),inset_0px_-2px_4px_rgba(0,0,0,0.7),0_20px_40px_rgba(0,0,0,0.6)] hover:border-blue-500/40 flex flex-col text-left">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-10%,rgba(59,130,247,0.25),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05),transparent_40%)] pointer-events-none"></div>
+                    
+                    <div className="relative z-10 flex flex-col h-full">
+                      <div className="flex justify-between items-start mb-8 md:mb-10">
+                        <CyberMetallicIcon>
+                          {feature.icon}
+                        </CyberMetallicIcon>
+                        <div className="text-right pt-2 flex-shrink-0">
+                          <div className="text-2xl md:text-3xl font-mono font-black text-white tracking-tighter mb-0.5 leading-none group-hover:text-blue-400 transition-colors">
+                            {statValue}
+                          </div>
+                          <div className="text-[8px] md:text-[9px] text-blue-400/60 font-mono uppercase tracking-[0.2em] font-bold">
+                            {statUnit}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mb-6 relative">
+                        <h3 className="text-lg md:text-2xl font-bold text-white mb-3 font-sans tracking-tight leading-tight">
+                          <GlitchText text={feature.title.trim()} />
+                        </h3>
+                        <div className="inline-block px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                          <span className="text-[8px] font-mono text-blue-400 uppercase tracking-[0.2em] font-black">
+                            {feature.subtitle}
+                          </span>
+                        </div>
+                      </div>
+
+                      <p className="text-gray-500 text-xs md:text-[13px] leading-relaxed mt-auto border-t border-white/5 pt-6 group-hover:text-gray-300 transition-colors duration-300">
+                        {feature.description}
+                      </p>
                     </div>
                   </div>
-                </div>
-
-                {/* Content: Title & Badge */}
-                <div className="mb-6 relative">
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3 font-sans tracking-tight leading-tight">
-                    {/* Ensure feature.title is a clean string with no extra spaces */}
-                    <GlitchText text={feature.title.trim()} />
-                  </h3>
-                  
-                  {/* The Subtitle Badge */}
-                  <div className="inline-block px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
-                    <span className="text-[8px] font-mono text-blue-400 uppercase tracking-[0.2em] font-black">
-                      {feature.subtitle}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Description: High-readability fade */}
-                <p className="text-gray-500 text-[13px] leading-relaxed mt-auto border-t border-white/5 pt-6 group-hover:text-gray-300 transition-colors duration-300">
-                  {feature.description}
-                </p>
-              </div>
-            </div>
-          </TiltCard>
-        );
-      })}
-    </div>
-  </div>
-  
-  {/* Filter tuned for deeper metallic blue highlights */}
-  <svg className="absolute w-0 h-0 pointer-events-none">
-    <defs>
-    <filter id="black-chrome" x="-50%" y="-50%" width="200%" height="200%">
-  <feGaussianBlur in="SourceAlpha" stdDeviation="0.8" result="blur" />
-  {/* lightingColor changed to white for highlights, surfaceScale increased for contrast */}
-  <feSpecularLighting in="blur" surfaceScale="7" specularConstant="1.5" specularExponent="40" lightingColor="#ffffff" result="specOut">
-    <fePointLight x="-5000" y="-10000" z="20000" />
-  </feSpecularLighting>
-  <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut" />
-  <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" />
-</filter>
-    </defs>
-  </svg>
-</section>
+                </TiltCard>
+              );
+            })}
+          </div>
+        </div>
+        
+        <svg className="absolute w-0 h-0 pointer-events-none">
+          <defs>
+          <filter id="black-chrome" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="0.8" result="blur" />
+        <feSpecularLighting in="blur" surfaceScale="7" specularConstant="1.5" specularExponent="40" lightingColor="#ffffff" result="specOut">
+          <fePointLight x="-5000" y="-10000" z="20000" />
+        </feSpecularLighting>
+        <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut" />
+        <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" />
+      </filter>
+          </defs>
+        </svg>
+      </section>
 
       {/* Architecture */}
-      <section id="architecture" className="relative z-10 py-16 md:py-32 px-4 overflow-hidden border-y border-white/5 bg-[#030304]">
-  <div className="max-w-6xl mx-auto">
-    <SectionTitle subtitle="A multi-layered execution proxy replacing human subjectivity with deterministic trust.">
-      NETWORK TOPOLOGY
-    </SectionTitle>
-    
-    <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-      {/* Left Side: 3D List Items */}
-      <div className="space-y-10 relative">
-  {/* CORRECTED VERTICAL LINE:
-      - 'left-8' (32px) is the exact mathematical center for a w-16 icon container.
-      - Removing '-translate-x-1/2' prevents sub-pixel blurring on mobile devices.
-  */}
-  <div className="absolute left-8 top-10 bottom-10 w-[2px] z-0 overflow-visible">
-    {/* static background line */}
-    <div className="absolute inset-0 bg-white/5 w-[1px] mx-auto"></div>
-    
-    {/* Animated glow line: Dotted pulse effect from your reference */}
-    <div 
-      className="absolute inset-0 w-full h-full opacity-30 animate-dotted-flow" 
-      style={{ 
-        backgroundImage: 'radial-gradient(circle, #3b82f6 40%, transparent 50%)', 
-        backgroundSize: '4px 20px', 
-        backgroundRepeat: 'repeat-y' 
-      }}
-    ></div>
-  </div>
-
-  {[
-    { title: 'Autonomous Resolution Layer', desc: 'Intrigue logic replaces manual proposers, automatically triggering settlement.', icon: <Zap size={20} /> },
-    { title: 'Unified Liquidity Layer', desc: 'The ULR aggregates depth across Ethereum, Solana, and Layer 2s into a single global order book.', icon: <Database size={20} /> },
-    { title: 'Autonomous Grounding Layer', desc: 'Multiple independent nodes run AI checks against official news wires and document repositories.', icon: <Radio size={20} /> }
-  ].map((step, i) => (
-    <div key={i} className="relative flex gap-8 items-start group">
-      {/* 3D Icon Box:
-          - 'w-16' (64px) ensures that 'left-8' (32px) is always the exact center.
-          - 'flex justify-center' forces the 3D button to sit perfectly on the line.
-      */}
-      <div className="relative z-10 flex-shrink-0 w-16 flex justify-center">
-        <CyberMetallicIcon>
-          {step.icon}
-        </CyberMetallicIcon>
-      </div>
-
-      <div className="pt-3">
-        <h3 className="text-xl font-bold text-white mb-2 tracking-tighter uppercase group-hover:text-blue-400 transition-colors">
-          {step.title}
-        </h3>
-        <p className="text-gray-500 text-sm leading-relaxed max-w-sm border-l border-white/10 pl-4 group-hover:border-blue-500/50 transition-colors">
-          {step.desc}
-        </p>
-      </div>
-    </div>
-  ))}
-</div>
-
-      {/* Right Side: Terminal with enhanced 3D container */}
-      <div className="relative group">
-        {/* Glass flare behind terminal */}
-        <div className="absolute -inset-20 bg-blue-600/10 blur-[120px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-        
-        <div className="relative bg-[#08080a] border border-white/10 rounded-2xl overflow-hidden shadow-[inset_0px_1px_2px_rgba(255,255,255,0.1),0_30px_60px_rgba(0,0,0,0.8)]">
-          <div className="bg-white/5 px-4 py-3 flex items-center justify-between border-b border-white/5">
-            <div className="flex gap-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
-            </div>
-            <div className="text-[9px] font-mono text-gray-500 uppercase tracking-widest font-bold">trigslink_mainnet.sh</div>
-          </div>
+      <section id="architecture" className="relative z-10 py-16 md:py-32 px-4 overflow-hidden border-y border-white/5 bg-[#030304] w-full">
+        <div className="max-w-6xl mx-auto w-full">
+          <SectionTitle subtitle="A multi-layered execution proxy replacing human subjectivity with deterministic trust.">
+            NETWORK TOPOLOGY
+          </SectionTitle>
           
-          <div className="p-8 font-mono text-xs text-gray-400 h-[340px] bg-black/40 flex flex-col justify-between">
-            <div className="space-y-4">
-              <div className="flex gap-3"><span className="text-blue-500">➜</span><span>initiating_autonomous_handshake...</span></div>
-              <div className="pl-6 text-blue-400/80">[INFO] Verifying grounding evidence... <span className="text-green-500">SUCCESS</span></div>
-              <div className="flex gap-3"><span className="text-blue-500">➜</span><span className="text-white font-black">settlement-trigger --finality 15s</span></div>
-            </div>
-            
-            <div className="flex justify-center opacity-40 group-hover:opacity-100 transition-opacity duration-500">
-              <img src={asciiTerminal} alt="ASCII" className="w-32 h-32 object-contain" />
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            <div className="space-y-8 md:space-y-10 relative">
+              <div className="absolute left-8 top-10 bottom-10 w-[2px] z-0 overflow-visible hidden sm:block">
+                <div className="absolute inset-0 bg-white/5 w-[1px] mx-auto"></div>
+                <div className="absolute inset-0 w-full h-full opacity-30 animate-dotted-flow" style={{ backgroundImage: 'radial-gradient(circle, #3b82f6 40%, transparent 50%)', backgroundSize: '4px 20px', backgroundRepeat: 'repeat-y' }}></div>
+              </div>
+
+              {[
+                { title: 'Autonomous Resolution Layer', desc: 'Intrigue logic replaces manual proposers, automatically triggering settlement.', icon: <Zap size={20} /> },
+                { title: 'Unified Liquidity Layer', desc: 'The ULR aggregates depth across Ethereum, Solana, and Layer 2s into a single global order book.', icon: <Database size={20} /> },
+                { title: 'Autonomous Grounding Layer', desc: 'Multiple independent nodes run AI checks against official news wires and document repositories.', icon: <Radio size={20} /> }
+              ].map((step, i) => (
+                <div key={i} className="relative flex gap-4 md:gap-8 items-start group">
+                  <div className="relative z-10 flex-shrink-0 w-12 md:w-16 flex justify-center">
+                    <CyberMetallicIcon>
+                      {step.icon}
+                    </CyberMetallicIcon>
+                  </div>
+
+                  <div className="pt-2 md:pt-3">
+                    <h3 className="text-base md:text-xl font-bold text-white mb-2 tracking-tighter uppercase group-hover:text-blue-400 transition-colors">
+                      {step.title}
+                    </h3>
+                    <p className="text-gray-500 text-xs md:text-sm leading-relaxed max-w-sm border-l border-white/10 pl-3 md:pl-4 group-hover:border-blue-500/50 transition-colors">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            <div className="bg-blue-900/10 p-4 rounded-xl border border-blue-500/20 shadow-inner">
-               <div className="flex justify-between mb-2">
-                 <span className="text-[10px] font-black text-blue-300 tracking-widest uppercase">Truth_Sync</span>
-                 <span className="text-[10px] text-green-400 animate-pulse font-bold">100% SECURE</span>
-               </div>
-               <div className="h-1 bg-gray-800 rounded-full overflow-hidden">
-                 <div className="h-full bg-blue-500 w-full shadow-[0_0_10px_#3b82f6]"></div>
-               </div>
+            {/* Terminal */}
+            <div className="relative group w-full mt-8 lg:mt-0">
+              <div className="absolute -inset-10 bg-blue-600/10 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+              <div className="relative bg-[#08080a] border border-white/10 rounded-xl md:rounded-2xl overflow-hidden shadow-[inset_0px_1px_2px_rgba(255,255,255,0.1),0_20px_40px_rgba(0,0,0,0.8)] w-full">
+                <div className="bg-white/5 px-3 py-3 flex items-center justify-between border-b border-white/5">
+                  <div className="flex gap-1.5 md:gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/50"></div>
+                  </div>
+                  <div className="text-[8px] md:text-[9px] font-mono text-gray-500 uppercase tracking-widest font-bold">trigslink_mainnet.sh</div>
+                </div>
+                
+                <div className="p-4 md:p-8 font-mono text-[10px] md:text-xs text-gray-400 h-[280px] md:h-[340px] bg-black/40 flex flex-col justify-between overflow-x-hidden">
+                  <div className="space-y-3 md:space-y-4">
+                    <div className="flex gap-2 md:gap-3"><span className="text-blue-500">➜</span><span className="truncate">initiating_autonomous_handshake...</span></div>
+                    <div className="pl-4 md:pl-6 text-blue-400/80 truncate">[INFO] Verifying grounding evidence... <span className="text-green-500 ml-1">SUCCESS</span></div>
+                    <div className="flex gap-2 md:gap-3"><span className="text-blue-500">➜</span><span className="text-white font-black truncate">settlement-trigger --finality 15s</span></div>
+                  </div>
+                  
+                  <div className="flex justify-center opacity-40 group-hover:opacity-100 transition-opacity duration-500 py-4">
+                    <img src={asciiTerminal} alt="ASCII" className="w-24 h-24 md:w-32 md:h-32 object-contain" />
+                  </div>
+
+                  <div className="bg-blue-900/10 p-3 md:p-4 rounded-xl border border-blue-500/20 shadow-inner w-full">
+                     <div className="flex justify-between mb-2">
+                       <span className="text-[9px] md:text-[10px] font-black text-blue-300 tracking-widest uppercase">Truth_Sync</span>
+                       <span className="text-[9px] md:text-[10px] text-green-400 animate-pulse font-bold">100% SECURE</span>
+                     </div>
+                     <div className="h-1 bg-gray-800 rounded-full overflow-hidden">
+                       <div className="h-full bg-blue-500 w-full shadow-[0_0_10px_#3b82f6]"></div>
+                     </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-      {/* Roadmap - UPDATED PHASE 1 AS CURRENT */}
-      <section id="roadmap" className="relative z-10 py-16 md:py-32 bg-[#050507]">
+      </section>
+
+      {/* Roadmap */}
+      <section id="roadmap" className="relative z-10 py-16 md:py-32 bg-[#050507] w-full overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle subtitle="Evolution from deterministic trust to a global ecosystem of autonomous truth.">MISSION TIMELINE</SectionTitle>
           <div className="relative">
@@ -748,23 +715,23 @@ export default function App() {
                 <div className="absolute inset-0 opacity-50 animate-dotted-flow-horizontal" style={{ backgroundImage: 'radial-gradient(circle, #3b82f6 40%, transparent 50%)', backgroundSize: '20px 4px', backgroundRepeat: 'repeat-x', backgroundPosition: 'center' }}></div>
                 <div className="absolute top-0 bottom-0 w-48 bg-gradient-to-r from-transparent via-blue-400 to-transparent blur-md opacity-0 animate-beam-slide"></div>
             </div>
-            <div className="grid md:grid-cols-3 gap-8 md:gap-8 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative z-10">
               {ROADMAP.map((item, idx) => {
                 const isCurrent = item.status === 'current';
                 const isCompleted = item.status === 'completed';
                 return (
-                  <div key={idx} className={`group h-full p-6 md:p-8 border backdrop-blur-sm transition-all duration-300 flex flex-col relative ${isCurrent ? 'bg-blue-900/5 border-blue-500/50 shadow-2xl' : 'bg-[#0a0a0c] border-gray-800 hover:border-gray-700'}`}>
-                      <div className="mb-4 md:h-[90px] flex flex-col justify-start relative z-10">
-                          <div className={`text-[10px] font-mono uppercase tracking-widest mb-3 ${isCurrent ? 'text-blue-400' : 'text-gray-600'}`}>{item.phase}</div>
-                          <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">{item.title}</h3>
-                          {isCurrent && <div className="absolute top-0 right-0 px-2 py-1 bg-blue-600 text-[8px] font-bold text-white uppercase tracking-wider rounded-sm">Processing</div>}
+                  <div key={idx} className={`group h-full p-5 md:p-8 border backdrop-blur-sm transition-all duration-300 flex flex-col relative rounded-xl md:rounded-none ${isCurrent ? 'bg-blue-900/10 border-blue-500/50 shadow-2xl' : 'bg-[#0a0a0c] border-gray-800 hover:border-gray-700'}`}>
+                      <div className="mb-4 md:h-[90px] flex flex-col justify-start relative z-10 pr-16 md:pr-0">
+                          <div className={`text-[10px] font-mono uppercase tracking-widest mb-2 md:mb-3 ${isCurrent ? 'text-blue-400' : 'text-gray-600'}`}>{item.phase}</div>
+                          <h3 className="text-lg md:text-2xl font-bold text-white tracking-tight leading-tight">{item.title}</h3>
+                          {isCurrent && <div className="absolute top-0 right-0 md:-top-3 md:-right-3 px-2 py-1 bg-blue-600 text-[8px] font-bold text-white uppercase tracking-wider rounded-sm">Processing</div>}
                       </div>
                       <div className="hidden md:flex relative h-[40px] items-center justify-start mb-6 z-20">
                            <div className={`w-4 h-4 rounded-full border-4 transition-all duration-500 relative ${isCurrent ? 'bg-black border-blue-500 shadow-xl scale-125' : isCompleted ? 'bg-blue-900 border-blue-800' : 'bg-black border-gray-700'}`}>
                               {isCurrent && <div className="absolute inset-0 rounded-full bg-blue-400 animate-ping opacity-75"></div>}
                            </div>
                       </div>
-                      <ul className="space-y-3 md:space-y-4 mt-auto relative z-10">
+                      <ul className="space-y-3 mt-2 md:mt-auto relative z-10">
                         {item.items.map((point, i) => (
                           <li key={i} className="flex items-start gap-3"><span className={`mt-1.5 w-1.5 h-1.5 flex-shrink-0 rounded-sm ${isCurrent ? 'bg-blue-500' : 'bg-gray-700'}`}></span><span className="text-xs md:text-sm text-gray-400 group-hover:text-gray-300 transition-colors font-mono">{point}</span></li>
                         ))}
@@ -778,27 +745,26 @@ export default function App() {
       </section>
 
       {/* Team */}
-      <section id="team" className="relative z-10 py-16 md:py-32 px-4 bg-[#030304] border-t border-white/5">
+      <section id="team" className="relative z-10 py-16 md:py-32 px-4 bg-[#030304] border-t border-white/5 w-full">
         <div className="max-w-7xl mx-auto">
           <SectionTitle subtitle="Founding Team of the Trigslink Protocol">HALL OF FAME</SectionTitle>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-12 w-full">
             {TEAM.map((member, idx) => (<OperatorCard key={idx} member={member} />))}
           </div>
         </div>
       </section>
 
-      <footer className="relative z-10 py-12 md:py-16 border-t border-white/10 bg-black">
+      <footer className="relative z-10 py-12 md:py-16 border-t border-white/10 bg-black w-full overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-10 md:mb-12">
             <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center gap-3 mb-6"><Logo className="w-8 h-8" /><img src={trigslinkFont} alt="TRIGSLINK" className="h-6 object-contain opacity-90" /></div>
-              <p className="text-gray-500 text-sm max-w-sm leading-relaxed">The high-velocity truth layer for the decentralized economy. Securing data independence through deterministic settlement.</p>
+              <div className="flex items-center gap-3 mb-4 md:mb-6"><Logo className="w-8 h-8" /><img src={trigslinkFont} alt="TRIGSLINK" className="h-5 md:h-6 object-contain opacity-90" /></div>
+              <p className="text-gray-500 text-xs md:text-sm max-w-sm leading-relaxed">The high-velocity truth layer for the decentralized economy. Securing data independence through deterministic settlement.</p>
             </div>
             
-
             <div>
-               <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-sm uppercase tracking-widest opacity-80">Community</h4>
-               <ul className="space-y-3 md:space-y-4 text-sm text-gray-500 mb-6">
+               <h4 className="text-white font-bold mb-4 md:mb-6 font-mono text-xs md:text-sm uppercase tracking-widest opacity-80">Community</h4>
+               <ul className="space-y-3 text-xs md:text-sm text-gray-500 mb-6">
                   <li className="hover:text-white transition-colors"><a href="#">Documentation</a></li>
                   <li className="hover:text-white transition-colors"><a href={SOCIAL_LINKS.github}>GitHub</a></li>
                   <li className="hover:text-white transition-colors"><a href="mailto:jaiswalraj03014@gmail.com">Contact Author</a></li>
@@ -811,20 +777,44 @@ export default function App() {
             </div>
           </div>
 
-          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] md:text-xs text-gray-600 font-mono uppercase tracking-widest">
+          <div className="pt-6 md:pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] md:text-[10px] lg:text-xs text-gray-600 font-mono uppercase tracking-widest text-center md:text-left">
             <div>© {new Date().getFullYear()} Trigslink Foundation. All rights reserved.</div>
-            <div className="flex gap-6 md:gap-8"><span>Privacy Policy</span><span>Terms of Service</span></div>
+            <div className="flex gap-4 md:gap-8"><span>Privacy Policy</span><span>Terms of Service</span></div>
           </div>
         </div>
       </footer>
 
+      {/* CSS Modifications */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
         
         @font-face { font-family: 'kora'; src: url('/fonts/kora.ttf') format('opentype'); font-weight: normal; font-style: normal; font-display: block; }
         html { scroll-behavior: smooth; }
-        .font-lastica { font-family: 'kora', 'Michroma', sans-serif; text-transform: uppercase; display: inline-block; transform: scaleX(1.3);transform-origin: center;backface-visibility: hidden; -webkit-backface-visibility: hidden; perspective: 1000px; transform-style: preserve-3d; will-change: transform; letter-spacing: -0.02em; line-height: 0.9; }
+        
+        .font-lastica { 
+          font-family: 'kora', 'Michroma', sans-serif; 
+          text-transform: uppercase; 
+          display: block; 
+          transform: scaleX(1.05); 
+          transform-origin: center left; 
+          backface-visibility: hidden; 
+          -webkit-backface-visibility: hidden; 
+          perspective: 1000px; 
+          transform-style: preserve-3d; 
+          will-change: transform; 
+          letter-spacing: -0.02em; 
+          line-height: 1; 
+        }
+        
+        @media (min-width: 768px) {
+           .font-lastica { 
+             display: inline-block;
+             transform: scaleX(1.25);
+             transform-origin: center;
+           }
+        }
+
         .font-montserrat { font-family: 'Montserrat', sans-serif; }
         .clip-path-slant { clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%); }
         .font-kora { font-family: 'kora', sans-serif; }
@@ -854,6 +844,5 @@ export default function App() {
         @media (prefers-reduced-motion: reduce) { .animate-noise, .animate-dotted-flow, .animate-beam-drop, .animate-silver-rotate { animation: none; } }
       `}} />
     </div>
-    
   );
 }
