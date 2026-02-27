@@ -142,25 +142,59 @@ export default function App() {
       {/* Roadmap Section */}
       <section id="roadmap" className="relative z-10 py-16 md:py-32 bg-[#050507] w-full overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle subtitle="Evolution from deterministic trust to a global ecosystem of autonomous truth.">MISSION TIMELINE</SectionTitle>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative z-10">
-            {ROADMAP.map((item, idx) => {
-              const isCurrent = item.status === 'current';
-              return (
-                <div key={idx} className={`group h-full p-5 md:p-8 border backdrop-blur-sm transition-all duration-300 flex flex-col relative rounded-xl md:rounded-none ${isCurrent ? 'bg-blue-900/10 border-blue-500/50 shadow-2xl' : 'bg-[#0a0a0c] border-gray-800 hover:border-gray-700'}`}>
-                    <div className="mb-4 md:h-[90px] flex flex-col justify-start relative z-10 pr-16 md:pr-0">
-                        <div className={`text-[10px] font-mono uppercase tracking-widest mb-2 md:mb-3 ${isCurrent ? 'text-blue-400' : 'text-gray-600'}`}>{item.phase}</div>
-                        <h3 className="text-lg md:text-2xl font-bold text-white tracking-tight leading-tight">{item.title}</h3>
-                        {isCurrent && <div className="absolute top-0 right-0 md:-top-3 md:-right-3 px-2 py-1 bg-blue-600 text-[8px] font-bold text-white uppercase tracking-wider rounded-sm">Processing</div>}
-                    </div>
-                    <ul className="space-y-3 mt-2 md:mt-auto relative z-10">
-                      {item.items.map((point, i) => (
-                        <li key={i} className="flex items-start gap-3"><span className={`mt-1.5 w-1.5 h-1.5 flex-shrink-0 rounded-sm ${isCurrent ? 'bg-blue-500' : 'bg-gray-700'}`}></span><span className="text-xs md:text-sm text-gray-400 group-hover:text-gray-300 transition-colors font-mono">{point}</span></li>
-                      ))}
-                    </ul>
+          <SectionTitle subtitle="Evolution from deterministic trust to a global ecosystem of autonomous truth.">
+            MISSION TIMELINE
+          </SectionTitle>
+          
+          <div className="relative">
+            {/* The Horizontal Dotted Line & Falling Star */}
+            <div className="hidden md:block absolute top-[130px] left-0 w-full h-[2px] overflow-visible z-0">
+                <div className="absolute inset-0 bg-blue-900/20"></div>
+                <div className="absolute inset-0 opacity-50 animate-dotted-flow-horizontal" style={{ backgroundImage: 'radial-gradient(circle, #3b82f6 40%, transparent 50%)', backgroundSize: '20px 4px', backgroundRepeat: 'repeat-x' }}></div>
+                
+                {/* FALLING STAR INTENSITY */}
+                <div className="absolute top-[-3px] bottom-[-3px] w-64 bg-gradient-to-r from-transparent via-blue-500 to-cyan-300 blur-sm opacity-0 animate-shooting-star"></div>
+                <div className="absolute top-[-1px] bottom-[-1px] w-64 bg-gradient-to-r from-transparent via-blue-400 to-white opacity-0 animate-shooting-star">
+                     {/* The bright hot core at the head of the star */}
+                     <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full blur-[2px] shadow-[0_0_20px_5px_rgba(255,255,255,0.9),0_0_40px_10px_rgba(59,130,246,0.8)]"></div>
                 </div>
-              );
-            })}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative z-10">
+              {ROADMAP.map((item, idx) => {
+                const isCurrent = item.status === 'current';
+                const isCompleted = item.status === 'completed';
+
+                return (
+                  <div key={idx} className={`group h-full p-5 md:p-8 border backdrop-blur-sm transition-all duration-300 flex flex-col relative rounded-xl md:rounded-none ${isCurrent ? 'bg-blue-900/10 border-blue-500/50 shadow-2xl' : 'bg-[#0a0a0c] border-gray-800 hover:border-gray-700'}`}>
+                      <div className="mb-4 md:h-[90px] flex flex-col justify-start relative z-10 pr-16 md:pr-0">
+                          <div className={`text-[10px] font-mono uppercase tracking-widest mb-2 md:mb-3 ${isCurrent ? 'text-blue-400' : 'text-gray-600'}`}>{item.phase}</div>
+                          <h3 className="text-lg md:text-2xl font-bold text-white tracking-tight leading-tight">{item.title}</h3>
+                          {isCurrent && <div className="absolute top-0 right-0 md:-top-3 md:-right-3 px-2 py-1 bg-blue-600 text-[8px] font-bold text-white uppercase tracking-wider rounded-sm">Processing</div>}
+                      </div>
+                      
+                      {/* The Synapse Nodes */}
+                      <div className="hidden md:flex relative h-[40px] items-center justify-start mb-6 z-20">
+                           <div className={`w-4 h-4 rounded-full border-4 transition-all duration-500 relative ${isCurrent ? 'bg-black border-blue-500 shadow-xl scale-125' : isCompleted ? 'bg-blue-900 border-blue-800' : 'bg-black border-gray-700'}`}>
+                              {/* INCREASED GLOW ON CURRENT NODE TO MATCH STAR */}
+                              {isCurrent && (
+                                <>
+                                  <div className="absolute inset-0 rounded-full bg-blue-300 animate-ping opacity-100"></div>
+                                  <div className="absolute inset-0 rounded-full bg-white blur-[4px] opacity-70 shadow-[0_0_15px_#ffffff]"></div>
+                                </>
+                              )}
+                           </div>
+                      </div>
+
+                      <ul className="space-y-3 mt-2 md:mt-auto relative z-10">
+                        {item.items.map((point, i) => (
+                          <li key={i} className="flex items-start gap-3"><span className={`mt-1.5 w-1.5 h-1.5 flex-shrink-0 rounded-sm ${isCurrent ? 'bg-blue-500' : 'bg-gray-700'}`}></span><span className="text-xs md:text-sm text-gray-400 group-hover:text-gray-300 transition-colors font-mono">{point}</span></li>
+                        ))}
+                      </ul>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -207,7 +241,19 @@ export default function App() {
         @keyframes dotted-flow { 0% { background-position: 0 0; } 100% { background-position: 0 20px; } }
         .animate-dotted-flow { animation: dotted-flow 1s linear infinite; }
 
-        @media (prefers-reduced-motion: reduce) { .animate-noise, .animate-dotted-flow, .animate-silver-rotate { animation: none; } }
+        @keyframes dotted-flow-horizontal { 0% { background-position: 0px center; } 100% { background-position: 20px center; } }
+        .animate-dotted-flow-horizontal { animation: dotted-flow-horizontal 1s linear infinite; }
+
+        /* The New Shooting Star Animation */
+        @keyframes shooting-star { 
+          0% { left: -30%; opacity: 0; } 
+          5% { opacity: 1; } 
+          80% { opacity: 1; } 
+          100% { left: 110%; opacity: 0; } 
+        }
+        .animate-shooting-star { animation: shooting-star 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
+        @media (prefers-reduced-motion: reduce) { .animate-noise, .animate-dotted-flow, .animate-dotted-flow-horizontal, .animate-shooting-star, .animate-silver-rotate { animation: none; } }
       `}} />
     </div>
   );
