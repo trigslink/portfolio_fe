@@ -61,11 +61,11 @@ export const ROADMAP: RoadmapItem[] = [
 ];
 
 export const TEAM: TeamMember[] = [
-  { name: 'Aakash Jaiswal', role: 'AI & Backend Alchemist', initials: 'AJ', hex: '0x01', image: '/images/aakash.png' },
-  { name: 'Gianluca Godfrey', role: 'Onchain Evangelist', initials: 'GG', hex: '0x03', image: '/images/gianluca.png' },
-  { name: 'Charles Cai', role: 'Onchain Evangelist', initials: 'CC', hex: '0x03', image: '/images/charles.png' },
-  { name: 'Odudu Essien', role: 'Pixel Crafter', initials: 'OE', hex: '0x05', image: '/images/odudu.png' },
-  { name: 'Yelena Cefalù', role: 'Growth & Crypto Kitana', initials: 'CC', hex: '0x03', image: '/images/yellie.png' }
+  { name: 'Aakash Jaiswal', role: 'Co-founder & Core AI Lead', initials: 'AJ', hex: '0x01', image: '/images/aakash.png' },
+  { name: 'Gianluca Godfrey', role: 'Co-founder & Protocol Strategy', initials: 'GG', hex: '0x02', image: '/images/gianluca.png' },
+  { name: 'Charles Cai', role: 'Protocol Architect', initials: 'CC', hex: '0x03', image: '/images/charles.png' },
+  { name: 'Odudu Essien', role: 'Brand & Design', initials: 'OE', hex: '0x04', image: '/images/odudu.png' },
+  { name: 'Yelena Cefalù', role: 'Growth Lead', initials: 'YC', hex: '0x05', image: '/images/yellie.png' }
 ];
 
 export const SOCIAL_LINKS = {
