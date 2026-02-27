@@ -45,7 +45,7 @@ export default function App() {
             <span className="block leading-[1] w-full break-words">ENGINE</span>
           </h1>
           <p className="text-xs sm:text-sm md:text-xl text-gray-400 max-w-[280px] sm:max-w-sm md:max-w-4xl mx-auto mb-10 md:mb-16 tracking-[0.1em] md:tracking-[0.3em] font-light uppercase font-sans leading-relaxed">
-            15-Second Autonomous Settlement • Universal Liquidity Rails • Machine-Verified Finality
+            Fast Autonomous Resolutions • Truth-Weighted Intelligence • Machine-Verified Finality
           </p>
         </div>
       </section>
